@@ -21,4 +21,9 @@
 
 本生成器依赖 fenics 作为有限元求解器，参照 [fenics安装文档](https://fenicsproject.org/download/)，推荐以下方式
 - Docker
-- Anaconda
+- Anaconda (**linux**)
+  1. 使用 `conda` 创建环境 
+    ```bash
+    conda create -n fenicsproject -c conda-forge fenics jupyter
+    source activate fenicsproject
+    ```
