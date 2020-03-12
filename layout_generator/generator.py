@@ -1,6 +1,12 @@
+# -*- encoding: utf-8 -*-
 '''
-数据集生成主程序
+@File    :   generator.py
+@Time    :   2020/03/13 00:44:27
+@Author  :   Zweien
+@Contact :   278954153@qq.com
+@Desc    :   Main function for generator.
 '''
+
 import os
 from functools import reduce
 import numpy as np

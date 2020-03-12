@@ -1,6 +1,12 @@
+# -*- encoding: utf-8 -*-
 '''
-fenics solver
+@File    :   fenics_solver.py
+@Time    :   2020/03/13 00:43:50
+@Author  :   Zweien
+@Contact :   278954153@qq.com
+@Desc    :   Fenics solver.
 '''
+
 import numpy as np
 from fenics import *
 
