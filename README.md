@@ -15,6 +15,7 @@
 
 ## 已实现功能
 
+- 使用 `fenics` 求解 Poisson 方程
 - 组件离散位置摆放
 - 添加多条 Dirichlet 边界条件（开口）
 - 线性叠加原理求解 `--method fenics_additive`
@@ -33,4 +34,15 @@
   ```bash
   pip install git+https://git.idrl.site/idrl/layout-generator.git
   ```
-  3. 
+  3. 以模块运行方式，使用配置文件或命令行生成数据集，比如
+  ```bash
+  python -m layout_generator --config default.yml
+  ```
+  其中 `default.yml` 在本仓库 `configs` 目录下。
+  
+## 用法
+
+- `python -m layout_generator -h` 获取命令行帮助
+- 配置文件以 YAML 格式存储
+
+
