@@ -42,7 +42,10 @@
   
 ## 用法
 
-- `python -m layout_generator -h` 获取命令行帮助
 - 配置文件以 YAML 格式存储
+- `python -m layout_generator -h` 获取命令行帮助
+
+![](https://i.bmp.ovh/imgs/2020/03/3721a692143eedee.png)
+
 
 
