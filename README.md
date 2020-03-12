@@ -15,9 +15,11 @@
 
 ## 已实现功能
 
+- 矩形组件离散位置摆放
+  - 数量、位置、功率
+- 可添加多条 Dirichlet 边界条件（开口）
 - 使用 `fenics` 求解 Poisson 方程
-- 组件离散位置摆放
-- 添加多条 Dirichlet 边界条件（开口）
+  - 分辨率、有限元 degree
 - 线性叠加原理求解 `--method fenics_additive`
 
 ## 使用方式
