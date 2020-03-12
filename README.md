@@ -29,4 +29,8 @@
   conda create -n fenicsproject -c conda-forge fenics mshr jupyter
   source activate fenicsproject
   ```
-  2. 
+  2. 使用 pip 安装本 package
+  ```bash
+  pip install git+https://git.idrl.site/idrl/layout-generator.git
+  ```
+  3. 
