@@ -15,15 +15,18 @@
 
 ## 已实现功能
 
-- ...
+- 组件离散位置摆放
+- 添加多条 Dirichlet 边界条件（开口）
+- 线性叠加原理求解 `--method fenics_additive`
 
 ## 使用方式
 
 本生成器依赖 fenics 作为有限元求解器，参照 [fenics安装文档](https://fenicsproject.org/download/)，推荐以下方式
 - Docker
 - Anaconda (**linux**)
-  1. 使用 `conda` 创建环境 
-    ```bash
-    conda create -n fenicsproject -c conda-forge fenics jupyter
-    source activate fenicsproject
-    ```
+  1. 使用 `conda` 创建并激活环境 
+  ```bash
+  conda create -n fenicsproject -c conda-forge fenics mshr jupyter
+  source activate fenicsproject
+  ```
+  2. 

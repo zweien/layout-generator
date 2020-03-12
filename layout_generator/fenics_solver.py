@@ -4,31 +4,33 @@ fenics solver
 import numpy as np
 from fenics import *
 
- 
+set_log_level(40) # ERROR = 40
+
 class Source(UserExpression):
     """热源布局"""
-    def __init__(self, layout_list, length, length_unit):
+    def __init__(self, layouts, length, length_unit, power):
         """
         
         Arguments:
-            layout_list {list} -- 组件摆放位置
+            layouts {list or int} -- 组件摆放位置
             length {float} -- 布局板尺寸
             length_unit {float} -- 组件尺寸
         """
         super().__init__(self)
-        self.layout_list = layout_list
+        self.layout_list = layouts if isinstance(layouts, list) else [layouts]
         self.length = length
         self.length_unit = length_unit
         self.n = length / length_unit  # unit_per_row
+        self.power = power
 
     def eval(self, value, x):
-        value[0] = power * self.get_source(x)
+        value[0] = self.power * self.get_source(x)
 
     def get_source(self, x):
         for l in self.layout_list:
             lx, ly = l % self.n, l // self.n
-            if (self.length_unit * lx <=x[0]<= self.length_unit * (lx+1)) \
-                and (self.length_unit * ly <=x[1]<= self.length_unit * (ly+1)):
+            if (self.length_unit * lx <= x[0] <= self.length_unit * (lx + 1)) \
+                    and (self.length_unit * ly <= x[1] <= self.length_unit * (ly + 1)):
                 return 1
         else:
             return 0 
@@ -59,12 +61,13 @@ class LineBoundary():
         def boundary(x, on_boundary):
             if on_boundary:
                 (lx, ly), (rx, ry) = self.line
-                if (lx <= x[0] <= rx) and (ly <= x[1] <= ry): return True
+                if (lx <= x[0] <= rx) and (ly <= x[1] <= ry):
+                    return True
             return False
         return boundary
 
 
-def solver(f, u_D, bc_funs, nx, ny, degree=1):
+def solver(f, u_D, bc_funs, length, nx, ny, degree=1):
     """有限元求解器
     
     Arguments:
@@ -91,17 +94,33 @@ def solver(f, u_D, bc_funs, nx, ny, degree=1):
     u = Function(V)
     solve(a == L, u, bcs)
     return u
+    
+
+def get_mesh_grid(length, nx, ny):
+    """获取网格节点坐标
+    """
+    mesh = RectangleMesh(Point(0.0, 0.0), Point(length, length), nx, ny)
+    xs = mesh.coordinates()[:, 0].reshape(ny + 1, nx + 1)
+    ys = mesh.coordinates()[:, 1].reshape(ny + 1, nx + 1)
+    return xs, ys
 
 
 def run_solver(length, length_unit, lines_D, layout_list, u0,
-                power, nx, ny, is_plot=False):
-    
+                power, nx, ny, coordinates=False, is_plot=False):
+    """求解器
+    """
     u_D = Constant(u0)
     bc_funs = [LineBoundary(line).get_boundary() for line in lines_D]
-    f = Source(layout_list, length, length_unit)
-    u = solver(f, u_D, bc_funs, nx, ny)
-    if is_plot: plot(u)
-    U = u.compute_vertex_values().reshape(nx+1, ny+1)
+    f = Source(layout_list, length, length_unit, power)
+    u = solver(f, u_D, bc_funs, length, nx, ny)
+    if is_plot:
+        plot(u)
+    U = u.compute_vertex_values().reshape(ny + 1, nx + 1)
+    if not coordinates:
+        return U
+    else:
+        xs, ys = get_mesh_grid(length, nx, ny)
+        return U, xs, ys
     return U
 
 
@@ -115,5 +134,6 @@ if __name__ == "__main__":
     lines_D = [[[0.01, 0], [0.02, 0]], [[0.08, 0], [0.09, 0]]]
     layout_list = [25]
 
-    run_solver(length, length_unit, lines_D, layout_list, u0, power, 20, 20, True)
+    run_solver(length, length_unit, lines_D, 
+                layout_list, u0, power, 20, 20, is_plot=True)
     

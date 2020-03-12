@@ -162,4 +162,5 @@ dependencies:
   - pip:
     - pyqt5-sip==4.19.18
     - pyqtwebengine==5.12.1
+    - configargparse==1.0
 

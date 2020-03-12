@@ -1,3 +1,6 @@
 *__pycache__*
 .vscode
 docs/build
+dataset
+core
+*.egg-info
