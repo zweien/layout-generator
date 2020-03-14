@@ -53,5 +53,5 @@ def generate_from_cli():
 def savemat(i, U, xs, ys, layout_pos_list):
     if not os.path.isdir(options.data_dir):
         os.mkdir(options.data_dir)
-    file_name = f'{options.data_dir}/{options.prefix}{i}'
+    file_name = f'{options.data_dir}/{options.prefix}{i}.mat'
     sio.savemat(file_name, {'u': U, 'xs': xs, 'ys': ys, 'list': np.array(layout_pos_list) + 1}) # 组件位置从 1 开始
