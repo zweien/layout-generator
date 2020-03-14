@@ -37,7 +37,7 @@ def generate_from_cli():
             u_elt = (u_basis[pos] for pos in layout_pos_list)
             U = reduce(np.add, u_elt)
             xs, ys = get_mesh_grid(options.length, options.nx, options.ny)
-            if option.file_format == 'mat':
+            if options.file_format == 'mat':
                 savemat(i, U, xs, ys, layout_pos_list)
     # 无叠加原理
     elif options.method == 'fenics':
