@@ -5,13 +5,24 @@
 ## 功能需求
 
 - 可配置选项
-  - 布局板大小、边界要求
-  - 组件形状、大小、功率、数量
-  - 采样方式，数量
+  - [x] 布局板大小、边界要求
+  - [ ] 组件配置
+    - [x] 大小
+    - [x] 数量
+    - [ ] 形状
+    - [ ] 功率
+  - 采样方式
+  - [x] 均匀采样
   - fenics 求解器
-    - 网格剖分
-    - 有限元解空间
+    - [x] 均匀网格
+    - [x] 网格分辨率
+    - [x] 边界设置
+    - [x] 多条边界 
+    - [x] 有限元 degree
+    - [x] 线性叠加原理 
   - 数据集存储格式
+    - [x] mat 格式
+    - [ ] 图片形式
 
 ## 已实现功能
 
@@ -37,18 +48,17 @@
   ```bash
   pip install git+https://git.idrl.site/idrl/layout-generator.git
   ```
-  3. 以模块运行方式，使用配置文件或命令行生成数据集，比如
+  3. 使用配置文件或命令行生成数据集，比如以默认配置文件 `default.yml` 生成数据集
   ```bash
-  python -m layout_generator --config default.yml
+  layout_generator
   ```
-  其中 `default.yml` 在本仓库 `configs` 目录下。
+  其中 `default.yml` 在目录 `utils` 下。
   
 ## 用法
 
 - 配置文件以 YAML 格式存储
-- `python -m layout_generator -h` 获取命令行帮助
+- `layout_generator -h` 获取命令行帮助
 
-![](https://i.bmp.ovh/imgs/2020/03/3721a692143eedee.png)
-
+![](https://i.bmp.ovh/imgs/2020/03/b2104e86c55e5320.png)
 
 
