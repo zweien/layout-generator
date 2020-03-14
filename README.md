@@ -84,7 +84,11 @@ nx: 10
 ny: 10
 
 method: fenics_additive
-
 ```
 
+### 例子
 
+1. 在 `./data1` 目录下生成 100 个数据，分辨率为 30*30，底边中间开口 1/4 边长，每个布局有 3 个组件
+```bash
+layout_generator --data_dir data1 --sample_n 100 --nx 30 --ny 30 --bcs '[ [[0.0375, 0], [0.0625, 0]] ]' --unit_n 3
+```
