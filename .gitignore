@@ -4,3 +4,6 @@ docs/build
 dataset
 core
 *.egg-info
+*.egg
+.tox
+build/

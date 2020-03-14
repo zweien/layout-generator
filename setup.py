@@ -23,5 +23,7 @@ setup(
     author=about.__author__,
     description='Layout dataset generator.',
     packages=find_packages(),
-    install_requires=load_requirements()
+    install_requires=load_requirements(),
+    include_package_data=True,
+    python_requires='>=3.6'
 )
