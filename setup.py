@@ -30,5 +30,5 @@ setup(
     include_package_data=True,
     python_requires='>=3.6',
     entry_points={
-        "console_scripts": ["layout_generator = layout_generator.print_cli:generate_from_cli"]},
+        "console_scripts": ["layout_generator = layout_generator.generator:generate_from_cli"]},
 )
