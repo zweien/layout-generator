@@ -23,7 +23,8 @@ def bc_convert(parm):
 
 default_conf = os.path.join(here, 'default.yml')
 # print(default_conf)
-parser = configargparse.ArgParser(default_config_files=[default_conf])
+parser = configargparse.ArgParser(default_config_files=[default_conf],
+    description='Generate layout dataset.')
 parser.add('--config', is_config_file=True, help='config file path')
 parser.add('--test', action='store_true', help='test mode')
 parser.add('--length', type=float, help='board length')

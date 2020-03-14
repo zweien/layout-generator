@@ -47,7 +47,7 @@ def generate_from_cli():
                                         options.u_D, options.power, options.nx, options.ny, True)
             if options.file_format == 'mat':
                 savemat(i, U, xs, ys, layout_pos_list)
-    print(f'Completed! Saved dataset in {options.data_dir}')
+    print(f'Completed! Generated {options.sample_n} layouts in {options.data_dir}')
 
 
 def savemat(i, U, xs, ys, layout_pos_list):
