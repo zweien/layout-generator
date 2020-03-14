@@ -8,7 +8,10 @@
 '''
 
 import configargparse
-import sys, os
+import sys
+import os
+
+here = os.path.abspath(os.path.dirname(__file__))
 
 
 def bc_convert(parm):
@@ -18,12 +21,15 @@ def bc_convert(parm):
     return eval(s)[0]
 
 
-parser = configargparse.ArgParser()
+default_conf = os.path.join(here, 'default.yml')
+# print(default_conf)
+parser = configargparse.ArgParser(default_config_files=[default_conf])
 
 parser.add('--config', is_config_file=True, help='config file path')
 parser.add('--length', type=float, help='board length')
 parser.add('--length_unit', type=float, help='unit length')
-parser.add('--bcs', action='append', type=bc_convert, help='Dirichlet boundarys, use tow point to represent a line segment')
+parser.add('--bcs', action='append', type=bc_convert,
+           help='Dirichlet boundarys, use tow point to represent a line segment')
 parser.add('--power', type=float, help='power of each unit')
 parser.add('--data_dir', type=str, help='dir to store generated layout data')
 parser.add('--sampler', type=str, choices=['uniform'], help='sampler method')
@@ -34,9 +40,11 @@ parser.add('--nx', type=int, help='number of grid in x direction')
 parser.add('--ny', type=int, help='number of grid in y direction')
 parser.add('--sample_n', type=int, help='number of samples')
 parser.add('--seed', type=int, help='seed in np.random module')
-parser.add('--file_format', type=str, choices=['mat'], help='dataset file format')
+parser.add('--file_format', type=str,
+           choices=['mat'], help='dataset file format')
 parser.add('--prefix', type=str, help='prefix of file')
-parser.add('--method', type=str, choices=['fenics', 'fenics_additive'], help='method to solve the equation')
+parser.add('--method', type=str,
+           choices=['fenics', 'fenics_additive'], help='method to solve the equation')
 
 options = parser.parse_args()
 

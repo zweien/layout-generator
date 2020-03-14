@@ -12,17 +12,19 @@
 #
 import os
 import sys
+
 sys.path.insert(0, os.path.abspath('./../../'))
 
+import layout_generator.about as about
 
 # -- Project information -----------------------------------------------------
 
 project = 'layout-generator'
 copyright = '2020, zweien'
-author = 'zweien'
+author = about.__author__
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = about.__version__
 
 
 # -- General configuration ---------------------------------------------------

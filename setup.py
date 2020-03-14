@@ -24,6 +24,11 @@ setup(
     description='Layout dataset generator.',
     packages=find_packages(),
     install_requires=load_requirements(),
+    extras_require={
+        'doc': ['sphinx', 'recommonmark', 'sphinx-rtd-theme']
+    },
     include_package_data=True,
-    python_requires='>=3.6'
+    python_requires='>=3.6',
+    entry_points={
+        "console_scripts": ["layout_generator = layout_generator.print_cli:generate_from_cli"]},
 )
