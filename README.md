@@ -20,7 +20,8 @@
     - [x] 多条边界 
     - [x] 有限元 degree
     - [x] 线性叠加原理 
-  - 数据集存储格式
+  - 数据集存储
+    - [x] 文件前缀
     - [x] mat 格式
     - [ ] 图片形式
 
@@ -34,7 +35,7 @@
   - 分辨率、有限元 degree
 - 线性叠加原理求解 `--method fenics_additive`
 
-## 使用方式
+## 安装方式
 
 本生成器依赖 fenics 作为有限元求解器，参照 [fenics安装文档](https://fenicsproject.org/download/)，推荐以下方式
 - Docker
@@ -60,5 +61,30 @@
 - `layout_generator -h` 获取命令行帮助
 
 ![](https://i.bmp.ovh/imgs/2020/03/b2104e86c55e5320.png)
+
+- 默认参数
+```yml
+# default.yml
+
+length: 0.1
+length_unit: 0.01 
+power: 10000
+u_D: 298
+unit_n: 1
+bcs: '[ [[0.01, 0], [0.02, 0]], [[0.08, 0], [0.09, 0]] ]'
+data_dir: example_dataset
+file_format: mat
+prefix: Example
+sampler: uniform
+sample_n: 2
+seed: 100
+
+fem_degree: 1
+nx: 10
+ny: 10
+
+method: fenics_additive
+
+```
 
 
