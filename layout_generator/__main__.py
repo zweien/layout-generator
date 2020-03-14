@@ -9,8 +9,7 @@
 '''
 
 
-# from layout_generator.generator import generate_from_cli
-from layout_generator.print_cli import generate_from_cli
+from .cli import main
 
 if __name__ == "__main__":
-    generate_from_cli()
+    main()
