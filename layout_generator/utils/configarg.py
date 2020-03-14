@@ -30,7 +30,7 @@ parser.add('--test', action='store_true', help='test mode')
 parser.add('--length', type=float, help='board length')
 parser.add('--length_unit', type=float, help='unit length')
 parser.add('--bcs', action='append', type=bc_convert,
-           help='Dirichlet boundarys, use tow point to represent a line segment')
+           help='Dirichlet boundarys, use two points to represent a line segment')
 parser.add('--power', type=float, help='power of each unit')
 parser.add('--data_dir', type=str, help='dir to store generated layout data')
 parser.add('--sampler', type=str, choices=['uniform'], help='sampler method')
