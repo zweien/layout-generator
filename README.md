@@ -1,5 +1,6 @@
 # layout-generator
-![travis](https://api.travis-ci.com/zweien/layout-generator.svg)
+[![Build Status](https://www.travis-ci.org/zweien/layout-generator.svg?branch=master)](https://www.travis-ci.org/zweien/layout-generator)
+[![codecov](https://codecov.io/gh/zweien/layout-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/zweien/layout-generator)
 
 布局数据生成器，按需求生成热源组件布局-稳态温度场数据集。
 

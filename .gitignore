@@ -9,3 +9,4 @@ core
 build/
 dist
 example_dataset/
+.coverage
