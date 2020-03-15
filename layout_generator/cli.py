@@ -19,6 +19,7 @@ def main():
         if options.data_dir is not None:
             if not os.path.isdir(options.data_dir):
                 os.mkdir(options.data_dir)
+            # write config.yml in data_dir
             config_file_data = options.data_dir + '/config.yml'
             parser.write_config_file(options, [config_file_data])
         
