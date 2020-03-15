@@ -8,3 +8,4 @@ core
 .tox
 build/
 dist
+example_dataset/

@@ -1,4 +1,5 @@
 # layout-generator
+![travis](https://api.travis-ci.com/zweien/layout-generator.svg)
 
 布局数据生成器，按需求生成热源组件布局-稳态温度场数据集。
 
