@@ -64,31 +64,32 @@
 
 - 默认参数
 ```yml
-# default.yml
+# config example
 
-length: 0.1
-length_unit: 0.01 
-power: 10000
-u_D: 298
-unit_n: 1
-bcs: '[ [[0.01, 0], [0.02, 0]], [[0.08, 0], [0.09, 0]] ]'
-data_dir: example_dataset
-file_format: mat
-prefix: Example
-sampler: uniform
-sample_n: 2
-seed: 100
+length: 0.1 # board 边长
+length_unit: 0.01  # 组件边长
+power: 10000  # 功率
+u_D: 298  # 边界上取值
+unit_n: 1  # 组件个数
+# 边界位置，此处为两个边界，每个边界有两个点表示线段
+bcs: "[ [[0.01, 0], [0.02, 0]], [[0.08, 0], [0.09, 0]] ]"
+data_dir: example_dataset  # 生成数据集的保存目录
+file_format: mat  # 数据集格式
+prefix: Example  # 单个数据的文件名前缀
+sampler: uniform  # 采样方法
+sample_n: 2  # 生成数据个数
+seed: 100  # 随机种子
 
-fem_degree: 1
-nx: 10
-ny: 10
+fem_degree: 1  # 有限元 degree
+nx: 10  # 生成数据 x 方向分辨率
+ny: 10  # 生成数据 x 方向分辨率
 
-method: fenics_additive
+method: fenics_additive  # 默认使用线性叠加原理，也可直接求解（fenics），但目前效率较差
 ```
 
 ### 例子
 
 1. 在 `./data1` 目录下生成 100 个数据，分辨率为 30*30，底边中间开口 1/4 边长，每个布局有 3 个组件，其他参数使用如上默认参数：
 ```bash
-layout_generator --data_dir data1 --sample_n 100 --nx 30 --ny 30 --bcs '[ [[0.0375, 0], [0.0625, 0]] ]' --unit_n 3
+layout_generator --data_dir data1 --sample_n 100 --nx 30 --ny 30 --bcs "[ [[0.0375, 0], [0.0625, 0]] ]" --unit_n 3
 ```

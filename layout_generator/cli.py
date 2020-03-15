@@ -7,14 +7,23 @@
 @Desc    :   CLI script entry point.
 '''
 
-from layout_generator.utils.configarg import options
+from .utils.configarg import parser
+
 
 def main():
-    if options.test:
-        print(options)
+    options = parser.parse_args()
+    if options.test:  # 仅测试，输出参数
+        print(parser.format_values())
     else:
         from .generator import generate_from_cli
-        generate_from_cli()
+        if options.data_dir is not None:
+            if not os.path.isdir(options.data_dir):
+                os.mkdir(options.data_dir)
+            config_file_data = options.data_dir + '/config.yml'
+            parser.write_config_file(options, [config_file_data])
+        
+        generate_from_cli(options)
 
 if __name__ == "__main__":
     main()
+

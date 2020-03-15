@@ -13,10 +13,10 @@ import numpy as np
 import scipy.io as sio
 import tqdm
 from .fenics_solver import run_solver, get_mesh_grid
-from .utils.configarg import options
+# from .utils.configarg import options
 
 
-def generate_from_cli():
+def generate_from_cli(options):
 
     unit_per_row = int(options.length / options.length_unit)
 
