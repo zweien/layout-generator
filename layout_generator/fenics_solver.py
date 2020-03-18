@@ -116,7 +116,10 @@ def run_solver(length, length_unit, lines_D, layout_list, u0,
     """求解器
     """
     u_D = Constant(u0)
-    bc_funs = [LineBoundary(line).get_boundary() for line in lines_D]
+    if len(lines_D) > 0:
+        bc_funs = [LineBoundary(line).get_boundary() for line in lines_D]
+    else:
+        bc_funs = [lambda x, on_boundary: on_boundary]
     f = Source(layout_list, length, length_unit, power)
     u = solver(f, u_D, bc_funs, length, nx, ny)
     if is_plot:

@@ -37,15 +37,18 @@ def generate_from_cli(options):
             layout_pos_list = sorted(sampler(possible_n, options.unit_n, replace=False))
             u_elt = (u_basis[pos] for pos in layout_pos_list)
             U = reduce(np.add, u_elt)
+            F = io.layout2matrix(options.nx, options.ny, unit_per_row, options.power, layout_pos_list)
             xs, ys = get_mesh_grid(options.length, options.nx, options.ny)
-            io.save(options, i, U, xs, ys, layout_pos_list)
+            io.save(options, i, U, xs, ys, F, layout_pos_list)
     # 无叠加原理
     elif options.method == 'fenics':
         for i in tqdm.trange(options.sample_n):
             layout_pos_list = sorted(sampler(possible_n, options.unit_n, replace=False))
+            # layout_pos_list = [45]
             U, xs, ys = run_solver(options.length, options.length_unit, options.bcs, layout_pos_list,
                                         options.u_D, options.power, options.nx, options.ny, True)
-            io.save(i, U, xs, ys, layout_pos_list)
+            F = io.layout2matrix(options.nx, options.ny, unit_per_row, options.power, layout_pos_list)
+            io.save(options, i, U, xs, ys, F, layout_pos_list)
     print(f'Completed! Generated {options.sample_n} layouts in {options.data_dir}')
 
 
