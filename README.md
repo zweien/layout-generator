@@ -62,7 +62,49 @@
 - 配置文件以 YAML 格式存储
 - `layout_generator -h` 获取命令行帮助
 
-![](https://i.bmp.ovh/imgs/2020/03/b2104e86c55e5320.png)
+```
+usage: layout_generator [-h] [--config CONFIG] [--test] [--length LENGTH]
+                        [--length_unit LENGTH_UNIT] [--bcs BCS]
+                        [--power POWER] [--data_dir DATA_DIR]
+                        [--sampler {uniform}] [--fem_degree FEM_DEGREE]
+                        [--u_D U_D] [--unit_n UNIT_N] [--nx NX] [--ny NY]
+                        [--sample_n SAMPLE_N] [--seed SEED]
+                        [--file_format {mat}] [--prefix PREFIX]
+                        [--method {fenics,fenics_additive}]
+
+Generate layout dataset. Args that start with '--' (eg. --test) can also be
+set in a config file (/home/fenics/shared/layout-
+generator/layout_generator/utils/default.yml or specified via --config).
+Config file syntax allows: key=value, flag=true, stuff=[a,b,c] (for details,
+see syntax at https://goo.gl/R74nmi). If an arg is specified in more than one
+place, then commandline values override config file values which override
+defaults.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --config CONFIG       config file path
+  --test                test mode
+  --length LENGTH       board length
+  --length_unit LENGTH_UNIT
+                        unit length
+  --bcs BCS             Dirichlet boundarys, use two points to represent a
+                        line segment
+  --power POWER         power of each unit
+  --data_dir DATA_DIR   dir to store generated layout data
+  --sampler {uniform}   sampler method
+  --fem_degree FEM_DEGREE
+                        fem degree in fenics
+  --u_D U_D             value on Dirichlet boundary
+  --unit_n UNIT_N       number of units
+  --nx NX               number of grid in x direction
+  --ny NY               number of grid in y direction
+  --sample_n SAMPLE_N   number of samples
+  --seed SEED           seed in np.random module
+  --file_format {mat}   dataset file format
+  --prefix PREFIX       prefix of file
+  --method {fenics,fenics_additive}
+                        method to solve the equation
+```
 
 - 默认参数
 ```yml
@@ -91,7 +133,7 @@ method: fenics_additive  # 默认使用线性叠加原理，也可直接求解�
 
 ### 例子
 
-1. 在 `./data1` 目录下生成 100 个数据，分辨率为 30*30，底边中间开口 1/4 边长，每个布局有 3 个组件，其他参数使用如上默认参数：
+1. 在 `./data1` 目录下生成 100 个数据，图像分辨率为 30*30，底边中间开口 1/4 边长，每个布局有 3 个组件，其他参数使用如上默认参数：
 ```bash
 layout_generator --data_dir data1 --sample_n 100 --nx 30 --ny 30 --bcs "[ [[0.0375, 0], [0.0625, 0]] ]" --unit_n 3
 ```
