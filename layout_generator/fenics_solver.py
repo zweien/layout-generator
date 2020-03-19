@@ -14,7 +14,7 @@ set_log_level(40) # ERROR = 40
 
 class Source(UserExpression):
     """热源布局"""
-    def __init__(self, layouts, length, length_unit, power):
+    def __init__(self, layouts, length, length_unit, powers):
         """
         
         Arguments:
@@ -27,17 +27,17 @@ class Source(UserExpression):
         self.length = length
         self.length_unit = length_unit
         self.n = length / length_unit  # unit_per_row
-        self.power = power
+        self.powers = powers
 
     def eval(self, value, x):
-        value[0] = self.power * self.get_source(x)
+        value[0] = self.get_source(x)
 
     def get_source(self, x):
-        for l in self.layout_list:
+        for i, (l, power) in enumerate(zip(self.layout_list, self.powers)):
             lx, ly = l % self.n, l // self.n
             if (self.length_unit * lx <= x[0] <= self.length_unit * (lx + 1)) \
                     and (self.length_unit * ly <= x[1] <= self.length_unit * (ly + 1)):
-                return 1
+                return power
         else:
             return 0 
 
@@ -112,15 +112,16 @@ def get_mesh_grid(length, nx, ny):
 
 
 def run_solver(length, length_unit, lines_D, layout_list, u0,
-                power, nx, ny, coordinates=False, is_plot=False):
+                powers, nx, ny, coordinates=False, is_plot=False):
     """求解器
     """
+
     u_D = Constant(u0)
     if len(lines_D) > 0:
         bc_funs = [LineBoundary(line).get_boundary() for line in lines_D]
     else:
         bc_funs = [lambda x, on_boundary: on_boundary]
-    f = Source(layout_list, length, length_unit, power)
+    f = Source(layout_list, length, length_unit, powers)
     u = solver(f, u_D, bc_funs, length, nx, ny)
     if is_plot:
         plot(u)

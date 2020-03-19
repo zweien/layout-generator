@@ -22,12 +22,12 @@ def loadmat(path):
     return sio.loadmat(path)
 
 
-def layout2matrix(nx, ny, unit_per_row, power, layout_pos_list):
+def layout2matrix(nx, ny, unit_per_row, powers, layout_pos_list):
     F = np.zeros((nx+1, ny+1))
-    for pos in layout_pos_list:
+    for i, pos in enumerate(layout_pos_list):
         col, row = pos % unit_per_row, pos // unit_per_row
         size_x, size_y = int((nx+1) / unit_per_row), int((ny+1) / unit_per_row)
         col_slice = slice(size_y * col, size_y * (col + 1))
         row_slice = slice(size_x * row, size_x * (row + 1))
-        F[row_slice, col_slice] = power
+        F[row_slice, col_slice] = powers[i]
     return F

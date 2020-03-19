@@ -18,3 +18,4 @@ def test_cli_default():
     with pytest.raises(SystemExit), pytest.raises(argparse.ArgumentError):
         parser.parse_args('--method unknown')
 
+    assert options.power == [10000, 20000]
