@@ -4,6 +4,8 @@
 
 布局数据生成器，按需求生成热源组件布局-稳态温度场数据集。
 
+![](https://i.bmp.ovh/imgs/2020/03/47d860f83ed75a99.png)
+
 ## 功能需求
 
 - 可配置选项
@@ -12,7 +14,7 @@
     - [x] 大小
     - [x] 数量
     - [ ] 形状
-    - [ ] 功率
+    - [x] 功率
   - 采样方式
   - [x] 均匀采样
   - fenics 求解器
@@ -89,7 +91,7 @@ optional arguments:
                         unit length
   --bcs BCS             Dirichlet boundarys, use two points to represent a
                         line segment
-  --power POWER         power of each unit
+  --power POWER         possible powers of each unit
   --data_dir DATA_DIR   dir to store generated layout data
   --sampler {uniform}   sampler method
   --fem_degree FEM_DEGREE
@@ -112,7 +114,7 @@ optional arguments:
 
 length: 0.1 # board 边长
 length_unit: 0.01  # 组件边长
-power: 10000  # 功率
+power: [10000, 20000]  # 功率
 u_D: 298  # 边界上取值
 unit_n: 1  # 组件个数
 # 边界位置，此处为两个边界，每个边界有两个点表示线段
@@ -137,3 +139,9 @@ method: fenics_additive  # 默认使用线性叠加原理，也可直接求解�
 ```bash
 layout_generator --data_dir data1 --sample_n 100 --nx 30 --ny 30 --bcs "[ [[0.0375, 0], [0.0625, 0]] ]" --unit_n 3
 ```
+
+### 参数说明
+
+- bcs: Dirichlet 边界 (对应布局问题中的开孔)，以嵌套 list 的形式配置。可以设置多条边界，每条边界用两个点(A, B)表示线段 `[[Ax, Ay], [Bx, By]]`。
+  - 若四周全开孔，可设置 `bc: "[]"`
+- power: 组件功率，可设置多种功率大小
