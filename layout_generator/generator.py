@@ -36,7 +36,7 @@ def generate_from_cli(options):
         for i in tqdm.trange(options.sample_n):
             layout_pos_list = sorted(sampler(possible_n, options.unit_n, replace=False))
             u_elt = (u_basis[pos] for pos in layout_pos_list)
-            U = reduce(np.add, u_elt)
+            U = reduce(np.add, u_elt) / options.unit_n
             F = io.layout2matrix(options.nx, options.ny, unit_per_row, options.power, layout_pos_list)
             xs, ys = get_mesh_grid(options.length, options.nx, options.ny)
             io.save(options, i, U, xs, ys, F, layout_pos_list)
