@@ -50,7 +50,14 @@ def plot_mat(mat_path, plot=True, save=False, figkwargs={'figsize': (12, 5)}):
             img_path = save  # save is path
         fig.savefig(img_path, dpi=100)
 
-if __name__ == "__main__":
+
+def plot_dir(path):
+    path = Path(path)
+    if not path.is_dir():
+        print("Error! --dir arg must be a dir.")
+    # TODO: 遍历目录，调用 plot
+
+def main():
     import argparse
 
     parser = argparse.ArgumentParser()
@@ -60,4 +67,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     plot_mat(args.file, plot=args.plot_off, save=args.output)
+
+if __name__ == "__main__":
+    main()
 

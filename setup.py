@@ -30,5 +30,7 @@ setup(
     include_package_data=True,
     python_requires='>=3.6',
     entry_points={
-        "console_scripts": ["layout_generator = layout_generator.cli:main"]},
+        "console_scripts": ["layout_generator = layout_generator.cli:main",
+        "layout_plot = layout_generator.utils.visualize:main"]
+    },
 )
