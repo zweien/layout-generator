@@ -127,8 +127,8 @@ sample_n: 2  # 生成数据个数
 seed: 100  # 随机种子
 
 fem_degree: 1  # 有限元 degree
-nx: 10  # 生成数据 x 方向分辨率
-ny: 10  # 生成数据 x 方向分辨率
+nx: 20  # 生成数据 x 方向分辨率
+ny: 20  # 生成数据 x 方向分辨率
 
 method: fenics_additive  # 默认使用线性叠加原理，也可直接求解（fenics），但目前效率较差
 ```
