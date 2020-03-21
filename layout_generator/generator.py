@@ -32,12 +32,12 @@ def generate_from_cli(options):
         u_basis = []
         for layout_pos in tqdm.trange(possible_n):
             u = run_solver(options.length, options.length_unit, options.bcs, layout_pos,
-                                        options.u_D, [1.], options.nx, options.ny, False)
+                                        0, [1.], options.nx, options.ny, False)
             u_basis.append(u)
         for i in tqdm.trange(options.sample_n):
             layout_pos_list = sorted(sampler(possible_n, options.unit_n, replace=False))
             u_elt = (powers[i] * u_basis[pos] for i, pos in enumerate(layout_pos_list))
-            U = reduce(np.add, u_elt) / options.unit_n
+            U = reduce(np.add, u_elt) / options.unit_n + options.u_D
             F = io.layout2matrix(options.nx, options.ny, unit_per_row, powers, layout_pos_list)
             xs, ys = get_mesh_grid(options.length, options.nx, options.ny)
             io.save(options, i, U, xs, ys, F, layout_pos_list)
@@ -46,9 +46,10 @@ def generate_from_cli(options):
         for i in tqdm.trange(options.sample_n):
             layout_pos_list = sorted(sampler(possible_n, options.unit_n, replace=False))
             # layout_pos_list = [45]
-            U, xs, ys = run_solver(options.length, options.length_unit, options.bcs, layout_pos_list,
-                                        options.u_D, powers, options.nx, options.ny, True)
             F = io.layout2matrix(options.nx, options.ny, unit_per_row, powers, layout_pos_list)
+            U, xs, ys = run_solver(options.length, options.length_unit, options.bcs, layout_pos_list,
+                                        options.u_D, powers, options.nx, options.ny, True, F=F)
+            
             io.save(options, i, U, xs, ys, F, layout_pos_list)
     print(f'Completed! Generated {options.sample_n} layouts in {options.data_dir}')
 

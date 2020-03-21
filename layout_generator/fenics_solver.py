@@ -44,6 +44,34 @@ class Source(UserExpression):
     def value_shape(self):
         return ()
 
+class SourceF(UserExpression):
+    """热源, 矩阵表达"""
+    def __init__(self, F, length):
+        """
+        
+        Arguments:
+            F {2D array} -- 组件节点矩阵
+            length {float} -- 布局板尺寸
+            length_unit {float} -- 组件尺寸
+        """
+        super().__init__(self)
+        self.F = F
+        self.length = length
+
+    def eval(self, value, x):
+        value[0] = self.get_source(x)
+
+    def get_source(self, x):
+        assert self.F.ndim == 2
+        m, n = self.F.shape
+        col = int(x[0] / self.length * (n - 1))
+        row = int(x[1] / self.length * (m - 1))
+        return self.F[row, col]
+
+    def value_shape(self):
+        return ()
+
+
 
 class LineBoundary():
     """线段边界
@@ -112,7 +140,7 @@ def get_mesh_grid(length, nx, ny):
 
 
 def run_solver(length, length_unit, lines_D, layout_list, u0,
-                powers, nx, ny, coordinates=False, is_plot=False):
+                powers, nx, ny, coordinates=False, is_plot=False, F=None):
     """求解器
     """
 
@@ -121,10 +149,13 @@ def run_solver(length, length_unit, lines_D, layout_list, u0,
         bc_funs = [LineBoundary(line).get_boundary() for line in lines_D]
     else:
         bc_funs = [lambda x, on_boundary: on_boundary]
-    f = Source(layout_list, length, length_unit, powers)
+    if F is None:
+        f = Source(layout_list, length, length_unit, powers)
+    else:
+        f = SourceF(F, length)
     u = solver(f, u_D, bc_funs, length, nx, ny)
     if is_plot:
-        plot(u)
+        plt.plot(u)
     U = u.compute_vertex_values().reshape(ny + 1, nx + 1)
     if not coordinates:
         return U
