@@ -15,7 +15,7 @@ sample_n: 2
 seed: 100
 
 fem_degree: 1
-nx: 20
-ny: 20
+nx: 21
+ny: 21
 
 method: fenics_additive
