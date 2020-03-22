@@ -11,6 +11,7 @@ import numpy as np
 from fenics import *
 
 set_log_level(40) # ERROR = 40
+TOL = 1e-14
 
 class Source(UserExpression):
     """热源布局"""
@@ -95,7 +96,7 @@ class LineBoundary():
         def boundary(x, on_boundary):
             if on_boundary:
                 (lx, ly), (rx, ry) = self.line
-                if (lx <= x[0] <= rx) and (ly <= x[1] <= ry):
+                if (lx - TOL <= x[0] <= rx + TOL) and (ly - TOL <= x[1] <= ry + TOL):
                     return True
             return False
         return boundary
@@ -163,18 +164,3 @@ def run_solver(length, length_unit, lines_D, layout_list, u0,
         xs, ys = get_mesh_grid(length, nx, ny)
         return U, xs, ys
     return U
-
-
-if __name__ == "__main__":
-    # test
-    length = 0.1
-    unit_per_row = 10
-    length_unit = length / unit_per_row
-    power = 1e4
-    u0 = 298.
-    lines_D = [[[0.01, 0], [0.02, 0]], [[0.08, 0], [0.09, 0]]]
-    layout_list = [25]
-
-    run_solver(length, length_unit, lines_D, 
-                layout_list, u0, power, 20, 20, is_plot=True)
-    
