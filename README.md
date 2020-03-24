@@ -30,7 +30,8 @@
     - [ ] 图片形式
 - 数据集可视化 `layout_plot`
   - [x] 单一文件
-  - [ ] 目录 
+  - [x] 目录批量处理
+  - [x] multiprocess
 - 性能
   - [x] multiprocess
   - [ ] cluster
