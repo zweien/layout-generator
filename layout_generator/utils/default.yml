@@ -18,4 +18,4 @@ fem_degree: 1
 nx: 21
 ny: 21
 
-method: fenics_additive
+method: fenics

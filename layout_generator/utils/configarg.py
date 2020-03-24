@@ -46,6 +46,6 @@ parser.add('--file_format', type=str,
 parser.add('--prefix', type=str, help='prefix of file')
 parser.add('--method', type=str,
            choices=['fenics', 'fenics_additive'], help='method to solve the equation')
-
+parser.add('--worker', type=int, help='number of workers')
 
 

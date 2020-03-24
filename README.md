@@ -28,9 +28,12 @@
     - [x] 文件前缀
     - [x] mat 格式
     - [ ] 图片形式
-  - 数据集可视化 `layout_plot`
-    - [x] 单一文件
-    - [ ] 目录 
+- 数据集可视化 `layout_plot`
+  - [x] 单一文件
+  - [ ] 目录 
+- 性能
+  - [x] multiprocess
+  - [ ] cluster
 
 ## 已实现功能
 
@@ -41,6 +44,8 @@
 - 使用 `fenics` 求解 Poisson 方程
   - 分辨率、有限元 degree
 - 线性叠加原理求解 `--method fenics_additive`
+- 数据集可视化脚本 `layout_plot`
+- 多线程支持
 
 ## 安装方式
 

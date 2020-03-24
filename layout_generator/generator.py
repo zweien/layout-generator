@@ -9,8 +9,10 @@
 
 import os
 from functools import reduce
+from functools import partial
 import numpy as np
 import tqdm
+from multiprocessing import Pool
 from .fenics_solver import run_solver, get_mesh_grid
 from .utils import io
 
@@ -43,16 +45,27 @@ def generate_from_cli(options):
             io.save(options, i, U, xs, ys, F, layout_pos_list)
     # 无叠加原理
     elif options.method == 'fenics':
-        for i in tqdm.trange(options.sample_n):
-            layout_pos_list = sorted(sampler(possible_n, options.unit_n, replace=False))
-            # layout_pos_list = [45]
-            F = io.layout2matrix(options.nx, options.ny, unit_per_row, powers, layout_pos_list)
-            U, xs, ys = run_solver(options.length, options.length_unit, options.bcs, layout_pos_list,
-                                        options.u_D, powers, options.nx, options.ny, True, F=F)
-            
-            io.save(options, i, U, xs, ys, F, layout_pos_list)
+        method_fenics_p = partial(method_fenics, options=options,
+            sampler=sampler, possible_n=possible_n, unit_per_row=unit_per_row, powers=powers)
+        # multiprocess support
+        with Pool(options.worker) as pool:
+            pool_it = pool.imap_unordered(method_fenics_p, range(options.sample_n))
+            for it in tqdm.tqdm(pool_it, desc=f'{pool._processes} workers\'s running',\
+                total=options.sample_n, ncols=100):
+                pass
+
     print(f'Completed! Generated {options.sample_n} layouts in {options.data_dir}')
 
 
+def method_fenics(i, options, sampler, possible_n, unit_per_row, powers):
+    # for i in tqdm.trange(options.sample_n):
+    
+    layout_pos_list = sorted(sampler(possible_n, options.unit_n, replace=False))
+    # layout_pos_list = [45]
+    F = io.layout2matrix(options.nx, options.ny, unit_per_row, powers, layout_pos_list)
+    U, xs, ys = run_solver(options.length, options.length_unit, options.bcs, layout_pos_list,
+                                options.u_D, powers, options.nx, options.ny, True, F=F)
+        
+    io.save(options, i, U, xs, ys, F, layout_pos_list)
 
 
