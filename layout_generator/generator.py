@@ -28,8 +28,9 @@ def generate_from_cli(options):
     np.random.seed(options.seed)
     if options.sampler == 'uniform':
         sampler = np.random.choice
+    powers = [sampler(options.power, options.unit_n) for _ in range(options.sample_n)]
+    layout_pos_lists = [sampler(possible_n, options.unit_n, replace=False) for _ in range(options.sample_n)]
     # 叠加原理
-    powers = sampler(options.power, options.unit_n)
     if options.method == 'fenics_additive':
         u_basis = []
         for layout_pos in tqdm.trange(possible_n):
@@ -46,8 +47,11 @@ def generate_from_cli(options):
     # 无叠加原理
     elif options.method == 'fenics':
         method_fenics_p = partial(method_fenics, options=options,
-            sampler=sampler, possible_n=possible_n, unit_per_row=unit_per_row, powers=powers)
+            sampler=sampler, possible_n=possible_n, unit_per_row=unit_per_row, powers=powers, layout_pos_lists=layout_pos_lists)
         # multiprocess support
+        # for i in range(options.sample_n):
+        #     method_fenics_p(i)
+
         with Pool(options.worker) as pool:
             pool_it = pool.imap_unordered(method_fenics_p, range(options.sample_n))
             for it in tqdm.tqdm(pool_it, desc=f'{pool._processes} workers\'s running',\
@@ -57,12 +61,11 @@ def generate_from_cli(options):
     print(f'Completed! Generated {options.sample_n} layouts in {options.data_dir}')
 
 
-def method_fenics(i, options, sampler, possible_n, unit_per_row, powers):
-    # for i in tqdm.trange(options.sample_n):
+def method_fenics(i, options, sampler, possible_n, unit_per_row, powers, layout_pos_lists):
     
-    layout_pos_list = sorted(sampler(possible_n, options.unit_n, replace=False))
-    # layout_pos_list = [45]
-    F = io.layout2matrix(options.nx, options.ny, unit_per_row, powers, layout_pos_list)
+    layout_pos_list = layout_pos_lists[i]
+    # print(layout_pos_list)
+    F = io.layout2matrix(options.nx, options.ny, unit_per_row, powers[i], layout_pos_list)
     U, xs, ys = run_solver(options.length, options.length_unit, options.bcs, layout_pos_list,
                                 options.u_D, powers, options.nx, options.ny, True, F=F)
         

@@ -8,8 +8,11 @@
 '''
 import numpy as np
 import scipy.io as sio
+from functools import partial
 import matplotlib.pyplot as plt
 from pathlib import Path
+import tqdm
+from multiprocessing import Pool
 
 
 
@@ -17,7 +20,7 @@ def plot_mat(mat_path, plot=True, save=False, figkwargs={'figsize': (12, 5)}):
     """Plot mat file.
     
     Arguments:
-        mat_path {[type]} -- mat file path
+        mat_path {Path} -- mat file path
     
     Keyword Arguments:
         plot {bool} -- whether to show plot (default: {True})
@@ -49,24 +52,47 @@ def plot_mat(mat_path, plot=True, save=False, figkwargs={'figsize': (12, 5)}):
         else:
             img_path = save  # save is path
         fig.savefig(img_path, dpi=100)
+        plt.close()
 
 
-def plot_dir(path):
+def plot_dir(path, out, worker):
+    """将 mat 数据生成 png 图像
+
+    Arguments:
+        path {Path} -- dir path
+        out {Path} -- output dir path 
+        worker {int} -- number of workers
+    """
     path = Path(path)
-    if not path.is_dir():
-        print("Error! --dir arg must be a dir.")
-    # TODO: 遍历目录，调用 plot
+    assert path.is_dir(), "Error! Arg --dir must be a dir."
+    if out is None:
+        out = True
+    else:
+        assert Path(out).is_dir(), "Error! Arg --out must be a dir."
+    
+    with Pool(worker) as pool:
+        plot_mat_p = partial(plot_mat, plot=False, save=out)
+        pool_iter = pool.imap_unordered(plot_mat_p, path.glob('*.mat'))
+        for it in tqdm.tqdm(pool_iter, desc=f'{pool._processes} workers\'s running'):
+            pass
+
 
 def main():
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-f', '--file', type=str, help='file path')
+    parser.add_argument('-p', '--path', type=str, help='file path')
     parser.add_argument('-o', '--output', type=str, help='output path')
     parser.add_argument('--plot-off', action='store_false', help='turn off plot')
+    parser.add_argument('--dir', action='store_true', default=False, help='path is dir')
+    parser.add_argument('--worker', type=int, help='number of workers')
     args = parser.parse_args()
     
-    plot_mat(args.file, plot=args.plot_off, save=args.output)
+    if not args.dir:
+        plot_mat(args.path, plot=args.plot_off, save=args.output)  # single file
+    else:
+        plot_dir(args.path, out=args.output, worker=args.worker)
+
 
 if __name__ == "__main__":
     main()
