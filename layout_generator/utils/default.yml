@@ -1,12 +1,12 @@
 # config example
 
 length: 0.1
-length_unit: 0.01 
+length_unit: 0.01
 power: [10000, 20000]
 u_D: 298
 unit_n: 1
 bcs: "[ [[0.01, 0], [0.02, 0]], [[0.08, 0], [0.09, 0]] ]"
-# bcs: "[]"  # no Dirichlet BC
+# bcs: "[]"  # all are Dirichlet BCs
 data_dir: example_dataset
 file_format: mat
 prefix: Example
