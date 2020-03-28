@@ -51,34 +51,36 @@
 
 ## 安装方式
 
-本生成器依赖 fenics 作为有限元求解器，参照 [fenics 安装文档](https://fenicsproject.org/download/)，推荐以下方式
+本生成器依赖 fenics 作为有限元求解器，可参照 [fenics 安装文档](https://fenicsproject.org/download/)，推荐以下方式
 
-- Docker
+- Docker (**linux**, **win**)
+  1. 安装 docker-ce (若已有 docker 可跳过)
+  2. pull fenics image: `docker pull quay.azk8s.cn/fenicsproject/stable`
+  3. 创建并启动容器: `docker run -it -v $(pwd):/home/fenics/shared -u root quay.azk8s.cn/fenicsproject/stable bash`
+  4. 使用 pip 安装本 package
+  ```bash
+  pip install git+https://git.idrl.site/idrl/layout-generator.git
+  ```
 - Anaconda (**linux**)
 
   1. 使用 `conda` 创建并激活环境
 
   ```bash
-  conda create -n fenicsproject -c conda-forge fenics mshr jupyter
+  conda create -n fenicsproject -c conda-forge fenics mshr
   source activate fenicsproject
   ```
 
-  2. 使用 pip 安装本 package
-
+  1. 使用 pip 安装本 package
   ```bash
   pip install git+https://git.idrl.site/idrl/layout-generator.git
   ```
 
-  3. 使用配置文件或命令行生成数据集，比如以默认配置文件 `default.yml` 生成数据集
-
+## 用法
+  - 使用配置文件或命令行生成数据集，比如以默认配置文件 `default.yml` 生成数据集
   ```bash
   layout_generator
   ```
-
   其中 `default.yml` 在目录 `utils` 下。
-
-## 用法
-
 - 配置文件以 YAML 格式存储
 - `layout_generator -h` 获取命令行帮助
 
