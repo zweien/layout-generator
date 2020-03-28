@@ -47,6 +47,6 @@ parser.add('--file_format', type=str,
            choices=['mat'], help='dataset file format')
 parser.add('--prefix', type=str, help='prefix of file')
 parser.add('--method', type=str,
-           choices=['fenics', 'fenics_additive'], help='method to solve the equation')
+           choices=['fenics', ], help='method to solve the equation')
 parser.add('--worker', type=int, help='number of workers')
 parser.add('--ndim', type=int, choices=[2, 3], help='dimension')

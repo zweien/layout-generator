@@ -32,31 +32,31 @@ def generate_from_cli(options):
               for _ in range(options.sample_n)]
     layout_pos_lists = [sampler(possible_n, options.unit_n, replace=False)
                         for _ in range(options.sample_n)]
-    # 叠加原理
-    if options.method == 'fenics_additive':
-        u_basis = []
-        for layout_pos in tqdm.trange(possible_n):
-            u = run_solver(options.length, options.length_unit, options.bcs, layout_pos,
-                           0, [1.], options.nx, options.ny, False)
-            u_basis.append(u)
-        for i in tqdm.trange(options.sample_n):
-            layout_pos_list = sorted(
-                sampler(possible_n, options.unit_n, replace=False))
-            u_elt = (powers[i] * u_basis[pos]
-                     for i, pos in enumerate(layout_pos_list))
-            U = reduce(np.add, u_elt) / options.unit_n + options.u_D
-            F = io.layout2matrix(options.nx, options.ny,
-                                 unit_per_row, powers, layout_pos_list)
-            xs, ys = get_mesh_grid(options.length, options.nx, options.ny)
-            io.save(options, i, U, xs, ys, F, layout_pos_list)
+    # # 叠加原理
+    # if options.method == 'fenics_additive':
+    #     u_basis = []
+    #     for layout_pos in tqdm.trange(possible_n):
+    #         u = run_solver(options.length, options.length_unit, options.bcs, layout_pos,
+    #                        0, [1.], options.nx, options.ny, False)
+    #         u_basis.append(u)
+    #     for i in tqdm.trange(options.sample_n):
+    #         layout_pos_list = sorted(
+    #             sampler(possible_n, options.unit_n, replace=False))
+    #         u_elt = (powers[i] * u_basis[pos]
+    #                  for i, pos in enumerate(layout_pos_list))
+    #         U = reduce(np.add, u_elt) / options.unit_n + options.u_D
+    #         F = io.layout2matrix(options.nx, options.ny,
+    #                              unit_per_row, powers, layout_pos_list)
+    #         xs, ys = get_mesh_grid(options.length, options.nx, options.ny)
+    #         io.save(options, i, U, xs, ys, F, layout_pos_list)
     # 无叠加原理
-    elif options.method == 'fenics':
+    if options.method == 'fenics':
         method_fenics_p = partial(method_fenics, options=options,
                                   sampler=sampler, possible_n=possible_n, unit_per_row=unit_per_row, powers=powers, layout_pos_lists=layout_pos_lists)
-        # multiprocess support
+
         # for i in range(options.sample_n):
         #     method_fenics_p(i)
-
+        # multiprocess support
         with Pool(options.worker) as pool:
             pool_it = pool.imap_unordered(
                 method_fenics_p, range(options.sample_n))

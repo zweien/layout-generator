@@ -67,6 +67,14 @@ class SourceF(UserExpression):
         value[0] = self.get_source(x)
 
     def get_source(self, x):
+        """由预生成的 F 获取热源函数值 f(x).
+
+        Args:
+            x : 坐标
+
+        Returns:
+            float: 热源函数值 f(x)
+        """
         assert self.ndim in [2, 3]
         n = self.F.shape[0]
         if self.ndim == 2:
@@ -85,14 +93,13 @@ class SourceF(UserExpression):
 
 class LineBoundary():
     """线段边界
+
+    Args:
+        line (list): 表示边界的线段，格式为 [[起点x, 起点y], [终点x, 终点y]]
     """
 
     def __init__(self, line):
-        """
 
-        Arguments:
-            line {list} -- 表示边界的线段，格式为 [[起点x, 起点y], [终点x, 终点y]]
-        """
         self.line = line
         assert len(line) == 2, "线段包含两个点"
         assert len(line[0]) == 2 and len(line[1]) == 2, "二维点"
@@ -101,7 +108,7 @@ class LineBoundary():
         """构造 fenics 所需 bc 函数
 
         Returns:
-            function -- fenics 所需 bc
+            function: fenics 所需 bc
         """
         def boundary(x, on_boundary):
             if on_boundary:
@@ -113,20 +120,22 @@ class LineBoundary():
 
 
 class RecBoundary():
-    """矩形边界
+    """线段边界
+
+    Args:
+        rec (list): 表示边界的矩形，格式为 [[起点x, 起点y, 起点z], [终点x, 终点y, 终点z]]
     """
 
     def __init__(self, rec):
         self.rec = rec
-        assert len(rec) == 2, "线段包含两个点"
-        assert len(rec[0]) == 3 and len(rec[1]) == 3, "三维点"
+        assert len(rec) == 2, "线段必须包含两个点"
+        assert len(rec[0]) == 3 and len(rec[1]) == 3, "必须为三维点"
 
     def get_boundary(self):
         """构造 fenics 所需 bc 函数
 
         Returns:
-            function:
-                fenics 所需 bc
+            function: fenics 所需 bc
         """
         def boundary(x, on_boundary):
             if on_boundary:
@@ -156,11 +165,7 @@ def solver(f, u_D, bc_funs, ndim, length, nx, ny, nz=None, degree=1):
         Function: 解 u
     """
 
-    if ndim == 2:
-        mesh = RectangleMesh(Point(0.0, 0.0), Point(length, length), nx, ny)
-    else:
-        mesh = BoxMesh(Point(0.0, 0.0, 0.0), Point(
-            length, length, length), nx, ny, nz)
+    mesh = get_mesh(length, nx, ny, nz)
     V = FunctionSpace(mesh, 'P', degree)
     bcs = [DirichletBC(V, u_D, bc) for bc in bc_funs]
     u = TrialFunction(V)
@@ -173,17 +178,27 @@ def solver(f, u_D, bc_funs, ndim, length, nx, ny, nz=None, degree=1):
     return u
 
 
+def get_mesh(length, nx, ny, nz=None):
+    """获得 mesh
+
+    """
+    if nz is None:
+        mesh = RectangleMesh(Point(0.0, 0.0), Point(length, length), nx, ny)
+    else:
+        mesh = BoxMesh(Point(0.0, 0.0, 0.0), Point(
+            length, length, length), nx, ny, nz)
+    return mesh
+
+
 def get_mesh_grid(length, nx, ny, nz=None):
     """获取网格节点坐标
     """
+    mesh = get_mesh(length, nx, ny, nz)
     if nz is None:
-        mesh = RectangleMesh(Point(0.0, 0.0), Point(length, length), nx, nx)
         xs = mesh.coordinates()[:, 0].reshape(nx + 1, nx + 1)
         ys = mesh.coordinates()[:, 1].reshape(nx + 1, ny + 1)
         return xs, ys, None
     else:
-        mesh = BoxMesh(Point(0.0, 0.0, 0.0), Point(
-            length, length, length), nx, nx, nx)
         xs = mesh.coordinates()[:, 0].reshape(nx + 1, ny + 1, nz + 1)
         ys = mesh.coordinates()[:, 1].reshape(nx + 1, ny + 1, nz + 1)
         zs = mesh.coordinates()[:, 2].reshape(nx + 1, ny + 1, nz + 1)
@@ -229,6 +244,7 @@ def run_solver(ndim, length, length_unit, bcs, layout_list, u0,
     if is_plot:
         import matplotlib.pyplot as plt
         plt.plot(u)
+
     if ndim == 2:
         U = u.compute_vertex_values().reshape(nx + 1, nx + 1)
     else:
