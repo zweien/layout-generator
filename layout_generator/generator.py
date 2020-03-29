@@ -1,11 +1,12 @@
 # -*- encoding: utf-8 -*-
 '''
-@File    :   generator.py
-@Time    :   2020/03/13 00:44:27
-@Author  :   Zweien
-@Contact :   278954153@qq.com
-@Desc    :   Main function for generator.
+Desc      :   Main function for generator.
 '''
+# File    :   generator.py
+# Time    :   2020/03/29 15:18:57
+# Author  :   Zweien
+# Contact :   278954153@qq.com
+
 
 import os
 from functools import reduce
@@ -75,6 +76,6 @@ def method_fenics(i, options, sampler, possible_n, unit_per_row, powers, layout_
     F = io.layout2matrix(options.ndim, options.nx,
                          unit_per_row, powers[i], layout_pos_list)
     U, xs, ys, zs = run_solver(options.ndim, options.length, options.length_unit, options.bcs, layout_pos_list,
-                               options.u_D, powers, options.nx, coordinates=True, F=F)
+                               options.u_D, powers, options.nx, coordinates=True, F=F, vtk=options.vtk)
 
     io.save(options, i, U, xs, ys, F, layout_pos_list, zs)

@@ -1,3 +1,5 @@
 tqdm
 scipy>=1.0
-configargparse==1.0
+matplotlib
+configargparse>=1.0
+fenics

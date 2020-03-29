@@ -1,11 +1,12 @@
 # -*- encoding: utf-8 -*-
 '''
-@File    :   configarg.py
-@Time    :   2020/03/13 00:41:07
-@Author  :   Zweien
-@Contact :   278954153@qq.com
-@Desc    :   None
+Desc      :   config based argparser.
 '''
+# File    :   configarg.py
+# Time    :   2020/03/29 15:17:56
+# Author  :   Zweien
+# Contact :   278954153@qq.com
+
 
 import configargparse
 import sys
@@ -50,3 +51,4 @@ parser.add('--method', type=str,
            choices=['fenics', ], help='method to solve the equation')
 parser.add('--worker', type=int, help='number of workers')
 parser.add('--ndim', type=int, choices=[2, 3], help='dimension')
+parser.add('--vtk', action='store_true', default=False, help='output vtk file')

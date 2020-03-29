@@ -186,3 +186,6 @@ layout_generator --data_dir data1 --sample_n 100 --nx 30 --ny 30 --bcs "[ [[0.03
 - bcs: Dirichlet 边界 (对应布局问题中的开孔)，以嵌套 list 的形式配置。可以设置多条边界，每条边界用两个点(A, B)表示线段 `[[Ax, Ay], [Bx, By]]`。
   - 若四周全开孔，可设置 `bc: "[]"`
 - power: 组件功率，可设置多种功率大小
+
+
+## Change Log

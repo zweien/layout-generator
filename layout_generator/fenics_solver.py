@@ -1,11 +1,12 @@
 # -*- encoding: utf-8 -*-
 '''
-@File    :   fenics_solver.py
-@Time    :   2020/03/13 00:43:50
-@Author  :   Zweien
-@Contact :   278954153@qq.com
-@Desc    :   Fenics solver.
+Desc      :   solver for layout-generator equation.
 '''
+# File    :   fenics_solver.py
+# Time    :   2020/03/29 15:16:48
+# Author  :   Zweien
+# Contact :   278954153@qq.com
+
 
 import numpy as np
 from typing import List, Callable, Union
@@ -206,7 +207,7 @@ def get_mesh_grid(length, nx, ny, nz=None):
 
 
 def run_solver(ndim, length, length_unit, bcs, layout_list, u0,
-               powers, nx, coordinates=False, is_plot=False, F=None):
+               powers, nx, coordinates=False, is_plot=False, F=None, vtk=False):
     """求解器主函数.
 
     Args:
@@ -221,6 +222,7 @@ def run_solver(ndim, length, length_unit, bcs, layout_list, u0,
         coordinates (bool, optional): 是否返回坐标矩阵. Defaults to False.
         is_plot (bool, optional): 是否画图. Defaults to False.
         F (ndarray, optional): 热源布局矩阵 F. Defaults to None.
+        vtk (bool): 是否输出 vtk 文件.
 
     Returns:
         tuple: U, xs, ys, zs
@@ -244,7 +246,9 @@ def run_solver(ndim, length, length_unit, bcs, layout_list, u0,
     if is_plot:
         import matplotlib.pyplot as plt
         plt.plot(u)
-
+    if vtk:
+        vtkfile = File('solution.pvd')
+        vtkfile << u
     if ndim == 2:
         U = u.compute_vertex_values().reshape(nx + 1, nx + 1)
     else:

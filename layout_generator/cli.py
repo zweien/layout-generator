@@ -1,11 +1,13 @@
 # -*- encoding: utf-8 -*-
 '''
-@File    :   print_cli.py
-@Time    :   2020/03/13 00:43:33
-@Author  :   Zweien
-@Contact :   278954153@qq.com
-@Desc    :   CLI script entry point.
+Desc      :   command line interface entry.
 '''
+# File    :   cli.py
+# Time    :   2020/03/29 15:19:45
+# Author  :   Zweien
+# Contact :   278954153@qq.com
+
+
 import os
 from .utils.configarg import parser
 
