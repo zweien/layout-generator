@@ -189,3 +189,20 @@ layout_generator --data_dir data1 --sample_n 100 --nx 30 --ny 30 --bcs "[ [[0.03
 
 
 ## Change Log
+
+- v0.2.0
+  - 增加 3D 数据生成
+    - 统一入口 `layout_generator`
+    - 3D poisson solver 
+    - vtk 数据存储
+- v0.1.2
+  - 布局预处理，fenics solver 增速
+  - 修改默认参数 method: fenics
+  - 增加可视化脚本 `layout_plot`
+    - 单一文件 plot，保存
+    - 目录装换
+  - multiprocess 支持，增加 worker 参数
+- v0.1.1
+  - 增加命令行入口
+  - 增加配置测试模式
+  - 更新 setup.py
