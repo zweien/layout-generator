@@ -9,10 +9,11 @@ Desc      :   command line interface entry.
 
 
 import os
-from .utils.configarg import parser
+from layout_generator.utils import get_parser
 
 
 def main():
+    parser = get_parser()
     options = parser.parse_args()
     if options.test:  # 仅测试，输出参数
         print(parser.format_values())

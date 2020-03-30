@@ -89,6 +89,9 @@ def main():
     parser.add_argument('--dir', action='store_true',
                         default=False, help='path is dir')
     parser.add_argument('--worker', type=int, help='number of workers')
+
+    # TODO 3D version
+
     args = parser.parse_args()
 
     if not args.dir:

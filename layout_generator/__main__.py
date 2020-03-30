@@ -9,6 +9,6 @@ Example   :   >> python -m layout_generator --config config.yml
 # Contact :   278954153@qq.com
 
 
-from .cli import main
+from layout_generator.cli import main
 if __name__ == "__main__":
     main()

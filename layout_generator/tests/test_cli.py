@@ -1,12 +1,13 @@
 import pytest
 import argparse
 import numpy as np
-from layout_generator.utils.configarg import parser
+from layout_generator.utils import get_parser
 from layout_generator.utils import io
 
 
 def test_cli_default():
     # default config test
+    parser = get_parser()
     options = parser.parse_args('')
     assert options.length == 0.1
     assert options.prefix == 'Example'

@@ -8,6 +8,6 @@ Desc      :   meta info.
 # Contact :   278954153@qq.com
 
 
-__version__ = '0.1.1'
+__version__ = '0.2.1'
 __author__ = 'Zweien'
 __licence__ = 'LGPL-3.0'
