@@ -16,6 +16,6 @@ def test_save(tmp_path):
     F = [[1]]
     layout_pos_list = [1, 2]
     io.save(options, i, U, xs, ys, F, layout_pos_list)
-
-    data = io.loadmat(tmp_path / f'{options.prefix}{i}.{options.file_format}')
+    # assert tmp_path == 1
+    data = io.load_mat(tmp_path / f'{options.prefix}{i}.{options.file_format}')
     assert data['u'] == pytest.approx(np.array(U))

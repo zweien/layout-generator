@@ -11,3 +11,4 @@ Desc      :   meta info.
 __version__ = '0.2.0'
 __author__ = 'Zweien'
 __licence__ = 'LGPL-3.0'
+__desp__ = 'Layout dataset generator.'

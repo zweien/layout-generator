@@ -22,7 +22,7 @@ def generate_from_cli(options):
     """Generate from cli with options.
 
     Arguments:
-        options {configargparse.Namespace} -- config options
+        options (configargparse.Namespace): config options
     """
     unit_per_row = int(options.length / options.length_unit)
     possible_n = unit_per_row ** options.ndim
@@ -52,11 +52,13 @@ def generate_from_cli(options):
     #         io.save(options, i, U, xs, ys, F, layout_pos_list)
     # 无叠加原理
     if options.method == 'fenics':
+        # 创建单参数函数
         method_fenics_p = partial(method_fenics, options=options,
                                   sampler=sampler, possible_n=possible_n, unit_per_row=unit_per_row, powers=powers, layout_pos_lists=layout_pos_lists)
 
         # for i in range(options.sample_n):
         #     method_fenics_p(i)
+
         # multiprocess support
         with Pool(options.worker) as pool:
             pool_it = pool.imap_unordered(
@@ -70,7 +72,8 @@ def generate_from_cli(options):
 
 
 def method_fenics(i, options, sampler, possible_n, unit_per_row, powers, layout_pos_lists):
-
+    """采用 fenics 求解
+    """
     layout_pos_list = layout_pos_lists[i]
     # print(layout_pos_list)
     F = io.layout2matrix(options.ndim, options.nx,
