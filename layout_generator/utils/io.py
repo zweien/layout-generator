@@ -1,33 +1,64 @@
+# -*- encoding: utf-8 -*-
+'''
+Desc      :   IO helper.
+'''
+# File    :   io.py
+# Time    :   2020/03/29 15:21:56
+# Author  :   Zweien
+# Contact :   278954153@qq.com
+
+
 import os
 from pathlib import Path
 import numpy as np
 import scipy.io as sio
 
 
-def save(options, i, U, xs, ys, F, layout_pos_list):
+def save(options, i, U, xs, ys, F, layout_pos_list, zs=None):
+    """存储数据
+    """
     data_dir = Path(options.data_dir)
-    file_name = f'{options.prefix}{i}.mat'
+    file_name = f'{options.prefix}{i}'
     path = data_dir / file_name
-    if options.file_format == 'mat':        
-        savemat(path, U, xs, ys, F, layout_pos_list)
+    if options.file_format == 'mat':
+        path = path.with_suffix('.mat')
+        save_mat(path, U, xs, ys, F, layout_pos_list, zs=zs)
 
 
-def savemat(path, U, xs, ys, F, layout_pos_list):
+def save_mat(path, U, xs, ys, F, layout_pos_list, zs=None):
     # 组件位置从 1 开始
-    data = {'u': U, 'xs': xs, 'ys': ys, 'F':F, 'list': np.array(layout_pos_list) + 1}
+    zs = zs if zs is not None else []
+    data = {'u': U, 'xs': xs, 'ys': ys, 'zs': zs, 'F': F,
+            'list': np.array(layout_pos_list) + 1}
     sio.savemat(path, data)
 
 
-def loadmat(path):
+def load_mat(path):
+    path = Path(path)
+    assert path.suffix == '.mat'
     return sio.loadmat(path)
 
 
-def layout2matrix(nx, ny, unit_per_row, powers, layout_pos_list):
-    F = np.zeros((nx+1, ny+1))
-    for i, pos in enumerate(layout_pos_list):
-        col, row = pos % unit_per_row, pos // unit_per_row
-        size_x, size_y = int((nx+1) / unit_per_row), int((ny+1) / unit_per_row)
-        col_slice = slice(size_y * col, size_y * (col + 1))
-        row_slice = slice(size_x * row, size_x * (row + 1))
-        F[row_slice, col_slice] = powers[i]
+def layout2matrix(ndim, nx, unit_per_row, powers, layout_pos_list):
+    """将 layout 位置 list 转换为矩阵
+    """
+    assert ndim in [2, 3]
+    F = np.zeros((nx + 1,) * ndim)
+    if ndim == 3:
+        for i, pos in enumerate(layout_pos_list):
+            z = pos // (unit_per_row ** 2)
+            y = (pos % (unit_per_row ** 2)) // unit_per_row
+            x = pos % unit_per_row
+            size = int((nx + 1) / unit_per_row)
+            x_slice = slice(size * x, size * (x + 1))
+            y_slice = slice(size * y, size * (y + 1))
+            z_slice = slice(size * z, size * (z + 1))
+            F[x_slice, y_slice, z_slice] = powers[i]
+    else:
+        for i, pos in enumerate(layout_pos_list):
+            x, y = pos % unit_per_row, pos // unit_per_row
+            size = int((nx+1) / unit_per_row)
+            x_slice = slice(size * x, size * (x + 1))
+            y_slice = slice(size * y, size * (y + 1))
+            F[y_slice, x_slice] = powers[i]
     return F

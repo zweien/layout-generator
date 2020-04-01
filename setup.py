@@ -21,7 +21,7 @@ setup(
     name="layout-generator",
     version=about.__version__,
     author=about.__author__,
-    description='Layout dataset generator.',
+    description=about.__desp__,
     packages=find_packages(),
     install_requires=load_requirements(),
     extras_require={
