@@ -189,8 +189,11 @@ layout_generator --data_dir data1 --sample_n 100 --nx 30 --ny 30 --bcs "[ [[0.03
 
 ### 参数说明
 
-- bcs: Dirichlet 边界 (对应布局问题中的开孔)，以嵌套 list 的形式配置。可以设置多条边界，每条边界用两个点(A, B)表示线段 `[[Ax, Ay], [Bx, By]]`。
-  - 若四周全开孔，可设置 `bc: "[]"`
+- bcs: Dirichlet 边界 (对应布局问题中的开孔)，以嵌套 list 的形式配置。
+  - 可以设置多条边界
+  - 2D: 每条边界用两个点 (A, B)表示线段 `[[Ax, Ay], [Bx, By]]`。
+  - 3D: 每个边界用矩形表示，用两个对角点 (A, B) 表示矩形 `[[Ax, Ay, Az], [Bx, By, Bz]]`。
+  - 若所有边界全为 Dirichlet 类型，可设置 `bc: "[]"`
 - power: 组件功率，可设置多种功率大小
 
 ## Change Log
@@ -198,7 +201,7 @@ layout_generator --data_dir data1 --sample_n 100 --nx 30 --ny 30 --bcs "[ [[0.03
 - v0.2.0
   - 增加 3D 数据生成
     - 统一入口 `layout_generator`
-    - 3D poisson solver 
+    - 实现 3D Poisson solver 
     - vtk 数据存储
 - v0.1.2
   - 布局预处理，fenics solver 增速
