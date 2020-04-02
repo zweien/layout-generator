@@ -12,7 +12,7 @@ install:
     - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
     - source activate test-environment
     - conda install -c conda-forge fenics mshr
-    - pip install git+https://git.idrl.site/idrl/layout-generator.git
+    - pip install .
     - pip install coverage
 script:
     - pytest --cov=./
