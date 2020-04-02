@@ -14,7 +14,7 @@ install:
     # - conda install -c conda-forge fenics mshr
     - pip install .
     - pip install pytest
-    - pip install coverage
+    - pip install pytest-cov
 script:
     - pytest --cov=./
 after_success: bash <(curl -s https://codecov.io/bash)
