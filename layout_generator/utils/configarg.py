@@ -11,6 +11,7 @@ Desc      :   config based argparser.
 import configargparse
 import sys
 import os
+from pathlib import Path
 
 
 def bc_convert(parm: str) -> list:
@@ -23,9 +24,10 @@ def bc_convert(parm: str) -> list:
 def get_parser(config_path=None):
     if config_path is None:
         here = os.path.abspath(os.path.dirname(__file__))
-        default_conf = os.path.join(here, 'default.yml')
-
-    parser = configargparse.ArgParser(default_config_files=[default_conf],
+        config_path = os.path.join(here, 'default.yml')
+    config_path = Path(config_path)
+    assert config_path.exists()
+    parser = configargparse.ArgParser(default_config_files=[config_path],
                                       description='Generate layout dataset.')
     parser.add('--config', is_config_file=True, help='config file path')
     parser.add('--test', action='store_true', help='test mode')

@@ -13,22 +13,25 @@ import scipy.io as sio
 from functools import partial
 import matplotlib.pyplot as plt
 from pathlib import Path
+import argparse
 import tqdm
 from multiprocessing import Pool
 
 
-def plot_mat(mat_path, plot=True, save=False, figkwargs={'figsize': (12, 5)}):
-    """Plot mat file.
+def plot_mat(mat_path, plot=True, save=False, worker=None, figkwargs={'figsize': (12, 5)}):
+    """Plot mat files.
 
     Arguments:
-        mat_path {Path} -- mat file path
+        mat_path (Path) : mat files path
 
     Keyword Arguments:
-        plot {bool} -- whether to show plot (default: {True})
-        save {bool, str} -- whether to save figure, can be fig path  (default: {False})
-        figkwargs {dict} -- figure kwargs (default: {{'figsize': (12, 5)}})
+        plot (bool) : whether to show plot (default: (True))
+        save (bool or str) : whether to save figure, can be fig path  (default: (False))
+        figkwargs (dict) : figure kwargs (default: {{'figsize': (12, 5)}})
     """
     mat_path = Path(mat_path)
+    if mat_path.is_dir():
+        plot_dir(mat_path, save, worker)
     mat = sio.loadmat(mat_path)
     xs, ys, u, F = mat['xs'], mat['ys'], mat['u'], mat['F']
 
@@ -60,16 +63,16 @@ def plot_dir(path, out, worker):
     """将 mat 数据生成 png 图像
 
     Arguments:
-        path {Path} -- dir path
-        out {Path} -- output dir path 
-        worker {int} -- number of workers
+        path {Path} : dir path
+        out {Path} : output dir path 
+        worker {int} : number of workers
     """
     path = Path(path)
-    assert path.is_dir(), "Error! Arg --dir must be a dir."
+    assert path.is_dir(), "Error! Arg :dir must be a dir."
     if out is None:
         out = True
     else:
-        assert Path(out).is_dir(), "Error! Arg --out must be a dir."
+        assert Path(out).is_dir(), "Error! Arg :out must be a dir."
 
     with Pool(worker) as pool:
         plot_mat_p = partial(plot_mat, plot=False, save=out)
@@ -78,8 +81,7 @@ def plot_dir(path, out, worker):
             pass
 
 
-def main():
-    import argparse
+def get_parser():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--path', type=str, help='file path')
@@ -91,12 +93,15 @@ def main():
     parser.add_argument('--worker', type=int, help='number of workers')
 
     # TODO 3D version
+    return parser
 
+def main():
+    parser = get_parser()
     args = parser.parse_args()
 
     if not args.dir:
         plot_mat(args.path, plot=args.plot_off,
-                 save=args.output)  # single file
+                 save=args.output, worker=args.worker)  # single file
     else:
         plot_dir(args.path, out=args.output, worker=args.worker)
 
