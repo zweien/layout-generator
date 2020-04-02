@@ -27,6 +27,7 @@ def test_2d_generator(tmp_path):
     r = io.load_mat(datum_path)
     assert set(['u', 'F', 'list', 'xs', 'ys']).issubset(set(r.keys()))
     u = r['u']
+    assert u.shape == (options.nx + 1, ) * options.ndim
     assert u.min() >= options.u_D
     
     # generator_plot

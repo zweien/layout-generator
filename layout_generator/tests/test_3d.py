@@ -28,9 +28,9 @@ def test_3d_generator(tmp_path):
     datum_path = data_path_list[0]
 
     r = io.load_mat(datum_path)
-    assert set(['u', 'F', 'list', 'xs', 'ys']).issubset(set(r.keys()))
-
+    assert set(['u', 'F', 'list', 'xs', 'ys', 'zs']).issubset(set(r.keys()))
     u = r['u']
+    assert u.shape == (options.nx + 1, ) * options.ndim
 
     assert u.min() >= options.u_D
 
