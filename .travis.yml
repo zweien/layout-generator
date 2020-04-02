@@ -13,7 +13,8 @@ install:
     # - source activate test-environment
     # - conda install -c conda-forge fenics mshr
     - pip install .
-    - pip install pytest, coverage
+    - pip install pytest
+    - pip install coverage
 script:
     - pytest --cov=./
 after_success: bash <(curl -s https://codecov.io/bash)
