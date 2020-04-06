@@ -17,6 +17,7 @@ def main():
     options = parser.parse_args()
     if options.test:  # 仅测试，输出参数
         print(parser.format_values())
+        print(options)
     else:
         from .generator import generate_from_cli
         print(parser.format_values())

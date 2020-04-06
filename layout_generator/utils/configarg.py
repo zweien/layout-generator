@@ -12,6 +12,7 @@ import configargparse
 import sys
 import os
 from pathlib import Path
+import yaml
 
 
 def bc_convert(parm: str) -> list:
@@ -26,14 +27,15 @@ def get_parser(config_path=None):
         here = os.path.abspath(os.path.dirname(__file__))
         config_path = os.path.join(here, 'default.yml')
     config_path = Path(config_path)
-    assert config_path.exists()
-    parser = configargparse.ArgParser(default_config_files=[config_path],
-                                      description='Generate layout dataset.')
+    assert config_path.exists(), "Config do not exist!"
+    parser = configargparse.ArgParser(default_config_files=[str(config_path)],
+                                      description='Generate layout dataset.',
+                                      config_file_parser_class=configargparse.YAMLConfigFileParser)
     parser.add('--config', is_config_file=True, help='config file path')
     parser.add('--test', action='store_true', help='test mode')
     parser.add('--length', type=float, help='board length')
     parser.add('--length_unit', type=float, help='unit length')
-    parser.add('--bcs', type=bc_convert,
+    parser.add('--bcs', type=yaml.safe_load, action='append',
                help='Dirichlet boundarys, use two points to represent a line segment')
     parser.add('--power', action='append', type=float,
                help='possible power of each unit')

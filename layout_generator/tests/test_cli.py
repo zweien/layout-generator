@@ -14,7 +14,7 @@ def test_cli_default():
     # assert options.bcs == [ [[0.01, 0], [0.02, 0]], [[0.08, 0], [0.09, 0]] ]
     # cli test
     bcs = parser.parse_args(
-        ['--bcs', '"[[[0.25,0],[0.75,0]],[[0.1,0],[0.2,0]]]"']).bcs
+        ['--bcs', '[[0.25,0],[0.75,0]]', '--bcs', '[[0.1,0],[0.2,0]]']).bcs
     assert bcs == [[[0.25, 0], [0.75, 0]], [[0.1, 0], [0.2, 0]]]
     # unknown method
     with pytest.raises(SystemExit), pytest.raises(argparse.ArgumentError):

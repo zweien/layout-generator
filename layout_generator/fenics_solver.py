@@ -230,7 +230,7 @@ def run_solver(ndim, length, length_unit, bcs, layout_list, u0,
     ny = nx
     nz = nx if ndim == 3 else None
     u_D = Constant(u0)
-    if len(bcs) > 0:
+    if not bcs:
         if ndim == 2:
             bc_funs = [LineBoundary(line).get_boundary() for line in bcs]
         else:
