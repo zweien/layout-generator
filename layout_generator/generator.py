@@ -8,17 +8,16 @@ Desc      :   Main function for generator.
 # Contact :   278954153@qq.com
 
 
-import os
-from functools import reduce
 from functools import partial
 import numpy as np
 import tqdm
+import configargparse
 from multiprocessing import Pool
-from .fenics_solver import run_solver, get_mesh_grid
+from .fenics_solver import run_solver
 from .utils import io
 
 
-def generate_from_cli(options):
+def generate_from_cli(options: configargparse.Namespace):
     """Generate from cli with options.
 
     Arguments:
@@ -37,7 +36,8 @@ def generate_from_cli(options):
     # if options.method == 'fenics_additive':
     #     u_basis = []
     #     for layout_pos in tqdm.trange(possible_n):
-    #         u = run_solver(options.length, options.length_unit, options.bcs, layout_pos,
+    #         u = run_solver(options.length, options.length_unit, options.bcs,
+    #                          layout_pos,
     #                        0, [1.], options.nx, options.ny, False)
     #         u_basis.append(u)
     #     for i in tqdm.trange(options.sample_n):
@@ -53,8 +53,13 @@ def generate_from_cli(options):
     # 无叠加原理
     if options.method == 'fenics':
         # 创建单参数函数
-        method_fenics_p = partial(method_fenics, options=options,
-                                  sampler=sampler, possible_n=possible_n, unit_per_row=unit_per_row, powers=powers, layout_pos_lists=layout_pos_lists)
+        method_fenics_p = partial(method_fenics,
+                                  options=options,
+                                  sampler=sampler,
+                                  possible_n=possible_n,
+                                  unit_per_row=unit_per_row,
+                                  powers=powers,
+                                  layout_pos_lists=layout_pos_lists)
 
         # for i in range(options.sample_n):
         #     method_fenics_p(i)
@@ -63,22 +68,27 @@ def generate_from_cli(options):
         with Pool(options.worker) as pool:
             pool_it = pool.imap_unordered(
                 method_fenics_p, range(options.sample_n))
-            for it in tqdm.tqdm(pool_it, desc=f'{pool._processes} workers\'s running',
+            for _ in tqdm.tqdm(pool_it,
+                                desc=f'{pool._processes} workers\'s running',
                                 total=options.sample_n, ncols=100):
                 pass
 
     print(
-        f'Completed! Generated {options.sample_n} layouts in {options.data_dir}')
+        f'Generated {options.sample_n} layouts in {options.data_dir}')
 
 
-def method_fenics(i, options, sampler, possible_n, unit_per_row, powers, layout_pos_lists):
+def method_fenics(i, options, sampler, possible_n,
+                  unit_per_row, powers, layout_pos_lists):
     """采用 fenics 求解
     """
     layout_pos_list = layout_pos_lists[i]
     # print(layout_pos_list)
     F = io.layout2matrix(options.ndim, options.nx,
                          unit_per_row, powers[i], layout_pos_list)
-    U, xs, ys, zs = run_solver(options.ndim, options.length, options.length_unit, options.bcs, layout_pos_list,
-                               options.u_D, powers, options.nx, coordinates=True, F=F, vtk=options.vtk)
+    U, xs, ys, zs = run_solver(options.ndim, options.length,
+                               options.length_unit, options.bcs,
+                               layout_pos_list, options.u_D,
+                               powers, options.nx, coordinates=True,
+                               F=F, vtk=options.vtk)
 
     io.save(options, i, U, xs, ys, F, layout_pos_list, zs)
