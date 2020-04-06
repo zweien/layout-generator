@@ -8,7 +8,6 @@ Desc      :   solver for layout-generator equation.
 # Contact :   278954153@qq.com
 
 
-import numpy as np
 from typing import List, Callable, Union
 from fenics import *
 
@@ -38,7 +37,7 @@ class Source(UserExpression):
         value[0] = self.get_source(x)
 
     def get_source(self, x):
-        for i, (l, power) in enumerate(zip(self.layout_list, self.powers)):
+        for _, (l, power) in enumerate(zip(self.layout_list, self.powers)):
             lx, ly = l % self.n, l // self.n
             if (self.length_unit * lx <= x[0] <= self.length_unit * (lx + 1)) \
                     and (self.length_unit * ly <= x[1] <= self.length_unit * (ly + 1)):

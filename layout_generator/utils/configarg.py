@@ -9,7 +9,6 @@ Desc      :   config based argparser.
 
 
 import configargparse
-import sys
 import os
 from pathlib import Path
 import yaml
@@ -36,7 +35,7 @@ def get_parser(config_path=None):
     parser.add('--length', type=float, help='board length')
     parser.add('--length_unit', type=float, help='unit length')
     parser.add('--bcs', type=yaml.safe_load, action='append',
-               help='Dirichlet boundarys, use two points to represent a line segment')
+               help='Dirichlet boundarys')
     parser.add('--power', action='append', type=float,
                help='possible power of each unit')
     parser.add('--data_dir', type=str,
