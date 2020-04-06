@@ -16,7 +16,7 @@ def test_3d_generator(tmp_path):
     options.bcs = []
     options.sample_n = 2
     options.worker = 2
-
+    # assert options == 1
     generate_from_cli(options)
 
     data_dir = Path(options.data_dir)
@@ -29,8 +29,9 @@ def test_3d_generator(tmp_path):
 
     r = io.load_mat(datum_path)
     assert set(['u', 'F', 'list', 'xs', 'ys', 'zs']).issubset(set(r.keys()))
+    F = r['F']
     u = r['u']
     assert u.shape == (options.nx + 1, ) * options.ndim
-
+    assert F.max() == options.power[0]
     assert u.min() >= options.u_D
 

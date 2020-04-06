@@ -3,12 +3,15 @@
 ndim: 3 # dimension
 length: 0.1
 length_unit: 0.01
-power: [10000, 20000]
+power: [10000]
 u_D: 298
-unit_n: 10
-# bcs: "[ [[0.01, 0], [0.02, 0]], [[0.08, 0], [0.09, 0]] ]" # 2d example
-bcs: "[ [[0, 0.05, 0.05], [0, 0.07, 0.07]]]" # 3d example
-# bcs: "[]" # all are Dirichlet BCs
+unit_n: 1
+# bcs: 
+#     - [[0.01, 0], [0.02, 0]]
+#     - [[0.08, 0], [0.09, 0]] # 2d example
+# bcs:
+#     - [[0, 0.05, 0.05], [0, 0.07, 0.07]]  # 3d example
+bcs: []  # all are Dirichlet BCs
 data_dir: example_dataset
 file_format: mat
 prefix: Example
