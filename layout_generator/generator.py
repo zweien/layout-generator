@@ -23,6 +23,8 @@ def generate_from_cli(options: configargparse.Namespace):
     Arguments:
         options (configargparse.Namespace): config options
     """
+    if options.bcs is None:
+        options.bcs = []
     unit_per_row = int(options.length / options.length_unit)
     possible_n = unit_per_row ** options.ndim
     np.random.seed(options.seed)
