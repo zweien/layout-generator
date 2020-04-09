@@ -14,13 +14,6 @@ from pathlib import Path
 import yaml
 
 
-def bc_convert(parm: str) -> list:
-    """将 yml 中 bcs 转换为 list
-    """
-    s = parm.replace('"', '').replace("'", '')  # del outside "
-    return eval(s)
-
-
 def get_parser(config_path=None):
     if config_path is None:
         here = os.path.abspath(os.path.dirname(__file__))

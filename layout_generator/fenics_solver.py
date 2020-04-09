@@ -42,8 +42,8 @@ class Source(UserExpression):
             if (self.length_unit * lx <= x[0] <= self.length_unit * (lx + 1)) \
                     and (self.length_unit * ly <= x[1] <= self.length_unit * (ly + 1)):
                 return power
-        else:
-            return 0
+
+        return 0
 
     def value_shape(self):
         return ()
@@ -81,11 +81,10 @@ class SourceF(UserExpression):
             xx = int(x[0] / self.length * (n - 1))
             yy = int(x[1] / self.length * (n - 1))
             return self.F[yy, xx]
-        else:
-            xx = int(x[0] / self.length * (n - 1))
-            yy = int(x[1] / self.length * (n - 1))
-            zz = int(x[2] / self.length * (n - 1))
-            return self.F[zz, yy, xx]
+        xx = int(x[0] / self.length * (n - 1))
+        yy = int(x[1] / self.length * (n - 1))
+        zz = int(x[2] / self.length * (n - 1))
+        return self.F[zz, yy, xx]
 
     def value_shape(self):
         return ()
@@ -198,11 +197,10 @@ def get_mesh_grid(length, nx, ny, nz=None):
         xs = mesh.coordinates()[:, 0].reshape(nx + 1, nx + 1)
         ys = mesh.coordinates()[:, 1].reshape(nx + 1, ny + 1)
         return xs, ys, None
-    else:
-        xs = mesh.coordinates()[:, 0].reshape(nx + 1, ny + 1, nz + 1)
-        ys = mesh.coordinates()[:, 1].reshape(nx + 1, ny + 1, nz + 1)
-        zs = mesh.coordinates()[:, 2].reshape(nx + 1, ny + 1, nz + 1)
-        return xs, ys, zs
+    xs = mesh.coordinates()[:, 0].reshape(nx + 1, ny + 1, nz + 1)
+    ys = mesh.coordinates()[:, 1].reshape(nx + 1, ny + 1, nz + 1)
+    zs = mesh.coordinates()[:, 2].reshape(nx + 1, ny + 1, nz + 1)
+    return xs, ys, zs
 
 
 def run_solver(ndim, length, length_unit, bcs, layout_list, u0,

@@ -51,7 +51,7 @@ def plot_mat(mat_path, plot=True, save=False, worker=None, figkwargs={'figsize':
     if plot:
         plt.show()
     if save:
-        if save == True:
+        if save is True:
             img_path = mat_path.with_suffix('.png')
         else:
             img_path = save  # save is path
@@ -94,6 +94,7 @@ def get_parser():
 
     # TODO 3D version
     return parser
+
 
 def main():
     parser = get_parser()
