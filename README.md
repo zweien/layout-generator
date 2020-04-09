@@ -2,11 +2,13 @@
 
 [![Build Status](https://www.travis-ci.org/zweien/layout-generator.svg?branch=master)](https://www.travis-ci.org/zweien/layout-generator)
 [![codecov](https://codecov.io/gh/zweien/layout-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/zweien/layout-generator)
+[![CodeFactor](https://www.codefactor.io/repository/github/zweien/layout-generator/badge)](https://www.codefactor.io/repository/github/zweien/layout-generator)
 
 布局数据生成器，按需求生成热源组件布局-稳态温度场数据集。
 
 ![](https://i.bmp.ovh/imgs/2020/03/47d860f83ed75a99.png)
 ![](https://i.bmp.ovh/imgs/2020/04/acda55376056bc8f.png)
+
 ## 功能需求
 
 - 可配置选项
@@ -71,16 +73,21 @@
   ```
 
   1. 使用 pip 安装本 package
+
   ```bash
   pip install git+https://git.idrl.site/idrl/layout-generator.git
   ```
 
 ## 用法
-  - 使用配置文件或命令行生成数据集，比如以默认配置文件 `default.yml` 生成数据集
-  ```bash
-  layout_generator
-  ```
-  其中 `default.yml` 在目录 `utils` 下。
+
+- 使用配置文件或命令行生成数据集，比如以默认配置文件 `default.yml` 生成数据集
+
+```bash
+layout_generator
+```
+
+其中 `default.yml` 在目录 `utils` 下。
+
 - 配置文件以 YAML 格式存储
 - `layout_generator -h` 获取命令行帮助
 
@@ -176,7 +183,7 @@ optional arguments:
 
 ### 例子
 
-1. 针对2D问题，在 `./data1` 目录下生成 100 个数据，图像分辨率为 30\*30，底边中间开口 1/4 边长，每个布局有 3 个组件，其他参数使用如上默认参数：
+1. 针对 2D 问题，在 `./data1` 目录下生成 100 个数据，图像分辨率为 30\*30，底边中间开口 1/4 边长，每个布局有 3 个组件，其他参数使用如上默认参数：
 
 ```bash
 layout_generator --data_dir data1 --sample_n 100 --nx 30 --ny 30 --bcs "[ [[0.0375, 0], [0.0625, 0]] ]" --unit_n 3
@@ -185,7 +192,6 @@ layout_generator --data_dir data1 --sample_n 100 --nx 30 --ny 30 --bcs "[ [[0.03
 2. 可视化 `./data1` 目录下生成好的数据
    1. 转化单个数据文件`./data1/Example0.mat`，在相同目录下生成 png 文件, `layout_plot -p data1/Example0.mat --plot-off`
    2. 以 4 线程转化整个目录，`layout_plot -p data1 --dir --worker 4`
-
 
 ### 参数说明
 
@@ -198,13 +204,17 @@ layout_generator --data_dir data1 --sample_n 100 --nx 30 --ny 30 --bcs "[ [[0.03
 
 ## Change Log
 
+- v0.2.1
+  - 修改配置文件中 bcs
+  - 重构部分代码
+  - 增加单元测试
 - v0.2.0
   - 增加 3D 数据生成
     - 统一入口 `layout_generator`
-    - 实现 3D Poisson solver 
+    - 实现 3D Poisson solver
     - vtk 数据存储
 - v0.1.2
-  - 布局预处理，fenics solver 增速
+  - 布局预处理，改进 fenics solver 性能
   - 修改默认参数 method: fenics
   - 增加可视化脚本 `layout_plot`
     - 单一文件 plot，保存
