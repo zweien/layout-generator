@@ -10,3 +10,6 @@ def test_cli_mock(capsys):
         main()
     captured = capsys.readouterr()
     assert captured.out == f"{__package_name__} version: {__version__}\n"
+
+    sys.argv = ["layout_generator", "--test"]
+    main()

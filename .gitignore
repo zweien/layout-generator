@@ -11,3 +11,4 @@ dist
 example_dataset/
 .coverage
 .cache/
+htmlcov

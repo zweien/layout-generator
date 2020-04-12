@@ -9,9 +9,10 @@ from layout_generator.cli import main
 def test_2d_generator(tmp_path, capsys):
     sample_n = 10
     worker = 2
+    path = tmp_path / 'test'
     sys.argv = [
         "layout_generator",
-        "--data_dir", str(tmp_path),
+        "--data_dir", str(path),
         "--bcs", "[]",
         "--sample_n", str(sample_n),
         "--worker", str(worker)
@@ -20,8 +21,7 @@ def test_2d_generator(tmp_path, capsys):
     options, _ = parser.parse_known_args()
 
     main()
-
-    data_dir = Path(options.data_dir)
+    data_dir = path
     # assert data_dir == 's'
     # data_path_list = os.listdir(options.data_dir)
     data_path_list = list(data_dir.glob(f"*.{options.file_format}"))

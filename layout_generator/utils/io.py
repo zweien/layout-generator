@@ -8,7 +8,6 @@ Desc      :   IO helper.
 # Contact :   278954153@qq.com
 
 
-import os
 from pathlib import Path
 import numpy as np
 import scipy.io as sio
