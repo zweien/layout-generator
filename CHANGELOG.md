@@ -3,21 +3,7 @@
 
 ### Bug Fixes
 
-* fix bug `--bcs []` in cli ([d4529ee](https://git.idrl.site/idrl/layout-generator/commits/d4529eea0fa8f37c1d23e334ec60f13c29d5da28))
-
-
-### Features
-
-* add version info in cli (`-V` or `--version`) ([3c19e2d](https://git.idrl.site/idrl/layout-generator/commits/3c19e2d78ab940a0f15474d3b0e55e01ee6d549f))
-
-
-
-# [](https://git.idrl.site/idrl/layout-generator/compare/v0.2.1...v) (2020-04-12)
-
-
-### Bug Fixes
-
-* fix bug `--bcs []` in cli ([474bda8](https://git.idrl.site/idrl/layout-generator/commits/474bda8bde4602421616dc494c964a54f084f589))
+* fix bug `--bcs []` in cli ([5c8c286](https://git.idrl.site/idrl/layout-generator/commits/5c8c2868dee007f663231ac439551dd47abd02b0))
 
 
 ### Features
@@ -28,19 +14,18 @@
 
 # Changelog
 
-## Unreleased (2020-04-12)
+## Unreleased (2020-04-13)
 
 #### New Features
 
 * add version info in cli (`-V` or `--version`)
-#### Fixes
-
-* fix bug `--bcs []` in cli
 #### Others
 
+* add `.coveragerc` in travis
 * `del environment.yml`
 * change CHANGELOG.md
 * update style according to flake8
+* add test for io
 * add test for cli
 
 ## v0.2.1 (2020-04-10)

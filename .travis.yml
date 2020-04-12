@@ -17,5 +17,5 @@ install:
     - pip install pytest-cov
     - pip install codecov
 script:
-    - pytest --cov=./
+    - pytest --cov=./ --cov-config layout_generator/tests/.coveragerc
 after_success: codecov
