@@ -1,4 +1,3 @@
-import mock
 import sys
 import pytest
 from layout_generator.cli import main

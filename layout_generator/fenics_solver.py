@@ -235,7 +235,7 @@ def run_solver(
         ndim (int): 2 or 3, 问题维数
         length (float): board length
         length_unit (float): unit length
-        bcs (list): bcs.  
+        bcs (list): bcs
         layout_list (list): unit 位置
         u0 (float): Dirichlet bc 上的值
         powers (list): 功率 list
@@ -251,7 +251,7 @@ def run_solver(
     ny = nx
     nz = nx if ndim == 3 else None
     u_D = Constant(u0)
-    if len(bcs) > 0:
+    if len(bcs) > 0 and bcs[0] != []:
         if ndim == 2:
             bc_funs = [LineBoundary(line).get_boundary() for line in bcs]
         else:
