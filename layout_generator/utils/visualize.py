@@ -1,14 +1,13 @@
 # -*- encoding: utf-8 -*-
-'''
+"""
 Desc      :   visulaizing layout data.
-'''
+"""
 # File    :   visualize.py
 # Time    :   2020/03/29 15:19:17
 # Author  :   Zweien
 # Contact :   278954153@qq.com
 
 
-import numpy as np
 import scipy.io as sio
 from functools import partial
 import matplotlib.pyplot as plt
@@ -18,7 +17,13 @@ import tqdm
 from multiprocessing import Pool
 
 
-def plot_mat(mat_path, plot=True, save=False, worker=None, figkwargs={'figsize': (12, 5)}):
+def plot_mat(
+    mat_path,
+    plot=True,
+    save=False,
+    worker=None,
+    figkwargs={"figsize": (12, 5)},
+):
     """Plot mat files.
 
     Arguments:
@@ -26,33 +31,33 @@ def plot_mat(mat_path, plot=True, save=False, worker=None, figkwargs={'figsize':
 
     Keyword Arguments:
         plot (bool) : whether to show plot (default: (True))
-        save (bool or str) : whether to save figure, can be fig path  (default: (False))
+        save (bool or str) : whether to save figure, can be fig path (default: (False))
         figkwargs (dict) : figure kwargs (default: {{'figsize': (12, 5)}})
     """
     mat_path = Path(mat_path)
     if mat_path.is_dir():
         plot_dir(mat_path, save, worker)
     mat = sio.loadmat(mat_path)
-    xs, ys, u, F = mat['xs'], mat['ys'], mat['u'], mat['F']
+    xs, ys, u, F = mat["xs"], mat["ys"], mat["u"], mat["F"]
 
     fig = plt.figure(**figkwargs)
     plt.subplot(121)
     img = plt.pcolormesh(xs, ys, u)
     plt.colorbar(img)
-    plt.axis('image')
-    plt.title('u')
+    plt.axis("image")
+    plt.title("u")
 
     plt.subplot(122)
     img = plt.pcolormesh(xs, ys, F)
     plt.colorbar(img)
-    plt.axis('image')
-    plt.title('F')
+    plt.axis("image")
+    plt.title("F")
 
     if plot:
         plt.show()
     if save:
         if save is True:
-            img_path = mat_path.with_suffix('.png')
+            img_path = mat_path.with_suffix(".png")
         else:
             img_path = save  # save is path
         fig.savefig(img_path, dpi=100)
@@ -64,7 +69,7 @@ def plot_dir(path, out, worker):
 
     Arguments:
         path {Path} : dir path
-        out {Path} : output dir path 
+        out {Path} : output dir path
         worker {int} : number of workers
     """
     path = Path(path)
@@ -76,21 +81,25 @@ def plot_dir(path, out, worker):
 
     with Pool(worker) as pool:
         plot_mat_p = partial(plot_mat, plot=False, save=out)
-        pool_iter = pool.imap_unordered(plot_mat_p, path.glob('*.mat'))
-        for it in tqdm.tqdm(pool_iter, desc=f'{pool._processes} workers\'s running'):
+        pool_iter = pool.imap_unordered(plot_mat_p, path.glob("*.mat"))
+        for it in tqdm.tqdm(
+            pool_iter, desc=f"{pool._processes} workers's running"
+        ):
             pass
 
 
 def get_parser():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--path', type=str, help='file path')
-    parser.add_argument('-o', '--output', type=str, help='output path')
-    parser.add_argument('--plot-off', action='store_false',
-                        help='turn off plot')
-    parser.add_argument('--dir', action='store_true',
-                        default=False, help='path is dir')
-    parser.add_argument('--worker', type=int, help='number of workers')
+    parser.add_argument("-p", "--path", type=str, help="file path")
+    parser.add_argument("-o", "--output", type=str, help="output path")
+    parser.add_argument(
+        "--plot-off", action="store_false", help="turn off plot"
+    )
+    parser.add_argument(
+        "--dir", action="store_true", default=False, help="path is dir"
+    )
+    parser.add_argument("--worker", type=int, help="number of workers")
 
     # TODO 3D version
     return parser
@@ -101,8 +110,9 @@ def main():
     args = parser.parse_args()
 
     if not args.dir:
-        plot_mat(args.path, plot=args.plot_off,
-                 save=args.output, worker=args.worker)  # single file
+        plot_mat(
+            args.path, plot=args.plot_off, save=args.output, worker=args.worker
+        )  # single file
     else:
         plot_dir(args.path, out=args.output, worker=args.worker)
 

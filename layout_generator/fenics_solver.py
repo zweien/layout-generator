@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
-'''
+"""
 Desc      :   solver for layout-generator equation.
-'''
+"""
 # File    :   fenics_solver.py
 # Time    :   2020/03/29 15:16:48
 # Author  :   Zweien
@@ -39,8 +39,11 @@ class Source(UserExpression):
     def get_source(self, x):
         for _, (l, power) in enumerate(zip(self.layout_list, self.powers)):
             lx, ly = l % self.n, l // self.n
-            if (self.length_unit * lx <= x[0] <= self.length_unit * (lx + 1)) \
-                    and (self.length_unit * ly <= x[1] <= self.length_unit * (ly + 1)):
+            if (
+                self.length_unit * lx <= x[0] <= self.length_unit * (lx + 1)
+            ) and (
+                self.length_unit * ly <= x[1] <= self.length_unit * (ly + 1)
+            ):
                 return power
 
         return 0
@@ -50,7 +53,6 @@ class Source(UserExpression):
 
 
 class SourceF(UserExpression):
-
     def __init__(self, F, length):
         """
 
@@ -90,7 +92,7 @@ class SourceF(UserExpression):
         return ()
 
 
-class LineBoundary():
+class LineBoundary:
     """线段边界
 
     Args:
@@ -109,16 +111,20 @@ class LineBoundary():
         Returns:
             function: fenics 所需 bc
         """
+
         def boundary(x, on_boundary):
             if on_boundary:
                 (lx, ly), (rx, ry) = self.line
-                if (lx - TOL <= x[0] <= rx + TOL) and (ly - TOL <= x[1] <= ry + TOL):
+                if (lx - TOL <= x[0] <= rx + TOL) and (
+                    ly - TOL <= x[1] <= ry + TOL
+                ):
                     return True
             return False
+
         return boundary
 
 
-class RecBoundary():
+class RecBoundary:
     """线段边界
 
     Args:
@@ -136,13 +142,18 @@ class RecBoundary():
         Returns:
             function: fenics 所需 bc
         """
+
         def boundary(x, on_boundary):
             if on_boundary:
                 (lx, ly, lz), (rx, ry, rz) = self.rec
-                if (lx - TOL <= x[0] <= rx + TOL) and (ly - TOL <= x[1] <= ry + TOL) \
-                        and (lz - TOL <= x[2] <= rz + TOL):
+                if (
+                    (lx - TOL <= x[0] <= rx + TOL)
+                    and (ly - TOL <= x[1] <= ry + TOL)
+                    and (lz - TOL <= x[2] <= rz + TOL)
+                ):
                     return True
             return False
+
         return boundary
 
 
@@ -165,11 +176,11 @@ def solver(f, u_D, bc_funs, ndim, length, nx, ny, nz=None, degree=1):
     """
 
     mesh = get_mesh(length, nx, ny, nz)
-    V = FunctionSpace(mesh, 'P', degree)
+    V = FunctionSpace(mesh, "P", degree)
     bcs = [DirichletBC(V, u_D, bc) for bc in bc_funs]
     u = TrialFunction(V)
     v = TestFunction(V)
-    FF = dot(grad(u), grad(v))*dx - f*v*dx
+    FF = dot(grad(u), grad(v)) * dx - f * v * dx
     a = lhs(FF)
     L = rhs(FF)
     u = Function(V)
@@ -184,8 +195,9 @@ def get_mesh(length, nx, ny, nz=None):
     if nz is None:
         mesh = RectangleMesh(Point(0.0, 0.0), Point(length, length), nx, ny)
     else:
-        mesh = BoxMesh(Point(0.0, 0.0, 0.0), Point(
-            length, length, length), nx, ny, nz)
+        mesh = BoxMesh(
+            Point(0.0, 0.0, 0.0), Point(length, length, length), nx, ny, nz
+        )
     return mesh
 
 
@@ -203,15 +215,27 @@ def get_mesh_grid(length, nx, ny, nz=None):
     return xs, ys, zs
 
 
-def run_solver(ndim, length, length_unit, bcs, layout_list, u0,
-               powers, nx, coordinates=False, is_plot=False, F=None, vtk=False):
+def run_solver(
+    ndim,
+    length,
+    length_unit,
+    bcs,
+    layout_list,
+    u0,
+    powers,
+    nx,
+    coordinates=False,
+    is_plot=False,
+    F=None,
+    vtk=False,
+):
     """求解器主函数.
 
     Args:
         ndim (int): 2 or 3, 问题维数
         length (float): board length
         length_unit (float): unit length
-        bcs (list): bcs.    
+        bcs (list): bcs.  
         layout_list (list): unit 位置
         u0 (float): Dirichlet bc 上的值
         powers (list): 功率 list
@@ -233,7 +257,7 @@ def run_solver(ndim, length, length_unit, bcs, layout_list, u0,
         else:
             bc_funs = [RecBoundary(rec).get_boundary() for rec in bcs]
     else:
-        bc_funs = [lambda x, on_boundary:on_boundary]  # 边界都为 Dirichlet
+        bc_funs = [lambda x, on_boundary: on_boundary]  # 边界都为 Dirichlet
 
     if F is None:
         f = Source(layout_list, length, length_unit, powers)
@@ -242,9 +266,10 @@ def run_solver(ndim, length, length_unit, bcs, layout_list, u0,
     u = solver(f, u_D, bc_funs, ndim, length, nx, ny, nz)
     if is_plot:
         import matplotlib.pyplot as plt
+
         plt.plot(u)
     if vtk:
-        vtkfile = File('solution.pvd')
+        vtkfile = File("solution.pvd")
         vtkfile << u
     if ndim == 2:
         U = u.compute_vertex_values().reshape(nx + 1, nx + 1)

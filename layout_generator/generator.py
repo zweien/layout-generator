@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
-'''
+"""
 Desc      :   Main function for generator.
-'''
+"""
 # File    :   generator.py
 # Time    :   2020/03/29 15:18:57
 # Author  :   Zweien
@@ -28,12 +28,15 @@ def generate_from_cli(options: configargparse.Namespace):
     unit_per_row = int(options.length / options.length_unit)
     possible_n = unit_per_row ** options.ndim
     np.random.seed(options.seed)
-    if options.sampler == 'uniform':
+    if options.sampler == "uniform":
         sampler = np.random.choice
-    powers = [sampler(options.power, options.unit_n)
-              for _ in range(options.sample_n)]
-    layout_pos_lists = [sampler(possible_n, options.unit_n, replace=False)
-                        for _ in range(options.sample_n)]
+    powers = [
+        sampler(options.power, options.unit_n) for _ in range(options.sample_n)
+    ]
+    layout_pos_lists = [
+        sampler(possible_n, options.unit_n, replace=False)
+        for _ in range(options.sample_n)
+    ]
     # # 叠加原理
     # if options.method == 'fenics_additive':
     #     u_basis = []
@@ -53,15 +56,17 @@ def generate_from_cli(options: configargparse.Namespace):
     #         xs, ys = get_mesh_grid(options.length, options.nx, options.ny)
     #         io.save(options, i, U, xs, ys, F, layout_pos_list)
     # 无叠加原理
-    if options.method == 'fenics':
+    if options.method == "fenics":
         # 创建单参数函数
-        method_fenics_p = partial(method_fenics,
-                                  options=options,
-                                  sampler=sampler,
-                                  possible_n=possible_n,
-                                  unit_per_row=unit_per_row,
-                                  powers=powers,
-                                  layout_pos_lists=layout_pos_lists)
+        method_fenics_p = partial(
+            method_fenics,
+            options=options,
+            sampler=sampler,
+            possible_n=possible_n,
+            unit_per_row=unit_per_row,
+            powers=powers,
+            layout_pos_lists=layout_pos_lists,
+        )
 
         # for i in range(options.sample_n):
         #     method_fenics_p(i)
@@ -69,28 +74,41 @@ def generate_from_cli(options: configargparse.Namespace):
         # multiprocess support
         with Pool(options.worker) as pool:
             pool_it = pool.imap_unordered(
-                method_fenics_p, range(options.sample_n))
-            for _ in tqdm.tqdm(pool_it,
-                                desc=f'{pool._processes} workers\'s running',
-                                total=options.sample_n, ncols=100):
+                method_fenics_p, range(options.sample_n)
+            )
+            for _ in tqdm.tqdm(
+                pool_it,
+                desc=f"{pool._processes} workers's running",
+                total=options.sample_n,
+                ncols=100,
+            ):
                 pass
 
-    print(
-        f'Generated {options.sample_n} layouts in {options.data_dir}')
+    print(f"Generated {options.sample_n} layouts in {options.data_dir}")
 
 
-def method_fenics(i, options, sampler, possible_n,
-                  unit_per_row, powers, layout_pos_lists):
+def method_fenics(
+    i, options, sampler, possible_n, unit_per_row, powers, layout_pos_lists
+):
     """采用 fenics 求解
     """
     layout_pos_list = layout_pos_lists[i]
     # print(layout_pos_list)
-    F = io.layout2matrix(options.ndim, options.nx,
-                         unit_per_row, powers[i], layout_pos_list)
-    U, xs, ys, zs = run_solver(options.ndim, options.length,
-                               options.length_unit, options.bcs,
-                               layout_pos_list, options.u_D,
-                               powers, options.nx, coordinates=True,
-                               F=F, vtk=options.vtk)
+    F = io.layout2matrix(
+        options.ndim, options.nx, unit_per_row, powers[i], layout_pos_list
+    )
+    U, xs, ys, zs = run_solver(
+        options.ndim,
+        options.length,
+        options.length_unit,
+        options.bcs,
+        layout_pos_list,
+        options.u_D,
+        powers,
+        options.nx,
+        coordinates=True,
+        F=F,
+        vtk=options.vtk,
+    )
 
     io.save(options, i, U, xs, ys, F, layout_pos_list, zs)

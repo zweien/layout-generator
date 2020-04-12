@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
-'''
+"""
 Desc      :   IO helper.
-'''
+"""
 # File    :   io.py
 # Time    :   2020/03/29 15:21:56
 # Author  :   Zweien
@@ -18,24 +18,30 @@ def save(options, i, U, xs, ys, F, layout_pos_list, zs=None):
     """存储数据
     """
     data_dir = Path(options.data_dir)
-    file_name = f'{options.prefix}{i}'
+    file_name = f"{options.prefix}{i}"
     path = data_dir / file_name
-    if options.file_format == 'mat':
-        path = path.with_suffix('.mat')
+    if options.file_format == "mat":
+        path = path.with_suffix(".mat")
         save_mat(path, U, xs, ys, F, layout_pos_list, zs=zs)
 
 
 def save_mat(path, U, xs, ys, F, layout_pos_list, zs=None):
     # 组件位置从 1 开始
     zs = zs if zs is not None else []
-    data = {'u': U, 'xs': xs, 'ys': ys, 'zs': zs, 'F': F,
-            'list': np.array(layout_pos_list) + 1}
+    data = {
+        "u": U,
+        "xs": xs,
+        "ys": ys,
+        "zs": zs,
+        "F": F,
+        "list": np.array(layout_pos_list) + 1,
+    }
     sio.savemat(path, data)
 
 
 def load_mat(path):
     path = Path(path)
-    assert path.suffix == '.mat'
+    assert path.suffix == ".mat"
     return sio.loadmat(path)
 
 
@@ -57,7 +63,7 @@ def layout2matrix(ndim, nx, unit_per_row, powers, layout_pos_list):
     else:
         for i, pos in enumerate(layout_pos_list):
             x, y = pos % unit_per_row, pos // unit_per_row
-            size = int((nx+1) / unit_per_row)
+            size = int((nx + 1) / unit_per_row)
             x_slice = slice(size * x, size * (x + 1))
             y_slice = slice(size * y, size * (y + 1))
             F[y_slice, x_slice] = powers[i]
