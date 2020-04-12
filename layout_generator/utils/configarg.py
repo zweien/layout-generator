@@ -12,6 +12,7 @@ import configargparse
 import os
 from pathlib import Path
 import yaml
+from ..about import __version__
 
 
 def get_parser(config_path=None):
@@ -69,5 +70,11 @@ def get_parser(config_path=None):
     parser.add("--ndim", type=int, choices=[2, 3], help="dimension")
     parser.add(
         "--vtk", action="store_true", default=False, help="output vtk file"
+    )
+    parser.add(
+        "-V",
+        "--version",
+        action="version",
+        version=f"layout-generator version: {__version__}",
     )
     return parser

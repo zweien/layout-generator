@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased (2020-04-12)
+
+#### New Features
+
+* add version info in cli (`-V` or `--version`)
+#### Others
+
+* change CHANGELOG.md
+* update style according to flake8
+
 ## v0.2.1 (2020-04-10)
 
 #### Fixes

@@ -22,3 +22,6 @@ def test_cli_default():
     isinstance(options.power, list)
     power = parser.parse_args("--power 2 --power 3").power
     assert power == [2, 3]
+
+    with pytest.raises(SystemExit):
+        parser.parse_args("-V")
