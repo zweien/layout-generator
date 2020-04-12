@@ -8,6 +8,7 @@ Desc      :   meta info.
 # Contact :   278954153@qq.com
 
 
+__package_name__ = "layout-generator"
 __version__ = "0.2.1"
 __author__ = "Zweien"
 __licence__ = "LGPL-3.0"

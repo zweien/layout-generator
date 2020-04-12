@@ -9,6 +9,7 @@ Desc      :   command line interface entry.
 
 
 import os
+import sys
 from layout_generator.utils import get_parser
 
 
@@ -18,6 +19,7 @@ def main():
     if options.test:  # 仅测试，输出参数
         print(parser.format_values())
         print(options)
+        print(sys.argv)
     else:
         from .generator import generate_from_cli
 
