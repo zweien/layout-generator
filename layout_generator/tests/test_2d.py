@@ -6,8 +6,14 @@ from layout_generator.cli import main
 
 
 def test_2d_generator(tmp_path, capsys):
+    try:
+        from pytest_cov.embed import cleanup_on_sigterm
+    except ImportError:
+        pass
+    else:
+        cleanup_on_sigterm()
     sample_n = 10
-    worker = 2
+    worker = 4
     path = tmp_path / "test"
     sys.argv = [
         "layout_generator",
@@ -47,9 +53,12 @@ def test_2d_generator(tmp_path, capsys):
     file_path = next(path.glob("*.mat"))
     sys.argv = [
         "layout_plot",
-        "-p", str(file_path),
-        "-o", str(path / "o.png"),
-        "--worker", "2"
+        "-p",
+        str(file_path),
+        "-o",
+        str(path / "o.png"),
+        "--worker",
+        "2",
     ]
     visualize.main()
     png_path = path / "o.png"

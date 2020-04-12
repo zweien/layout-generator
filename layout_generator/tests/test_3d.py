@@ -1,7 +1,4 @@
-import pytest
 from pathlib import Path
-import argparse
-import numpy as np
 from layout_generator.utils import get_parser
 from layout_generator.utils import io
 from layout_generator.generator import generate_from_cli
