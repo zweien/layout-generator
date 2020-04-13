@@ -12,10 +12,7 @@ install:
     - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
     - source activate test-environment
     - conda install -c conda-forge fenics mshr
-    - pip install .
-    - pip install pytest
-    - pip install pytest-cov
-    - pip install codecov
+    - pip install .[dev]
 script:
-    - pytest --cov=./ --cov-config layout_generator/tests/.coveragerc
+    - pytest --cov=./ --cov-config tests/.coveragerc
 after_success: codecov

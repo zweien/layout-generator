@@ -23,10 +23,14 @@ setup(
     name="layout-generator",
     version=about.__version__,
     author=about.__author__,
+    license=about.__licence__,
     description=about.__desp__,
     packages=find_packages(),
     install_requires=load_requirements(),
-    extras_require={"doc": ["sphinx", "recommonmark", "sphinx-rtd-theme"]},
+    extras_require={
+        "doc": ["sphinx", "recommonmark", "sphinx-rtd-theme"],
+        "dev": ["pytest", "pytest-shell", "pytest-cov", "codecov"],
+    },
     include_package_data=True,
     python_requires=">=3.6",
     entry_points={
