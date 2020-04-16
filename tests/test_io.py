@@ -1,5 +1,4 @@
 import pytest
-import argparse
 import numpy as np
 from layout_generator.utils import get_parser
 from layout_generator.utils import io

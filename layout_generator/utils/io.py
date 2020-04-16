@@ -11,6 +11,7 @@ Desc      :   IO helper.
 from pathlib import Path
 import numpy as np
 import scipy.io as sio
+import h5py
 
 
 def save(options, i, U, xs, ys, F, layout_pos_list, zs=None):
@@ -42,6 +43,11 @@ def load_mat(path):
     path = Path(path)
     assert path.suffix == ".mat"
     return sio.loadmat(path)
+
+
+def load_h5(path):
+    h5file = h5py.File(path, "r")
+    return h5file
 
 
 def layout2matrix(ndim, nx, unit_per_row, powers, layout_pos_list):
