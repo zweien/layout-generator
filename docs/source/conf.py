@@ -84,4 +84,4 @@ autodoc_mock_imports = [
 ]
 
 
-master_doc = 'index'
+master_doc = "index"
