@@ -12,3 +12,4 @@ example_dataset/
 .coverage
 .cache/
 htmlcov
+conventional-changelog
