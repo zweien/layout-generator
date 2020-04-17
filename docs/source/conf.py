@@ -82,3 +82,6 @@ source_suffix = {
 autodoc_mock_imports = [
     "fenics",
 ]
+
+
+master_doc = 'index'
