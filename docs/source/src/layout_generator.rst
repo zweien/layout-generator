@@ -5,11 +5,28 @@ Subpackages
 -----------
 
 .. toctree::
+   :maxdepth: 4
 
    layout_generator.utils
 
 Submodules
 ----------
+
+layout\_generator.about module
+------------------------------
+
+.. automodule:: layout_generator.about
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+layout\_generator.cli module
+----------------------------
+
+.. automodule:: layout_generator.cli
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 layout\_generator.fenics\_solver module
 ---------------------------------------

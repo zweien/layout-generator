@@ -9,13 +9,13 @@ Desc      :   solver for layout-generator equation.
 
 
 from typing import List, Callable, Union
-from fenics import *
+import fenics as fs
 
-set_log_level(40)  # ERROR = 40
+fs.set_log_level(40)  # ERROR = 40
 TOL = 1e-14
 
 
-class Source(UserExpression):
+class Source(fs.UserExpression):
     """热源布局"""
 
     def __init__(self, layouts, length, length_unit, powers):
@@ -52,7 +52,7 @@ class Source(UserExpression):
         return ()
 
 
-class SourceF(UserExpression):
+class SourceF(fs.UserExpression):
     def __init__(self, F, length):
         """
 
@@ -176,15 +176,15 @@ def solver(f, u_D, bc_funs, ndim, length, nx, ny, nz=None, degree=1):
     """
 
     mesh = get_mesh(length, nx, ny, nz)
-    V = FunctionSpace(mesh, "P", degree)
-    bcs = [DirichletBC(V, u_D, bc) for bc in bc_funs]
-    u = TrialFunction(V)
-    v = TestFunction(V)
-    FF = dot(grad(u), grad(v)) * dx - f * v * dx
-    a = lhs(FF)
-    L = rhs(FF)
-    u = Function(V)
-    solve(a == L, u, bcs)
+    V = fs.FunctionSpace(mesh, "P", degree)
+    bcs = [fs.DirichletBC(V, u_D, bc) for bc in bc_funs]
+    u = fs.TrialFunction(V)
+    v = fs.TestFunction(V)
+    FF = fs.dot(fs.grad(u), fs.grad(v)) * fs.dx - f * v * fs.dx
+    a = fs.lhs(FF)
+    L = fs.rhs(FF)
+    u = fs.Function(V)
+    fs.solve(a == L, u, bcs)
     return u
 
 
@@ -193,10 +193,10 @@ def get_mesh(length, nx, ny, nz=None):
 
     """
     if nz is None:
-        mesh = RectangleMesh(Point(0.0, 0.0), Point(length, length), nx, ny)
+        mesh = fs.RectangleMesh(fs.Point(0.0, 0.0), fs.Point(length, length), nx, ny)
     else:
-        mesh = BoxMesh(
-            Point(0.0, 0.0, 0.0), Point(length, length, length), nx, ny, nz
+        mesh = fs.BoxMesh(
+            fs.Point(0.0, 0.0, 0.0), fs.Point(length, length, length), nx, ny, nz
         )
     return mesh
 
@@ -250,7 +250,7 @@ def run_solver(
     """
     ny = nx
     nz = nx if ndim == 3 else None
-    u_D = Constant(u0)
+    u_D = fs.Constant(u0)
     if len(bcs) > 0 and bcs[0] != []:
         if ndim == 2:
             bc_funs = [LineBoundary(line).get_boundary() for line in bcs]
@@ -269,7 +269,7 @@ def run_solver(
 
         plt.plot(u)
     if vtk:
-        vtkfile = File("solution.pvd")
+        vtkfile = fs.File("solution.pvd")
         vtkfile << u
     if ndim == 2:
         U = u.compute_vertex_values().reshape(nx + 1, nx + 1)
