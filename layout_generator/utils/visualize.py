@@ -37,6 +37,7 @@ def plot_mat(
     mat_path = Path(mat_path)
     if mat_path.is_dir():
         plot_dir(mat_path, save, worker)
+        return
     mat = sio.loadmat(mat_path)
     xs, ys, u, F = mat["xs"], mat["ys"], mat["u"], mat["F"]
 
