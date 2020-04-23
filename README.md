@@ -120,7 +120,7 @@ optional arguments:
   --length LENGTH       board length
   --length_unit LENGTH_UNIT
                         unit length
-  --bcs BCS             Dirichlet boundarys, use two points to represent a
+  --bcs BCS             Dirichlet boundaries, use two points to represent a
                         line segment
   --power POWER         possible powers of each unit
   --data_dir DATA_DIR   dir to store generated layout data

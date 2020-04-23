@@ -34,7 +34,7 @@ def get_parser(config_path=None):
         "--bcs",
         type=yaml.safe_load,
         action="append",
-        help="Dirichlet boundarys",
+        help="Dirichlet boundaries",
     )
     parser.add(
         "--power",
