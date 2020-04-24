@@ -14,9 +14,11 @@ import scipy.io as sio
 import h5py
 
 
-def save(options, i, U, xs, ys, F, layout_pos_list, zs=None):
+def save(options, i, U, xs, ys, F, layout_pos_list=None, zs=None):
     """存储数据
     """
+    if layout_pos_list is None:
+        layout_pos_list = []
     data_dir = Path(options.data_dir)
     file_name = f"{options.prefix}{i}"
     path = data_dir / file_name
