@@ -49,6 +49,19 @@ def test_2d_generator(tmp_path, capsys):
     visualize.main()
     assert len(list(path.glob("*.png"))) == options.sample_n
 
+    sys.argv = [
+        "layout_plot",
+        "-p",
+        str(path),
+        "--worker",
+        "2",
+        "-o",
+        str(path / "sub"),
+    ]
+    visualize.main()
+    outpath = path / "sub"
+    assert len(list(outpath.glob("*.png"))) == options.sample_n
+
     # plot single file
     file_path = next(path.glob("*.mat"))
     sys.argv = [
