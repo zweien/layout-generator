@@ -8,6 +8,9 @@ Welcome to layout-generator's documentation!
 
 layout-generator 说明文档
 
+Intro
+-----
+
 待完善...
 
 Install
@@ -26,6 +29,9 @@ Tutorial
 --------
 
 * :doc:`src/tutorial/1discrete`
+* :doc:`src/tutorial/2continuous`
+* :doc:`src/tutorial/3plot`
+* :doc:`src/tutorial/4convert`
 
 .. toctree::
    :maxdepth: 1

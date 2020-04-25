@@ -79,6 +79,10 @@
   pip install -U git+https://git.idrl.site/idrl/layout-generator.git
   ```
 
+## 使用方法
+
+请参见[文档](https://layout-generator.readthedocs.io/zh/latest/)
+
 
 ## Change Log
 
