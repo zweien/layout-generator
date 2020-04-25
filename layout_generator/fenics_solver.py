@@ -280,3 +280,48 @@ def run_solver(
     else:
         xs, ys, zs = None, None, None
     return U, xs, ys, zs
+
+
+def run_solver_c(
+    ndim,
+    length,
+    units,
+    bcs,
+    u0,
+    powers,
+    nx,
+    F,
+    coordinates=False,
+    is_plot=False,
+    vtk=False,
+):
+    ny = nx
+    nz = nx if ndim == 3 else None
+    u_D = fs.Constant(u0)
+    if len(bcs) > 0 and bcs[0] != []:
+        if ndim == 2:
+            bc_funs = [LineBoundary(line).get_boundary() for line in bcs]
+        else:
+            bc_funs = [RecBoundary(rec).get_boundary() for rec in bcs]
+    else:
+        bc_funs = [lambda x, on_boundary: on_boundary]  # 边界都为 Dirichlet
+
+
+    f = SourceF(F, length)
+    u = solver(f, u_D, bc_funs, ndim, length, nx, ny, nz)
+    if is_plot:
+        import matplotlib.pyplot as plt
+
+        plt.plot(u)
+    if vtk:
+        vtkfile = fs.File("solution.pvd")
+        vtkfile << u
+    if ndim == 2:
+        U = u.compute_vertex_values().reshape(nx + 1, nx + 1)
+    else:
+        U = u.compute_vertex_values().reshape(nx + 1, nx + 1, nx + 1)
+    if coordinates:
+        xs, ys, zs = get_mesh_grid(length, nx, ny, nz)
+    else:
+        xs, ys, zs = None, None, None
+    return U, xs, ys, zs

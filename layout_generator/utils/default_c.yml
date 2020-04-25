@@ -1,0 +1,42 @@
+# config example
+
+ndim: 2 # dimension
+length: 0.1
+
+units:  # unit shape
+    - [0.01, 0.01]
+    - [0.01, 0.01]
+    - [0.01, 0.01]
+    - [0.01, 0.01]
+    - [0.01, 0.01]
+    - [0.01, 0.01]
+    - [0.01, 0.01]
+    - [0.01, 0.01]
+    - [0.02, 0.01]
+    - [0.02, 0.01]
+    - [0.02, 0.01]
+    - [0.02, 0.02]
+
+powers: [4000, 6000, 8000, 10000, 10000, 14000, 16000, 20000, 8000, 16000, 10000, 14000]
+angles: [0, 0, 0, 0, 0, 0, 0, 0, 0, 90, 90, 0]
+
+u_D: 298
+# bcs: 
+#     - [[0.01, 0], [0.02, 0]]
+#     - [[0.08, 0], [0.09, 0]] # 2d example
+# bcs:
+#     - [[0, 0.05, 0.05], [0, 0.07, 0.07]]  # 3d example
+bcs: []  # all are Dirichlet BCs
+data_dir: example_dataset
+file_format: mat
+prefix: Example
+sampler: uniform
+sample_n: 2
+seed: 100
+
+fem_degree: 1
+nx: 200
+# ny: 21
+# nz: 21
+
+method: fenics
