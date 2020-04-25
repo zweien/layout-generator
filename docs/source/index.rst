@@ -10,17 +10,46 @@ layout-generator 说明文档
 
 待完善...
 
+Install
+-------
+
+* :doc:`src/install`
 
 .. toctree::
-   :numbered:
+   :maxdepth: 2
+   :hidden:
+   :caption: Install
+
+   src/install
+
+Tutorial
+--------
+
+* :doc:`src/tutorial/1discrete`
+
+.. toctree::
    :maxdepth: 1
-   :titlesonly:
-   :caption: 目录:
+   :hidden:
+   :caption: Tutorial
    :glob:
-   
+
    src/tutorial/*
 
-   模块<src/modules.rst>
+
+API
+----
+
+* :doc:`src/modules`
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: API
+
+   src/modules
+
+
+
 
 
 
