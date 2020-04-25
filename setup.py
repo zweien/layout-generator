@@ -36,6 +36,7 @@ setup(
     entry_points={
         "console_scripts": [
             "layout_generator = layout_generator.cli:main",
+            "layout_generator_c = layout_generator.cli_c:main",
             "layout_plot = layout_generator.utils.visualize:main",
             "layout_convert = layout_generator.utils.convert:main"
         ]
