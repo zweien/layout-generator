@@ -26,7 +26,7 @@ author = about.__author__
 
 # The full version, including alpha/beta/rc tags
 release = about.__version__
-
+version = release
 
 # -- General configuration ---------------------------------------------------
 

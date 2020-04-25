@@ -29,7 +29,7 @@ setup(
     install_requires=load_requirements(),
     extras_require={
         "doc": ["sphinx", "recommonmark", "sphinx-rtd-theme"],
-        "dev": ["pytest", "pytest-shell", "pytest-cov", "codecov"],
+        "dev": ["pytest", "pytest-shell", "pytest-cov", "codecov", "bump2version", ],
     },
     include_package_data=True,
     python_requires=">=3.6",
