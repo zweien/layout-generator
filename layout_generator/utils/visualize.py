@@ -56,11 +56,13 @@ def plot_mat(
 
     if plot:
         plt.show()
-    if save:
+    if save:  # save png
         if save is True:
             img_path = mat_path.with_suffix(".png")
-        else:
-            img_path = save  # save is path
+        else:  # save is path
+            img_path = Path(save)
+            if img_path.is_dir():  # save is dir
+                img_path = (img_path / mat_path.name).with_suffix(".png")
         fig.savefig(img_path, dpi=100)
         plt.close()
 
@@ -74,11 +76,16 @@ def plot_dir(path, out, worker):
         worker {int} : number of workers
     """
     path = Path(path)
-    assert path.is_dir(), "Error! Arg :dir must be a dir."
+    assert path.is_dir(), "Error! Arg path must be a dir."
     if out is None:
         out = True
     else:
-        assert Path(out).is_dir(), "Error! Arg :out must be a dir."
+        out = Path(out)
+        print(out.absolute())
+        if out.exists():
+            assert Path(out).is_dir(), "Error! Arg out must be a dir."
+        else:
+            out.mkdir(parents=True)
 
     with Pool(worker) as pool:
         plot_mat_p = partial(plot_mat, plot=False, save=out)
