@@ -8,7 +8,7 @@
 
 layout-generator 为布局数据生成器，可按需求生成热源**组件布局-稳态温度场**数据集。
 
-**文档**：[ReadTheDocs](https://layout-data.readthedocs.io/zh/latest/)
+**文档**：[ReadTheDocs](https://layout-generator.readthedocs.io/zh/latest/)
 
 ![](https://i.bmp.ovh/imgs/2020/03/47d860f83ed75a99.png)
 ![](https://i.bmp.ovh/imgs/2020/04/acda55376056bc8f.png)
@@ -82,6 +82,10 @@ layout-generator 为布局数据生成器，可按需求生成热源**组件布�
 
 ## Change Log
 
+- v0.3.0
+  - 增加连续布局生成脚本 `layout-generator_c`
+  - 增加单元测试
+  - 文档迁移
 - v0.2.2
   - 增加转换脚本 `layout_convert`，实现 mat 到 HDF5 格式的转换
   - 修复bug `--bcs []` 
