@@ -12,13 +12,15 @@ layout-generator 说明文档
 
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :numbered:
+   :maxdepth: 1
+   :titlesonly:
+   :caption: 目录:
+   :glob:
    
-   /src/test.md
-   /src/a/b.md
-   /src/modules.rst
+   src/tutorial/*
 
+   模块<src/modules.rst>
 
 
 
