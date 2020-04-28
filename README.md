@@ -65,21 +65,21 @@
   2. pull fenics image (docker hub 中国 Azure 源): `docker pull quay.azk8s.cn/fenicsproject/stable`
   3. 创建并启动容器: `docker run -it -v $(pwd):/home/fenics/shared -u root quay.azk8s.cn/fenicsproject/stable bash`
   4. 使用 pip 安装本 package
-  ```bash
+  ```text
   pip install git+https://git.idrl.site/idrl/layout-generator.git
   ```
 - Anaconda (**linux**， **Mac**)
   1. 使用 `conda` 创建并激活环境
-  ```bash
+  ```text
   conda create -n fenicsproject -c conda-forge fenics mshr
   source activate fenicsproject
   ```
   2. 使用 pip 安装本 package
-  ```bash
+  ```text
   pip install -U git+https://git.idrl.site/idrl/layout-generator.git
   ```
 - 如果出现 HDF5 warning，请使用如下命令重新安装 `h5py`
-  ```bash
+  ```text
   pip uninstall h5py
   pip install --no-binary=h5py h5py
   ```
@@ -87,11 +87,11 @@
 ## FAQ
 
 - pip 安装前可使用国内源如清华 
-  ```
+  ```text
   pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
   ```
 - 如果出现 HDF5 error，请使用如下命令重新安装 `h5py`
-  ```bash
+  ```text
   pip uninstall h5py
   pip install --no-binary=h5py h5py
   ```
