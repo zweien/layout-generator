@@ -1,6 +1,6 @@
 # 安装
 
-本生成器依赖 fenics 作为有限元求解器，可参照 [fenics 安装文档](https://fenicsproject.org/download/)，推荐以下方式
+本生成器依赖 fenics 作为有限元求解器，可参照 [fenics 安装文档](https://fenicsproject.org/download/)，推荐以下**两种**方式安装，如果没有没有 docker 经验推荐 Anaconda 方式
 
 ## Docker
 
@@ -26,10 +26,15 @@
   pip install -U git+https://git.idrl.site/idrl/layout-generator.git
   ```
 
-## 问题
+## FAQ
 
-- 如果出现 HDF5 warning，请使用如下命令重新安装 `h5py`
+- pip 安装前可使用国内源如清华 
+  ```
+  pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+  ```
+- 如果出现 HDF5 error，请使用如下命令重新安装 `h5py`
   ```bash
   pip uninstall h5py
   pip install --no-binary=h5py h5py
   ```
+- 仅支持 Python3.6 以上版本
