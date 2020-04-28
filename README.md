@@ -78,11 +78,6 @@
   ```text
   pip install -U git+https://git.idrl.site/idrl/layout-generator.git
   ```
-- 如果出现 HDF5 warning，请使用如下命令重新安装 `h5py`
-  ```text
-  pip uninstall h5py
-  pip install --no-binary=h5py h5py
-  ```
 
 ## FAQ
 
@@ -96,6 +91,7 @@
   pip install --no-binary=h5py h5py
   ```
 - 仅支持 Python3.6 以上版本
+- 如果按照以上 anaconda 安装方式，别忘了切换到 `fenicsproject` 环境
 
 ## 使用方法
 

@@ -38,3 +38,4 @@
   pip install --no-binary=h5py h5py
   ```
 - 仅支持 Python3.6 以上版本
+- 如果按照以上 anaconda 安装方式，别忘了切换到 `fenicsproject` 环境
