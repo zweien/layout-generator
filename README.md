@@ -78,6 +78,11 @@
   ```bash
   pip install -U git+https://git.idrl.site/idrl/layout-generator.git
   ```
+- 如果出现 HDF5 warning，请使用如下命令重新安装 `h5py`
+  ```bash
+  pip uninstall h5py
+  pip install --no-binary=h5py h5py
+  ```
 
 ## 使用方法
 
