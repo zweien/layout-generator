@@ -28,6 +28,7 @@
 
 ## FAQ
 
+- Windows 下可以使用 Docker 方式安装，或在应用商店安装 Ubuntu WSL
 - pip 安装前可使用国内源如清华 
   ```
   pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
