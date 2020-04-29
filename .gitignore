@@ -13,3 +13,4 @@ example_dataset/
 .cache/
 htmlcov
 conventional-changelog
+.mypy_cache
