@@ -4,6 +4,12 @@
 
 ![](https://ftp.bmp.ovh/imgs/2020/04/2c311a93f5976d57.png)
 
+## 采样方法
+
+- [x] 按顺序摆放 (对应参数 sampler: sequence)
+  - 参数要求：每个组件的尺寸需满足 `unit_x / length * nx` 与 `unit_y / length * nx` 为偶数
+- [x] Gibbs 采样 (对应参数 sampler: gibbs)
+
 ## 用法
 
 1. 使用配置文件或命令行生成数据集，比如以默认配置文件 `default_c.yml` 生成数据集，其中 `default_c.yml` 在目录 `utils` 下。
@@ -15,11 +21,12 @@
 usage: layout_generator_c [-h] [--config CONFIG] [--test] [--length LENGTH]
                           [--bcs BCS] [--units UNITS] [--powers POWERS]
                           [--angles ANGLES] [--data_dir DATA_DIR]
-                          [--sampler {uniform}] [--fem_degree FEM_DEGREE]
-                          [--u_D U_D] [--nx NX] [--sample_n SAMPLE_N]
-                          [--seed SEED] [--file_format {mat}]
-                          [--prefix PREFIX] [--method {fenics}]
-                          [--worker WORKER] [--ndim {2,3}] [--vtk] [-V]
+                          [--sampler {sequence,gibbs}]
+                          [--fem_degree FEM_DEGREE] [--u_D U_D] [--nx NX]
+                          [--sample_n SAMPLE_N] [--seed SEED]
+                          [--file_format {mat}] [--prefix PREFIX]
+                          [--method {fenics}] [--worker WORKER] [--ndim {2,3}]
+                          [--vtk] [-V]
 
 Generate layout dataset. Args that start with '--' (eg. --test) can also be
 set in a config file (/home/fenics/shared/layout-
@@ -39,7 +46,8 @@ optional arguments:
   --powers POWERS       power of each unit
   --angles ANGLES       angle of each unit
   --data_dir DATA_DIR   dir to store generated layout data
-  --sampler {uniform}   sampler method
+  --sampler {sequence,gibbs}
+                        sampler method
   --fem_degree FEM_DEGREE
                         fem degree in fenics
   --u_D U_D             value on Dirichlet boundary
@@ -90,7 +98,7 @@ bcs: []  # all are Dirichlet BCs
 data_dir: example_dataset
 file_format: mat
 prefix: Example
-sampler: uniform
+sampler: sequence
 sample_n: 2
 seed: 100
 
@@ -104,10 +112,11 @@ method: fenics
 
 ## 示例
 
-- 用法与离散布局相同，但需要指定每个组件参数
+用法与离散布局相同，但需要指定每个组件参数，同时注意 `sampler` 参数指定采样方法。
 
 ## 参数说明
 
 - `units`: 每个组件的宽与高
 - `powers`: 每个组件的功率
 - `angles`: 每个组件的摆放角度，暂时支持 0 与 90
+- `sampler`: 采样方法
