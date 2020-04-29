@@ -1,12 +1,31 @@
+## 0.4.0 (2020-04-29)
+
+* docs: add convert doc ([77e14b4](https://git.idrl.site/idrl/layout-generator/commits/77e14b4))
+* docs: add faq ([1451f38](https://git.idrl.site/idrl/layout-generator/commits/1451f38))
+* docs: add gibbs samping docs ([3c5754b](https://git.idrl.site/idrl/layout-generator/commits/3c5754b))
+* docs: update faq ([3bca670](https://git.idrl.site/idrl/layout-generator/commits/3bca670))
+* docs: update faq ([27b2d40](https://git.idrl.site/idrl/layout-generator/commits/27b2d40))
+* docs: update README ([12593fb](https://git.idrl.site/idrl/layout-generator/commits/12593fb))
+* docs: update sphinx conf.py ([54b806e](https://git.idrl.site/idrl/layout-generator/commits/54b806e))
+* chore: update .gitignore ([686760f](https://git.idrl.site/idrl/layout-generator/commits/686760f))
+* feat: add gibbs sampler for continuous layout ([c33b91d](https://git.idrl.site/idrl/layout-generator/commits/c33b91d))
+* doc:s fix conda install problem ([085d2ab](https://git.idrl.site/idrl/layout-generator/commits/085d2ab))
+* update README ([a1a13b3](https://git.idrl.site/idrl/layout-generator/commits/a1a13b3))
+* ci: add py38 ([3623d90](https://git.idrl.site/idrl/layout-generator/commits/3623d90))
+
+
+
 ## 0.3.0 (2020-04-25)
 
-* chore: update setup dev, conf.py for sphinx ([bd3550e](https://git.idrl.site/idrl/layout-generator/commits/bd3550e))
+* Bump version: 0.2.2 → 0.3.0 ([b0ce1a2](https://git.idrl.site/idrl/layout-generator/commits/b0ce1a2))
 * fix sphinx ([4a3f87e](https://git.idrl.site/idrl/layout-generator/commits/4a3f87e))
 * fix sphinx conf ([8ba0dcb](https://git.idrl.site/idrl/layout-generator/commits/8ba0dcb))
 * update changelog ([431ff24](https://git.idrl.site/idrl/layout-generator/commits/431ff24))
+* update CHANGELOG ([cb6d2f0](https://git.idrl.site/idrl/layout-generator/commits/cb6d2f0))
 * update io.py: save ([36879e6](https://git.idrl.site/idrl/layout-generator/commits/36879e6))
 * update sphinx conf ([1c38a28](https://git.idrl.site/idrl/layout-generator/commits/1c38a28))
 * update sphinx docs ([03a6343](https://git.idrl.site/idrl/layout-generator/commits/03a6343))
+* chore: update setup dev, conf.py for sphinx ([bd3550e](https://git.idrl.site/idrl/layout-generator/commits/bd3550e))
 * docs: configure `Read The Docs` ([2bd2d0f](https://git.idrl.site/idrl/layout-generator/commits/2bd2d0f))
 * docs: sphinx docs, `discrete.md` and `plot.md` ([b49bfa5](https://git.idrl.site/idrl/layout-generator/commits/b49bfa5))
 * docs: update README ([fc5bcde](https://git.idrl.site/idrl/layout-generator/commits/fc5bcde))
