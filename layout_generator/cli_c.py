@@ -1,13 +1,11 @@
 # -*- encoding: utf-8 -*-
-'''
+"""
 Desc      :   command line interface entry (continuous).
-'''
+"""
 # File    :   cli_c.py
 # Time    :   2020/04/22 18:43:27
 # Author  :   Zweien
 # Contact :   278954153@qq.com
-
-
 
 
 import os

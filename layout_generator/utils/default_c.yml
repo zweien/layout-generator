@@ -30,7 +30,7 @@ bcs: []  # all are Dirichlet BCs
 data_dir: example_dataset
 file_format: mat
 prefix: Example
-sampler: uniform
+sampler: sequence
 sample_n: 2
 seed: 100
 

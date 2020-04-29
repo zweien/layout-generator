@@ -12,9 +12,9 @@ import numpy as np
 import tqdm
 import configargparse
 from multiprocessing import Pool, Queue
-from .fenics_solver import run_solver, run_solver_c
+from .fenics_solver import run_solver_c
 from .utils import io
-from .sampler import continuous
+from .sampler.continuous.utils import get_task
 
 
 def generate_from_cli(options: configargparse.Namespace):
@@ -25,14 +25,16 @@ def generate_from_cli(options: configargparse.Namespace):
     """
     if options.bcs is None:
         options.bcs = []
+    np.random.seed(options.seed)
     seeds = np.random.randint(np.iinfo(np.int32).max, size=options.worker)
+    print(seeds)
     seeds_q = Queue()
     for seed in seeds:
         seeds_q.put(seed)
 
     unit_n = len(options.units)
     geometry = ["r"] * unit_n
-    task = continuous.get_task(
+    task = get_task(
         geometry_board="s",
         size_board=options.length,
         grid_board=options.nx + 1,
@@ -41,33 +43,15 @@ def generate_from_cli(options: configargparse.Namespace):
         angle=options.angles,
         intensity=options.powers,
         rad=False,
+        method=options.sampler,
     )
-
-    # # 叠加原理
-    # if options.method == 'fenics_additive':
-    #     u_basis = []
-    #     for layout_pos in tqdm.trange(possible_n):
-    #         u = run_solver(options.length, options.length_unit, options.bcs,
-    #                          layout_pos,
-    #                        0, [1.], options.nx, options.ny, False)
-    #         u_basis.append(u)
-    #     for i in tqdm.trange(options.sample_n):
-    #         layout_pos_list = sorted(
-    #             sampler(possible_n, options.unit_n, replace=False))
-    #         u_elt = (powers[i] * u_basis[pos]
-    #                  for i, pos in enumerate(layout_pos_list))
-    #         U = reduce(np.add, u_elt) / options.unit_n + options.u_D
-    #         F = io.layout2matrix(options.nx, options.ny,
-    #                              unit_per_row, powers, layout_pos_list)
-    #         xs, ys = get_mesh_grid(options.length, options.nx, options.ny)
-    #         io.save(options, i, U, xs, ys, F, layout_pos_list)
-    # 无叠加原理
+    task.warmup()  # warm up, especially for gibbs
 
     if options.method == "fenics":
         # 创建单参数函数
 
         method_fenics_p = partial(
-            method_fenics, options=options, sampler=task.sample_layout_seq
+            method_fenics, options=options, sampler=task.sample
         )
 
         # for i in range(options.sample_n):
