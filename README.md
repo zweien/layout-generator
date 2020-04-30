@@ -105,6 +105,10 @@
 
 ## Change Log
 
+- v0.4.0
+  - 增加连续布局 gibbs 采样
+  - 重构连续采样代码
+  - 增加 FAQ
 - v0.3.0
   - 增加连续布局生成脚本 `layout-generator_c`
   - 增加单元测试
