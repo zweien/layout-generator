@@ -32,6 +32,7 @@ Tutorial
 * :doc:`src/tutorial/2continuous`
 * :doc:`src/tutorial/3plot`
 * :doc:`src/tutorial/4convert`
+* :doc:`src/tutorial/5dataformat`
 
 .. toctree::
    :maxdepth: 1
