@@ -1,5 +1,23 @@
+##  (2020-05-04)
+
+
+
+
+## <small>0.4.1 (2020-05-04)</small>
+
+* docs: add data format docs ([35798d1](https://git.idrl.site/idrl/layout-generator/commits/35798d1))
+* docs: update installation guide for docker ([9677785](https://git.idrl.site/idrl/layout-generator/commits/9677785))
+* feat: add Dockerfile ([75c6bf5](https://git.idrl.site/idrl/layout-generator/commits/75c6bf5))
+* doc: update README ([97994d3](https://git.idrl.site/idrl/layout-generator/commits/97994d3))
+
+
+
 ## 0.4.0 (2020-04-29)
 
+* Bump version: 0.3.0 → 0.4.0 ([f9ff91f](https://git.idrl.site/idrl/layout-generator/commits/f9ff91f))
+* doc:s fix conda install problem ([085d2ab](https://git.idrl.site/idrl/layout-generator/commits/085d2ab))
+* update CHANGELOG ([627f291](https://git.idrl.site/idrl/layout-generator/commits/627f291))
+* update README ([a1a13b3](https://git.idrl.site/idrl/layout-generator/commits/a1a13b3))
 * docs: add convert doc ([77e14b4](https://git.idrl.site/idrl/layout-generator/commits/77e14b4))
 * docs: add faq ([1451f38](https://git.idrl.site/idrl/layout-generator/commits/1451f38))
 * docs: add gibbs samping docs ([3c5754b](https://git.idrl.site/idrl/layout-generator/commits/3c5754b))
@@ -9,8 +27,6 @@
 * docs: update sphinx conf.py ([54b806e](https://git.idrl.site/idrl/layout-generator/commits/54b806e))
 * chore: update .gitignore ([686760f](https://git.idrl.site/idrl/layout-generator/commits/686760f))
 * feat: add gibbs sampler for continuous layout ([c33b91d](https://git.idrl.site/idrl/layout-generator/commits/c33b91d))
-* doc:s fix conda install problem ([085d2ab](https://git.idrl.site/idrl/layout-generator/commits/085d2ab))
-* update README ([a1a13b3](https://git.idrl.site/idrl/layout-generator/commits/a1a13b3))
 * ci: add py38 ([3623d90](https://git.idrl.site/idrl/layout-generator/commits/3623d90))
 
 
