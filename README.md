@@ -83,10 +83,11 @@
     docker build -t layout-generator:latest layout-generator
     ```
     2. 切换到需要生成数据集的目录，准备好配置文件 `config.yml`
-    3. 使用 `config.yml` 在当前目录下生成数据集
+    3. 使用 `config.yml` 在当前目录下生成数据集，文件名为 `data1`
     ```text
-    docker run --rm layout-generator:latest -v $(pwd):/home/layout layout_generater --config config.yml
+    docker run --rm layout-generator:latest -v $(pwd):/home/fenics/layout layout_generater --config config.yml --data_dir data1
     ```
+    注意：windows 下 cmd 中使用 `-v %cd%:/home/fenics/layout`
   - 在 Container 中自行安装
     1. 安装 [docker-ce](https://docs.docker.com/) (若已安装 docker 可跳过)
     2. pull fenics image (docker hub 中国 Azure 源): `docker pull quay.azk8s.cn/fenicsproject/stable`

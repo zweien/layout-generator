@@ -4,7 +4,8 @@ MAINTAINER zweien <278954153@qq.com>
 WORKDIR /tmp
 COPY . .
 RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && pip install .
-RUN useradd --create-home --no-log-init --shell /bin/bash layout
-USER layout
-WORKDIR /home/layout
+USER fenics
+RUN mkdir /home/fenics/layout
+WORKDIR /home/fenics/layout
+RUN layout_generator --worker 1 && rm -rf *
 ENTRYPOINT [""]
