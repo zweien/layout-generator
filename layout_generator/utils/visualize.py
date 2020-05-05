@@ -35,6 +35,7 @@ def plot_mat(
         figkwargs (dict) : figure kwargs (default: {{'figsize': (12, 5)}})
     """
     mat_path = Path(mat_path)
+    assert mat_path.exists(), "Input path does not exist!"
     if mat_path.is_dir():
         plot_dir(mat_path, save, worker)
         return
