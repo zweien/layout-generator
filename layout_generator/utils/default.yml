@@ -17,7 +17,7 @@ file_format: mat
 prefix: Example
 sampler: uniform
 sample_n: 2
-seed: 100
+# seed: 100
 
 fem_degree: 1
 nx: 21
