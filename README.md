@@ -40,6 +40,8 @@
     - [x] mat 格式
     - [x] HDF5
     - [ ] 图片形式
+  - 其他
+    - [x] 随机数种子
 - 数据集可视化 `layout_plot`
   - [x] 单一文件
   - [x] 目录批量处理
@@ -120,6 +122,8 @@
 
 ## Change Log
 
+- Unreleased
+  - 删除默认 seed
 - v0.4.1
   - 增加 Dockerfile
   - 更新安装方式

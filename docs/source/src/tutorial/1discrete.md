@@ -80,7 +80,7 @@ file_format: mat
 prefix: Example
 sampler: uniform
 sample_n: 2
-seed: 100
+# seed: 100
 
 fem_degree: 1
 nx: 21
@@ -93,7 +93,11 @@ method: fenics
 
 ### 示例
 
-1. 针对 2D 问题，在 `./data1` 目录下生成 100 个数据，图像分辨率为 30\*30，底边中间开口 1/4 边长，每个布局有 3 个组件，其他参数使用如上默认参数：
+1. 在当前目录下准备配置文件 `config.yml`，使用该配置文件生成相应数据集:
+```bash
+layout_generator --config config.yml
+```
+2. 针对 2D 问题，在 `./data1` 目录下生成 100 个数据，图像分辨率为 30\*30，底边中间开口 1/4 边长，每个布局有 3 个组件，其他参数使用如上默认参数：
 
 ```bash
 layout_generator --data_dir data1 --sample_n 100 --nx 30 --bcs [[0.0375,0],[0.0625,0]] --unit_n 3
