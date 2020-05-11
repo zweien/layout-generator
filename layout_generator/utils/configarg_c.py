@@ -10,6 +10,7 @@ Desc      :   config based argparser (continuous layout).
 
 import configargparse
 import os
+import numpy as np
 from pathlib import Path
 import yaml
 from ..about import __version__
@@ -63,7 +64,12 @@ def get_parser(config_path=None):
     # parser.add('--ny', type=int, help='number of grid in y direction')
     # parser.add('--nz', type=int, help='number of grid in z direction')
     parser.add("--sample_n", type=int, help="number of samples")
-    parser.add("--seed", type=int, help="seed in np.random module")
+    parser.add(
+        "--seed",
+        type=int,
+        default=np.random.randint(2**32),
+        help="seed in np.random module",
+    )
     parser.add(
         "--file_format", type=str, choices=["mat"], help="dataset file format"
     )
