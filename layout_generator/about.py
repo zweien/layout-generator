@@ -9,7 +9,7 @@ Desc      :   meta info.
 
 
 __package_name__ = "layout-generator"
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 __author__ = "Zweien"
 __licence__ = "LGPL-3.0"
 __desp__ = "Layout dataset generator."
