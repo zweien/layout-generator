@@ -10,7 +10,6 @@ Desc      :   convert data format
 from pathlib import Path
 import scipy.io as sio
 import h5py
-import argparse
 import tqdm
 from multiprocessing import Pool
 from .io import load_mat
@@ -68,9 +67,8 @@ def get_mat_shape(mat_fn):
     return {k: v.shape for k, v in mat.items() if not k.startswith("__")}
 
 
-def get_parser():
+def get_parser(parser):
 
-    parser = argparse.ArgumentParser()
     parser.add_argument(
         "-i", "--input", type=str, required=True, help="input dir path"
     )
@@ -86,15 +84,5 @@ def get_parser():
         help="converting mode",
     )
     parser.add_argument("--worker", type=int, help="number of workers")
+    parser.add_argument("--test", action="store_true", help="test mode")
     return parser
-
-
-def main():
-    parser = get_parser()
-    args = parser.parse_args()
-    mode = globals()[args.mode]
-    mode(args.input, args.output, worker=args.worker)
-
-
-if __name__ == "__main__":
-    main()

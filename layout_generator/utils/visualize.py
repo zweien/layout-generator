@@ -12,7 +12,6 @@ import scipy.io as sio
 from functools import partial
 import matplotlib.pyplot as plt
 from pathlib import Path
-import argparse
 import tqdm
 from multiprocessing import Pool
 
@@ -91,15 +90,14 @@ def plot_dir(path, out, worker):
     with Pool(worker) as pool:
         plot_mat_p = partial(plot_mat, plot=False, save=out)
         pool_iter = pool.imap_unordered(plot_mat_p, path.glob("*.mat"))
-        for it in tqdm.tqdm(
+        for _ in tqdm.tqdm(
             pool_iter, desc=f"{pool._processes} workers's running"
         ):
             pass
 
 
-def get_parser():
+def get_parser(parser):
 
-    parser = argparse.ArgumentParser()
     parser.add_argument("-p", "--path", type=str, help="file path")
     parser.add_argument("-o", "--output", type=str, help="output path")
     parser.add_argument(
@@ -109,22 +107,6 @@ def get_parser():
         "--dir", action="store_true", default=False, help="path is dir"
     )
     parser.add_argument("--worker", type=int, help="number of workers")
-
+    parser.add_argument("--test", action="store_true", help="test mode")
     # TODO 3D version
     return parser
-
-
-def main():
-    parser = get_parser()
-    args = parser.parse_args()
-
-    if not args.dir:
-        plot_mat(
-            args.path, plot=args.plot_off, save=args.output, worker=args.worker
-        )  # single file
-    else:
-        plot_dir(args.path, out=args.output, worker=args.worker)
-
-
-if __name__ == "__main__":
-    main()

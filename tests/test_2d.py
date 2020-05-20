@@ -1,5 +1,4 @@
 import sys
-from layout_generator.utils import get_parser
 from layout_generator.utils import io
 from layout_generator.utils import visualize
 from layout_generator.cli import main
@@ -17,6 +16,7 @@ def test_2d_generator(tmp_path, capsys):
     path = tmp_path / "test"
     sys.argv = [
         "layout_generator",
+        "generate",
         "--data_dir",
         str(path),
         "--bcs",
@@ -26,10 +26,11 @@ def test_2d_generator(tmp_path, capsys):
         "--worker",
         str(worker),
     ]
-    parser = get_parser()
-    options, _ = parser.parse_known_args()
+    # parser = get_parser()
+    # options, _ = parser.parse_known_args()
 
-    main()
+    options = main()
+
     data_dir = path
     # assert data_dir == 's'
     # data_path_list = os.listdir(options.data_dir)
@@ -45,12 +46,21 @@ def test_2d_generator(tmp_path, capsys):
     assert u.min() >= options.u_D
 
     # plot dir
-    sys.argv = ["layout_plot", "-p", str(path), "--dir", "--worker", "2"]
-    visualize.main()
+    sys.argv = [
+        "layout_generator",
+        "plot",
+        "-p",
+        str(path),
+        "--dir",
+        "--worker",
+        "2",
+    ]
+    main()
     assert len(list(path.glob("*.png"))) == options.sample_n
 
     sys.argv = [
-        "layout_plot",
+        "layout_generator",
+        "plot",
         "-p",
         str(path),
         "--worker",
@@ -58,14 +68,15 @@ def test_2d_generator(tmp_path, capsys):
         "-o",
         str(path / "sub"),
     ]
-    visualize.main()
+    main()
     outpath = path / "sub"
     assert len(list(outpath.glob("*.png"))) == options.sample_n
 
     # plot single file
     file_path = next(path.glob("*.mat"))
     sys.argv = [
-        "layout_plot",
+        "layout_generator",
+        "plot",
         "-p",
         str(file_path),
         "-o",
@@ -73,7 +84,7 @@ def test_2d_generator(tmp_path, capsys):
         "--worker",
         "2",
     ]
-    visualize.main()
+    options = main()
     png_path = path / "o.png"
     assert png_path.exists()
 
@@ -90,6 +101,7 @@ def test_2d_bc(tmp_path):
     path = tmp_path / "test"
     sys.argv = [
         "layout_generator",
+        "generate",
         "--data_dir",
         str(path),
         "--bcs",
@@ -101,10 +113,7 @@ def test_2d_bc(tmp_path):
         "--worker",
         str(worker),
     ]
-    parser = get_parser()
-    options, _ = parser.parse_known_args()
-
-    main()
+    options = main()
     data_dir = path
     # assert data_dir == 's'
     # data_path_list = os.listdir(options.data_dir)

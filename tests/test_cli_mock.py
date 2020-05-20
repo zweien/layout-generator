@@ -11,8 +11,9 @@ def test_cli_mock(capsys):
     captured = capsys.readouterr()
     assert captured.out == f"{__package_name__} version: {__version__}\n"
 
-    sys.argv = ["layout_generator", "--test"]
-    main()
+    sys.argv = ["layout_generator", "generate", "--test"]
+    with pytest.raises(SystemExit):
+        main()
 
 
 def test_shell(bash):

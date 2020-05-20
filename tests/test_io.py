@@ -1,11 +1,13 @@
 import pytest
+from configargparse import ArgumentParser
 import numpy as np
-from layout_generator.utils import get_parser
+from layout_generator.utils.configarg import get_parser_discrete
 from layout_generator.utils import io
 
 
 def test_save(tmp_path):
-    parser = get_parser()
+    parser = ArgumentParser()
+    parser = get_parser_discrete(parser)
     options = parser.parse_args("")
     options.data_dir = tmp_path
     i = 1
