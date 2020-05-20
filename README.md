@@ -122,7 +122,7 @@
 
 ## Change Log
 
-- Unreleased
+- v0.4.2
   - 删除默认 seed
 - v0.4.1
   - 增加 Dockerfile
