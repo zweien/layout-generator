@@ -29,7 +29,13 @@ setup(
     install_requires=load_requirements(),
     extras_require={
         "doc": ["sphinx", "recommonmark", "sphinx-rtd-theme"],
-        "dev": ["pytest", "pytest-shell", "pytest-cov", "codecov", "bump2version", ],
+        "dev": [
+            "pytest>=3.6",
+            "pytest-shell",
+            "pytest-cov",
+            "codecov",
+            "bump2version",
+        ],
     },
     include_package_data=True,
     python_requires=">=3.6",
@@ -38,7 +44,7 @@ setup(
             "layout_generator = layout_generator.cli:main",
             "layout_generator_c = layout_generator.cli_c:main",
             "layout_plot = layout_generator.utils.visualize:main",
-            "layout_convert = layout_generator.utils.convert:main"
+            "layout_convert = layout_generator.utils.convert:main",
         ]
     },
 )
