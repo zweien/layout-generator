@@ -1,0 +1,22 @@
+image: layout-generator:latest
+
+before_script:
+    - python -V
+    - sudo pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+    - sudo pip install -U .[dev]
+
+stages:
+    - style
+    - test
+
+flake8:
+    stage: style
+    script:
+        - sudo pip install flake8
+        - flake8 --config .flake8 --count --show-source --statistics .
+
+pytest:
+    stage: test
+    script:
+        - pytest --cov=./
+    coverage: '/^TOTAL.*\s+(\d+\%)$/'

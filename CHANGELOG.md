@@ -1,10 +1,16 @@
-##  (2020-05-04)
+## <small>0.4.2 (2020-05-20)</small>
 
+* docs: update README and docs ([356bb1b](https://git.idrl.site/idrl/layout-generator/commits/356bb1b))
+* fix: delete default seed ([bbbd85b](https://git.idrl.site/idrl/layout-generator/commits/bbbd85b))
+* fix: fix `generator_plot -p` with non-existent path ([cfc31c5](https://git.idrl.site/idrl/layout-generator/commits/cfc31c5))
+* fix: fix Dockerfile ([94ee332](https://git.idrl.site/idrl/layout-generator/commits/94ee332))
 
 
 
 ## <small>0.4.1 (2020-05-04)</small>
 
+* Bump version: 0.4.0 → 0.4.1 ([3047f64](https://git.idrl.site/idrl/layout-generator/commits/3047f64))
+* update CHANGELOG ([62079d7](https://git.idrl.site/idrl/layout-generator/commits/62079d7))
 * docs: add data format docs ([35798d1](https://git.idrl.site/idrl/layout-generator/commits/35798d1))
 * docs: update installation guide for docker ([9677785](https://git.idrl.site/idrl/layout-generator/commits/9677785))
 * feat: add Dockerfile ([75c6bf5](https://git.idrl.site/idrl/layout-generator/commits/75c6bf5))
