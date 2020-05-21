@@ -1,1 +1,1 @@
-from .about import __version__, __author__, __licence__
+from .about import __version__, __author__, __licence__  # noqa

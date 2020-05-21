@@ -4,6 +4,7 @@ from pathlib import Path
 import numpy as np
 import scipy.io as sio
 from layout_generator.utils import convert, io
+from layout_generator.cli import main
 
 
 @pytest.fixture(scope="module")
@@ -46,7 +47,8 @@ def test_cli(prepare_data_path: Path, bash):
     h5_path: Path = path / "h5.h5"
     # bash.run_script("layout_convert", ["-i", path, "-o", h5_path, "worker", '1'])
     sys.argv = [
-        "layout_convert",
+        "layout_generator",
+        "convert",
         "-i",
         str(path),
         "-o",
@@ -54,4 +56,4 @@ def test_cli(prepare_data_path: Path, bash):
         "--worker",
         "1",
     ]
-    convert.main()
+    main()
