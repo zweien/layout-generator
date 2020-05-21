@@ -28,7 +28,7 @@ def test_2d_generator(tmp_path, capsys):
     # parser = get_parser()
     # options, _ = parser.parse_known_args()
 
-    options = main()
+    options = main(options_flag=True)
 
     data_dir = path
     # assert data_dir == 's'
@@ -83,7 +83,7 @@ def test_2d_generator(tmp_path, capsys):
         "--worker",
         "2",
     ]
-    options = main()
+    options = main(options_flag=True)
     png_path = path / "o.png"
     assert png_path.exists()
 
@@ -112,7 +112,7 @@ def test_2d_bc(tmp_path):
         "--worker",
         str(worker),
     ]
-    options = main()
+    options = main(options_flag=True)
     data_dir = path
     # assert data_dir == 's'
     # data_path_list = os.listdir(options.data_dir)

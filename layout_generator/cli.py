@@ -67,7 +67,7 @@ def preprocess(parser, options):
         options.nx -= 1
 
 
-def main(debug=False):
+def main(debug=False, options_flag=False):
     parser = ArgumentParser()
     parser.add(
         "-V",
@@ -113,7 +113,8 @@ def main(debug=False):
     if hasattr(options, "handle"):
         options.handle(parser, options)
 
-    return options
+    if options_flag:
+        return options
 
 
 if __name__ == "__main__":
