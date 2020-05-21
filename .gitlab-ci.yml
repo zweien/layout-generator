@@ -13,7 +13,7 @@ flake8:
     stage: style
     script:
         - sudo pip install flake8
-        - flake8 . --count --show-source --statistics
+        - flake8 --config .flake8 --count --show-source --statistics .
 
 pytest:
     stage: test
