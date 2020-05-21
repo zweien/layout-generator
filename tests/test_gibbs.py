@@ -21,7 +21,7 @@ def test_size_grid_board(size_board, grid_board):
         size=size,
         angle=angle,
         intensity=intensity,
-        method='gibbs'
+        method="gibbs",
     )
     task.warmup()
     F, _ = task.sample()

@@ -8,7 +8,6 @@ Desc      :   solver for layout-generator equation.
 # Contact :   278954153@qq.com
 
 
-from typing import List, Callable, Union
 import fenics as fs
 
 fs.set_log_level(40)  # ERROR = 40
@@ -193,10 +192,16 @@ def get_mesh(length, nx, ny, nz=None):
 
     """
     if nz is None:
-        mesh = fs.RectangleMesh(fs.Point(0.0, 0.0), fs.Point(length, length), nx, ny)
+        mesh = fs.RectangleMesh(
+            fs.Point(0.0, 0.0), fs.Point(length, length), nx, ny
+        )
     else:
         mesh = fs.BoxMesh(
-            fs.Point(0.0, 0.0, 0.0), fs.Point(length, length, length), nx, ny, nz
+            fs.Point(0.0, 0.0, 0.0),
+            fs.Point(length, length, length),
+            nx,
+            ny,
+            nz,
         )
     return mesh
 
@@ -305,7 +310,6 @@ def run_solver_c(
             bc_funs = [RecBoundary(rec).get_boundary() for rec in bcs]
     else:
         bc_funs = [lambda x, on_boundary: on_boundary]  # 边界都为 Dirichlet
-
 
     f = SourceF(F, length)
     u = solver(f, u_D, bc_funs, ndim, length, nx, ny, nz)

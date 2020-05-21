@@ -114,7 +114,6 @@ def main(debug=False):
         options.handle(parser, options)
 
     return options
-    
 
 
 if __name__ == "__main__":

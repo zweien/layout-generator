@@ -1,1 +1,1 @@
-from .utils import get_task
+from .utils import get_task  # noqa

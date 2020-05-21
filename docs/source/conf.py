@@ -12,11 +12,11 @@
 #
 import os
 import sys
-import sphinx_rtd_theme
+import sphinx_rtd_theme  # noqa
 
 sys.path.insert(0, os.path.abspath("./../../"))
 
-import layout_generator.about as about
+import layout_generator.about as about  # noqa
 
 # -- Project information -----------------------------------------------------
 

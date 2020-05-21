@@ -67,7 +67,7 @@ def get_parser(config_path=None):
     parser.add(
         "--seed",
         type=int,
-        default=np.random.randint(2**32),
+        default=np.random.randint(2 ** 32),
         help="seed in np.random module",
     )
     parser.add(

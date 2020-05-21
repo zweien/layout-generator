@@ -17,5 +17,5 @@ def test_cli_mock(capsys):
 
 
 def test_shell(bash):
-    version = bash.run_script('layout_generator', ['--version'])
+    version = bash.run_script("layout_generator", ["--version"])
     assert version == f"{__package_name__} version: {__version__}"

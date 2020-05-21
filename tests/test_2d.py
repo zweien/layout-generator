@@ -1,6 +1,5 @@
 import sys
 from layout_generator.utils import io
-from layout_generator.utils import visualize
 from layout_generator.cli import main
 
 

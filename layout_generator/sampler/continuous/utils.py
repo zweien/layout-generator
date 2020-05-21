@@ -35,9 +35,11 @@ def get_task(
     components = Components(domain, geometry, size, angle, intensity, rad)
     if method == "sequence":
         from .sequence_layout_sampling import TaskSeq
+
         return TaskSeq(components)
     elif method == "gibbs":
         from .gibbs_layout_sampling import TaskGibbs
+
         return TaskGibbs(components)
     else:
         raise LookupError("Method {method} does not supported!")

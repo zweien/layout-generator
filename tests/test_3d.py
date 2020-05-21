@@ -1,7 +1,6 @@
 import pytest
 from pathlib import Path
 import sys
-from layout_generator.utils.configarg import get_parser_discrete
 from layout_generator.utils import io
 from layout_generator.generator import generate_from_cli
 from layout_generator.utils import __file__ as utils__file__

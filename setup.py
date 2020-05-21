@@ -30,7 +30,7 @@ setup(
     extras_require={
         "doc": ["sphinx", "recommonmark", "sphinx-rtd-theme"],
         "dev": [
-            "pytest",
+            "pytest>=3.6",
             "pytest-shell",
             "pytest-cov",
             "codecov",

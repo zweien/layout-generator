@@ -26,7 +26,7 @@ def generate_from_cli(options: configargparse.Namespace):
     if options.bcs is None:
         options.bcs = []
     np.random.seed(options.seed)
-    seeds = np.random.randint(2**32, size=options.worker)
+    seeds = np.random.randint(2 ** 32, size=options.worker)
     print(options.worker)
     print(seeds)
     seeds_q: Queue = Queue()
