@@ -44,7 +44,9 @@ class Components:
             self.angle = self.angle / 180 * np.pi
 
         # heat disapation power: W
-        self.intensity = intensity
+        self.intensity = [
+            (p if isinstance(p, list) else [p]) for p in intensity
+        ]
         # ###################### user defines components here ###########
 
         self.size_pixel = (self.size / domain.size) * domain.grid
