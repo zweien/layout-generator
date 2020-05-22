@@ -1,6 +1,6 @@
 import numpy as np
-from .base import Components, Task
-from .utils import overlap_calculation
+from layout_generator.sampler.continuous.base import Components, Task
+from layout_generator.sampler.continuous.utils import overlap_calculation
 
 
 class TaskSeq(Task):
@@ -112,11 +112,11 @@ class TaskSeq(Task):
             row = feasible_index_x[choose_index][0]
             col = feasible_index_y[choose_index][0]
             location[index, :] = [row, col]
-
+            intensity = np.random.choice(self.components.intensity[index])
             f_layout[
                 (row - dx // 2) : (row + dx // 2),
                 (col - dy // 2) : (col + dy // 2),
-            ] = self.components.intensity[index] * np.ones([dx, dy])
+            ] = intensity * np.ones([dx, dy])
             component_APF[
                 (row - dx // 2) : (row + dx // 2 + 1),
                 (col - dy // 2) : (col + dy // 2 + 1),
@@ -130,15 +130,19 @@ class TaskSeq(Task):
 if __name__ == "__main__":
     import time
     import matplotlib.pyplot as plt
-    from .utils import get_task
-    from .config import geometry, angle, intensity, size
-
+    from layout_generator.sampler.continuous.utils import get_task
+    from layout_generator.sampler.continuous.config import (
+        geometry,
+        angle,
+        intensity,
+        size,
+    )
     np.random.seed(1)
     # sequence = np.random.choice(range(12), size=12, replace=False)
 
     t1 = time.time()
 
-    grid_board = 201  # 100, 201, 400 ok
+    grid_board = 200  # 100, 201, 400 ok
     task = get_task(
         geometry_board="s",
         size_board=0.1,

@@ -1,6 +1,9 @@
 import numpy as np
-from .base import Task, Components
-from .utils import overlap_calculation, overlap_rec_rec
+from layout_generator.sampler.continuous.base import Task, Components
+from layout_generator.sampler.continuous.utils import (
+    overlap_calculation,
+    overlap_rec_rec,
+)
 
 
 class TaskGibbs(Task):
@@ -227,17 +230,17 @@ class TaskGibbs(Task):
                 a2 = self.components.realsize[:, 0].reshape(-1, 1) / 2
                 b2 = self.components.realsize[:, 1].reshape(-1, 1) / 2
                 overlap = overlap_rec_rec(u1, a1, b1, u2, a2, b2)
-
+                # print(overlap)
                 if np.max(overlap) > 0:
                     ind = np.argsort(-overlap.reshape(1, -1))  # 按照逆序排列并对应序号
-                    f_layout[i, j] = self.components.intensity_norm[ind[0, 0]]
+                    f_layout[i, j] = self.components.intensity[ind[0, 0]]
         return f_layout
 
 
 if __name__ == "__main__":
     import time
     import matplotlib.pyplot as plt
-    from utils import get_task
+    from layout_generator.sampler.continuous.utils import get_task
     from config import size, angle, intensity, geometry
 
     np.random.seed(1)
