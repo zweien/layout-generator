@@ -114,7 +114,7 @@ def get_parser_continuous(
         help="shape of each unit",
     )
     parser.add(
-        "--powers", action="append", type=float, help="power of each unit",
+        "--powers", action="append", type=yaml.safe_load, help="power of each unit",
     )
     parser.add(
         "--angles", action="append", type=float, help="angle of each unit",

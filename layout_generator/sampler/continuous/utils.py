@@ -1,6 +1,6 @@
 from typing import Sequence
 import numpy as np
-from .base import Task, Domain, Components
+from layout_generator.sampler.continuous.base import Task, Domain, Components
 
 
 def get_task(
@@ -34,11 +34,15 @@ def get_task(
     domain = Domain(geometry_board, size_board, grid_board)
     components = Components(domain, geometry, size, angle, intensity, rad)
     if method == "sequence":
-        from .sequence_layout_sampling import TaskSeq
+        from layout_generator.sampler.continuous.sequence_layout_sampling import (
+            TaskSeq,
+        )
 
         return TaskSeq(components)
     elif method == "gibbs":
-        from .gibbs_layout_sampling import TaskGibbs
+        from layout_generator.sampler.continuous.gibbs_layout_sampling import (
+            TaskGibbs,
+        )
 
         return TaskGibbs(components)
     else:

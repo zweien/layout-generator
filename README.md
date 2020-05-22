@@ -124,10 +124,11 @@
 
 - unreleased
   - 统一脚本入口 `layout_generator`
-  - 离散布局 `layout_generator generate`
-  - 连续布局 `layout_generator generate_c`
-  - 可视化 `layout_generator plot`
-  - 转换数据格式 `layout_generator convert`
+    - 离散布局 `layout_generator generate`
+    - 连续布局 `layout_generator generate_c`
+    - 可视化 `layout_generator plot`
+    - 转换数据格式 `layout_generator convert`
+  - 连续布局增加单个组件多种备选功率配置
 - v0.4.2
   - 删除默认 seed
 - v0.4.1

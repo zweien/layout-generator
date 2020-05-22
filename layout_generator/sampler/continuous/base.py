@@ -44,13 +44,15 @@ class Components:
             self.angle = self.angle / 180 * np.pi
 
         # heat disapation power: W
-        self.intensity = np.array(intensity)
+        self.intensity = [
+            (p if isinstance(p, list) else [p]) for p in intensity
+        ]
         # ###################### user defines components here ###########
 
         self.size_pixel = (self.size / domain.size) * domain.grid
-        self.intensity_norm = self.intensity / np.max(
-            self.intensity
-        )  # normalized
+        # self.intensity_norm = self.intensity / np.max(
+        #     self.intensity
+        # )  # normalized
 
         # 计算旋转角度以后对应  x 轴边长，y 轴边长
         self.realsize = (
