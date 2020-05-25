@@ -1,6 +1,6 @@
 # 连续布局
 
-异构矩形组件、连续布局生成器，使用脚本`layout_generator_c` 配合**配置文件**与**命令行参数**生成所**布局图像**与**温度场**数据。
+异构矩形组件、连续布局生成器，使用脚本`layout_generator generate_c` 配合**配置文件**与**命令行参数**生成所**布局图像**与**温度场**数据。
 
 ![](https://ftp.bmp.ovh/imgs/2020/04/2c311a93f5976d57.png)
 
@@ -15,39 +15,40 @@
 1. 使用配置文件或命令行生成数据集，比如以默认配置文件 `default_c.yml` 生成数据集，其中 `default_c.yml` 在目录 `utils` 下。
 1. 或使用自定义配置文件 `--config 配置文件路径`
    - 配置文件以 YAML 格式存储
-- `layout_generator_c -h` 获取脚本帮助
+1. 优先级：命令行参数 > 配置文件参数 > 默认参数
+- `layout_generator generate_c -h` 获取脚本帮助
 
 ```text
-usage: layout_generator_c [-h] [--config CONFIG] [--test] [--length LENGTH]
-                          [--bcs BCS] [--units UNITS] [--powers POWERS]
-                          [--angles ANGLES] [--data_dir DATA_DIR]
-                          [--sampler {sequence,gibbs}]
-                          [--fem_degree FEM_DEGREE] [--u_D U_D] [--nx NX]
-                          [--sample_n SAMPLE_N] [--seed SEED]
-                          [--file_format {mat}] [--prefix PREFIX]
-                          [--method {fenics}] [--worker WORKER] [--ndim {2,3}]
-                          [--vtk] [-V]
+usage: layout_generator generate_c [-h] [--config CONFIG] [--test]
+                                   [--length LENGTH]
+                                   [--length_unit LENGTH_UNIT] [--bcs BCS]
+                                   [--data_dir DATA_DIR]
+                                   [--fem_degree FEM_DEGREE] [--u_D U_D]
+                                   [--nx NX] [--sample_n SAMPLE_N]
+                                   [--seed SEED] [--file_format {mat}]
+                                   [--prefix PREFIX] [--method {fenics}]
+                                   [--worker WORKER] [--ndim {2,3}] [--vtk]
+                                   [-V] [--task {discrete,continuous}]
+                                   [--units UNITS] [--powers POWERS]
+                                   [--angles ANGLES]
+                                   [--sampler {sequence,gibbs}]
 
-Generate layout dataset. Args that start with '--' (eg. --test) can also be
-set in a config file (/home/fenics/shared/layout-
-generator/layout_generator/utils/default_c.yml or specified via --config). The
-config file uses YAML syntax and must represent a YAML 'mapping' (for details,
-see http://learn.getgrav.org/advanced/yaml). If an arg is specified in more
-than one place, then commandline values override config file values which
-override defaults.
+Args that start with '--' (eg. --test) can also be set in a config file
+(/home/fenics/shared/layout-generator/layout_generator/utils/default_c.yml or
+specified via --config). The config file uses YAML syntax and must represent a
+YAML 'mapping' (for details, see http://learn.getgrav.org/advanced/yaml). If
+an arg is specified in more than one place, then commandline values override
+config file values which override defaults.
 
 optional arguments:
   -h, --help            show this help message and exit
   --config CONFIG       config file path
   --test                test mode
   --length LENGTH       board length
-  --bcs BCS             Dirichlet boundar
-  --units UNITS         shape of each unit
-  --powers POWERS       power of each unit
-  --angles ANGLES       angle of each unit
+  --length_unit LENGTH_UNIT
+                        unit length
+  --bcs BCS             Dirichlet boundaries
   --data_dir DATA_DIR   dir to store generated layout data
-  --sampler {sequence,gibbs}
-                        sampler method
   --fem_degree FEM_DEGREE
                         fem degree in fenics
   --u_D U_D             value on Dirichlet boundary
@@ -61,6 +62,13 @@ optional arguments:
   --ndim {2,3}          dimension
   --vtk                 output vtk file
   -V, --version         show program's version number and exit
+  --task {discrete,continuous}
+                        task
+  --units UNITS         shape of each unit
+  --powers POWERS       power of each unit
+  --angles ANGLES       angle of each unit
+  --sampler {sequence,gibbs}
+                        sampler method
 ```
 
 - 默认配置文件参数 (yaml)
@@ -68,6 +76,7 @@ optional arguments:
 ```yaml
 # config example
 
+task: continuous
 ndim: 2 # dimension
 length: 0.1
 
@@ -84,7 +93,7 @@ units:  # unit shape
     - [0.02, 0.01]
     - [0.02, 0.01]
     - [0.02, 0.02]
-# 单个组件多种备选功率
+
 powers:
     - [2000, 3000]
     - 1000
@@ -98,6 +107,8 @@ powers:
     - 1000
     - 1000
     - 1000
+
+
 angles: [0, 0, 0, 0, 0, 0, 0, 0, 0, 90, 90, 0]
 
 u_D: 298
@@ -124,7 +135,9 @@ method: fenics
 
 ## 示例
 
-用法与离散布局相同，但需要指定每个组件参数，同时注意 `sampler` 参数指定采样方法。
+用法与离散布局相同，但需要指定每个组件参数，同时注意 `sampler` 参数指定采样方法，目前支持：
+- `sequence`: 顺序采样
+- `gibbs`: Gibbs 采样
 
 ## 参数说明
 
