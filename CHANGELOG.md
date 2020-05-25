@@ -1,3 +1,25 @@
+##  (2020-05-25)
+
+* del configarg_c ([40145a2](https://git.idrl.site/idrl/layout-generator/commits/40145a2))
+* update README.md ([2c540e3](https://git.idrl.site/idrl/layout-generator/commits/2c540e3))
+* update setup.py ([7f29317](https://git.idrl.site/idrl/layout-generator/commits/7f29317))
+* docs: update docs for single script ([ab30e81](https://git.idrl.site/idrl/layout-generator/commits/ab30e81))
+* feat: add mulit power for sequence ([a15215e](https://git.idrl.site/idrl/layout-generator/commits/a15215e))
+* feat: add multipower config support for gibbs ([792ed78](https://git.idrl.site/idrl/layout-generator/commits/792ed78))
+* feat: single script `layout_generator` ([ae0de73](https://git.idrl.site/idrl/layout-generator/commits/ae0de73))
+* fix: main() return nonzero code ([0a2c667](https://git.idrl.site/idrl/layout-generator/commits/0a2c667))
+* fix: update Dockerfile ([ad2b72e](https://git.idrl.site/idrl/layout-generator/commits/ad2b72e))
+* ci: add .gitlab-ci ([83739fb](https://git.idrl.site/idrl/layout-generator/commits/83739fb))
+* ci: update ci ([a79b6cb](https://git.idrl.site/idrl/layout-generator/commits/a79b6cb))
+* ci: update Dockerfile and local.sh ([942725f](https://git.idrl.site/idrl/layout-generator/commits/942725f))
+* style: formating code ([6a72de8](https://git.idrl.site/idrl/layout-generator/commits/6a72de8))
+
+
+### BREAKING CHANGE
+
+* del scripts `layout_generator_c`, `plot`, `convert`
+
+
 ## <small>0.4.2 (2020-05-20)</small>
 
 * docs: update README and docs ([356bb1b](https://git.idrl.site/idrl/layout-generator/commits/356bb1b))
