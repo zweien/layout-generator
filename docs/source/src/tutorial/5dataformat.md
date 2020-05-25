@@ -12,4 +12,4 @@
 
 ## HDF5 文件
 
-采用 `layout_convert` 可将 `mat` 文件转换成 `HDF5` 文件，采用 index 可访问相应元素
+采用 `layout_generator convert` 可将 `mat` 文件转换成 `HDF5` 文件，采用 index 可访问相应元素

@@ -42,14 +42,14 @@
 ## FAQ
 
 - Windows 下可以使用 Docker 方式安装，或在应用商店安装 Ubuntu WSL
-- pip 安装前可使用国内源如清华 
+- pip 安装前可使用国内源如清华、阿里 
   ```
   pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
   ```
-- 如果出现 HDF5 error，请使用如下命令重新安装 `h5py`
-  ```bash
+- 如果出现 `HDF5 error`，请使用如下命令重新安装 `h5py`
+  ```text
   pip uninstall h5py
   pip install --no-binary=h5py h5py
   ```
-- 仅支持 Python3.6 以上版本
+- 目前仅支持 Python3.6 以上版本
 - 如果按照以上 Anaconda 安装方式，别忘了切换到 `fenicsproject` 环境
