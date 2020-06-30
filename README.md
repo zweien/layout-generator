@@ -123,7 +123,9 @@
 
 ## Change Log
 
-- **v0.5.0**
+- Unreleased
+  - fix file config.xml empty error
+- v0.5.0
   - 统一脚本入口 `layout_generator`
     - 离散布局 `layout_generator generate`
     - 连续布局 `layout_generator generate_c`

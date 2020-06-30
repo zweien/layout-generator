@@ -19,23 +19,23 @@ from .utils.convert import get_parser as get_convert_parser
 from .about import __version__
 
 
-def handle_generate(parser, options):
+def handle_generate(options):
     from .generator import generate_from_cli
 
-    preprocess(parser, options)
+    preprocess(options.parser, options)
     generate_from_cli(options)
     options.nx += 1
 
 
-def handle_generate_c(parser, options):
+def handle_generate_c(options):
     from .generator_c import generate_from_cli
 
-    preprocess(parser, options)
+    preprocess(options.parser, options)
     generate_from_cli(options)
     options.nx += 1
 
 
-def handle_plot(parser, options):
+def handle_plot(options):
     from .utils.visualize import plot_dir, plot_mat
 
     if not options.dir:
@@ -49,7 +49,7 @@ def handle_plot(parser, options):
         plot_dir(options.path, out=options.output, worker=options.worker)
 
 
-def handle_convert(parser, options):
+def handle_convert(options):
     from .utils import convert
 
     convert_func = getattr(convert, options.mode)
@@ -65,6 +65,12 @@ def preprocess(parser, options):
         parser.write_config_file(options, [config_file_data])
         # cli 中 nx 为节点数，fenics求解过程中为单元数
         options.nx -= 1
+        del_parser(options)  # fix error for multiprocessing
+
+
+def del_parser(options):
+    if hasattr(options, "parser"):
+        del options.parser
 
 
 def main(debug=False, options_flag=False):
@@ -81,13 +87,17 @@ def main(debug=False, options_flag=False):
         "generate", help="generate discrete layout data"
     )
     generate_parser = get_parser_discrete(generate_parser)
-    generate_parser.set_defaults(handle=handle_generate)
+    generate_parser.set_defaults(
+        handle=handle_generate, parser=generate_parser
+    )
 
     generate_c_parser = subparsers.add_parser(
         "generate_c", help="generate continuous layout data"
     )
     generate_c_parser = get_parser_continuous(generate_c_parser)
-    generate_c_parser.set_defaults(handle=handle_generate_c)
+    generate_c_parser.set_defaults(
+        handle=handle_generate_c, parser=generate_c_parser
+    )
 
     plot_parser = subparsers.add_parser("plot", help="plot layout data")
     plot_parser = get_plot_parser(plot_parser)
@@ -101,17 +111,18 @@ def main(debug=False, options_flag=False):
 
     options, _ = parser.parse_known_args()
 
-    if debug:
-        return parser, options
-
     if options.test:  # 仅测试，输出参数
         print(parser.format_values())
         print(options)
         # print(sys.argv)
         parser.exit()
 
+    if debug:
+        del_parser(options)
+        return parser, options
+
     if hasattr(options, "handle"):
-        options.handle(parser, options)
+        options.handle(options)
 
     if options_flag:
         return options
