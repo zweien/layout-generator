@@ -1,4 +1,14 @@
-##  (2020-05-25)
+##  v0.5.1 (2020-07-27)
+
+* docs: update README.md ([fd01139](https://git.idrl.site/idrl/layout-generator/commits/fd01139))
+* chore: pypi support ([85f0adb](https://git.idrl.site/idrl/layout-generator/commits/85f0adb))
+* chore: update tag prefix ([65177fe](https://git.idrl.site/idrl/layout-generator/commits/65177fe))
+* Create python-publish.yml ([0fc788d](https://git.idrl.site/idrl/layout-generator/commits/0fc788d))
+* fix: fix config.yml empty ([342932e](https://git.idrl.site/idrl/layout-generator/commits/342932e))
+
+
+
+## <small>v0.5.0 (2020-05-25)</small>
 
 * del configarg_c ([40145a2](https://git.idrl.site/idrl/layout-generator/commits/40145a2))
 * update README.md ([2c540e3](https://git.idrl.site/idrl/layout-generator/commits/2c540e3))
