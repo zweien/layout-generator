@@ -5,6 +5,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/zweien/layout-generator/badge)](https://www.codefactor.io/repository/github/zweien/layout-generator)
 [![readthedocs](https://readthedocs.org/projects/layout-data/badge/)](https://layout-generator.readthedocs.io/zh/latest/)
 [![GitLicense](https://gitlicense.com/badge/zweien/layout-generator)](https://gitlicense.com/license/zweien/layout-generator)
+![Upload Python Package](https://github.com/zweien/layout-generator/workflows/Upload%20Python%20Package/badge.svg)
 
 布局数据生成器 layout-generator，可按需求生成热源**组件布局-稳态温度场**数据集。
 
@@ -123,8 +124,10 @@
 
 ## Change Log
 
-- Unreleased
+- v0.5.1
   - fix file config.xml empty error
+  - add PyPi for installing
+  - add github action for publishing to PyPi
 - v0.5.0
   - 统一脚本入口 `layout_generator`
     - 离散布局 `layout_generator generate`
