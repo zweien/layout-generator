@@ -1,9 +1,11 @@
 import os
+import pathlib
 from setuptools import setup, find_packages
 import layout_generator.about as about
 
 
-here = os.path.abspath(os.path.dirname(__file__))
+here = pathlib.Path(__file__).parent.resolve()
+long_description = (here / "README.md").read_text(encoding="utf-8")
 
 
 def load_requirements(path_dir=here, comment_char="#"):
@@ -23,8 +25,12 @@ setup(
     name="layout-generator",
     version=about.__version__,
     author=about.__author__,
+    author_email="weienzhou@outlook.com",
+    url="http://github.com/zweien/layout-generator",
     license=about.__licence__,
     description=about.__desp__,
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     packages=find_packages(),
     install_requires=load_requirements(),
     extras_require={
