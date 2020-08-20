@@ -45,5 +45,5 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           dockerfile: dockers/Dockerfile
-          tags: "${{ env.RELEASE_VERSION }}"
+          tags: "${{ env.RELEASE_VERSION }}, latest"
         timeout-minutes: 40
