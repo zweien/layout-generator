@@ -74,34 +74,21 @@
   conda create -n fenicsproject -c conda-forge fenics mshr
   source activate fenicsproject
   ```
-  2. use pip to install this package
+  2. use pip to install the released version
      - `pip install -U layout-generator`
-     - or from master branch
+     - or use unreleased version from master branch
       ```text
       pip install -U git+https://github.com/zweien/layout-generator.git
       ```
 
 - Docker (**Linux**, **Win**, **Mac**)
-  - 使用 Dockerfile 构建 image
-    1. clone repo
-    ```text
-    git clone https://git.idrl.site/idrl/layout-generator.git
-    docker build -t layout-generator:latest layout-generator
-    ```
+  - 从 dockerhub 拉取镜像 `docker pull zweien/layout-generator:latest`
     1. 切换到需要生成数据集的目录，准备好配置文件 `config.yml`
-    2. 使用 `config.yml` 在当前目录下生成数据集，文件名为 `data1`
+    2. 使用 `config.yml` 在当前目录下生成数据集，数据集所在文件夹为 `data1`
     ```text
     docker run --rm layout-generator:latest -v $(pwd):/home/fenics/layout layout_generater generate --config config.yml --data_dir data1
     ```
     Notes：windows 下 cmd 中使用 `-v %cd%:/home/fenics/layout`
-  - 在 Container 中自行安装
-    1. 安装 [docker-ce](https://docs.docker.com/) (若已安装 docker 可跳过)
-    2. pull fenics image (docker hub 中国 Azure 源): `docker pull quay.azk8s.cn/fenicsproject/stable`
-    3. 创建并启动容器: `docker run -it -v $(pwd):/home/fenics/shared quay.azk8s.cn/fenicsproject/stable bash`
-    4. 使用 pip 安装本 package
-    ```text
-    pip install git+https://git.idrl.site/idrl/layout-generator.git
-    ```
 
 
 ## FAQ
@@ -126,8 +113,9 @@
 
 ## Change Log
 
-- Unreleased
-  - update installation
+- v0.5.2
+  - update installation guide
+  - add github action for pushing images to dockerhub
 - v0.5.1
   - fix file config.xml empty error
   - add PyPi for installing
