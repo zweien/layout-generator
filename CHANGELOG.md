@@ -1,4 +1,13 @@
-##  v0.5.1 (2020-07-27)
+##  v0.5.2(2020-08-20)
+
+* docs: update installation guide ([1e32144](https://git.idrl.site/idrl/layout-generator/commits/1e32144))
+* docs: update README ([6d4633b](https://git.idrl.site/idrl/layout-generator/commits/6d4633b))
+* ci: add dockerhub ci ([9a31624](https://git.idrl.site/idrl/layout-generator/commits/9a31624))
+* ci: update dockerhub ci ([ecc529a](https://git.idrl.site/idrl/layout-generator/commits/ecc529a))
+
+
+
+##  <small>v0.5.1 (2020-07-27)</small>
 
 * docs: update README.md ([fd01139](https://git.idrl.site/idrl/layout-generator/commits/fd01139))
 * chore: pypi support ([85f0adb](https://git.idrl.site/idrl/layout-generator/commits/85f0adb))
