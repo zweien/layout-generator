@@ -6,6 +6,7 @@
 [![readthedocs](https://readthedocs.org/projects/layout-data/badge/)](https://layout-generator.readthedocs.io/zh/latest/)
 [![GitLicense](https://gitlicense.com/badge/zweien/layout-generator)](https://gitlicense.com/license/zweien/layout-generator)
 ![Upload Python Package](https://github.com/zweien/layout-generator/workflows/Upload%20Python%20Package/badge.svg)
+![Publish Docker Releases](https://github.com/zweien/layout-generator/workflows/Publish%20Docker%20Releases/badge.svg)
 
 布局数据生成器 layout-generator，可按需求生成热源**组件布局-稳态温度场**数据集。
 
