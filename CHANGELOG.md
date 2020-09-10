@@ -1,4 +1,14 @@
-##  v0.5.2(2020-08-20)
+##  v0.5.3(2020-09-10)
+
+* docs: add badge for docker hub ([6491fe3](https://git.idrl.site/idrl/layout-generator/commits/6491fe3))
+* docs: update README ([4c77e31](https://git.idrl.site/idrl/layout-generator/commits/4c77e31))
+* fix bug by adding np.rint fun. ([1195a06](https://git.idrl.site/idrl/layout-generator/commits/1195a06))
+* ci: update dockerhub ci ([5b3bb02](https://git.idrl.site/idrl/layout-generator/commits/5b3bb02))
+* ci: update dockerhub ci ([78f4f0c](https://git.idrl.site/idrl/layout-generator/commits/78f4f0c))
+
+
+
+##  <small>v0.5.2(2020-08-20)</small>
 
 * docs: update installation guide ([1e32144](https://git.idrl.site/idrl/layout-generator/commits/1e32144))
 * docs: update README ([6d4633b](https://git.idrl.site/idrl/layout-generator/commits/6d4633b))
