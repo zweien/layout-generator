@@ -49,7 +49,7 @@ class Components:
         ]
         # ###################### user defines components here ###########
 
-        self.size_pixel = (self.size / domain.size) * domain.grid
+        self.size_pixel = np.rint((self.size / domain.size) * domain.grid)
         # self.intensity_norm = self.intensity / np.max(
         #     self.intensity
         # )  # normalized
@@ -77,12 +77,12 @@ class Components:
                 [self.posx_ub[i], self.posy_ub[i]]
             ).reshape(1, 2)
 
-        self.posx_pixel_lb = (self.posx_lb / domain.size) * domain.grid
-        self.posy_pixel_lb = (self.posy_lb / domain.size) * domain.grid
-        self.posx_pixel_ub = (self.posx_ub / domain.size) * domain.grid
-        self.posy_pixel_ub = (self.posy_ub / domain.size) * domain.grid
-        self.pos_pixel_lb = (self.pos_lb / domain.size) * domain.grid
-        self.pos_pixel_ub = (self.pos_ub / domain.size) * domain.grid
+        self.posx_pixel_lb = np.rint((self.posx_lb / domain.size) * domain.grid)
+        self.posy_pixel_lb = np.rint((self.posy_lb / domain.size) * domain.grid)
+        self.posx_pixel_ub = np.rint((self.posx_ub / domain.size) * domain.grid)
+        self.posy_pixel_ub = np.rint((self.posy_ub / domain.size) * domain.grid)
+        self.pos_pixel_lb = np.rint((self.pos_lb / domain.size) * domain.grid)
+        self.pos_pixel_ub = np.rint((self.pos_ub / domain.size) * domain.grid)
 
     @property
     def real_area(self):
