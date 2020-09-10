@@ -59,7 +59,7 @@ class Components:
             np.reshape(np.cos(self.angle), [-1, 1]) * self.size
             + np.reshape(np.sin(self.angle), [-1, 1]) * self.size[:, ::-1]
         )
-        self.realsize_pixel = (self.realsize / domain.size) * domain.grid
+        self.realsize_pixel = np.rint((self.realsize / domain.size) * domain.grid)
 
         # 组件坐标x,y的上下界
         self.posx_lb = self.realsize[:, 0] / 2
