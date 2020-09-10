@@ -113,7 +113,8 @@
 
 
 ## Change Log
-
+- v0.5.3
+  - fix bug in sequence sampling
 - v0.5.2
   - update installation guide
   - add github action for pushing images to dockerhub
