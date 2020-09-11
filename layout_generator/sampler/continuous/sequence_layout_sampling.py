@@ -101,11 +101,11 @@ class TaskSeq(Task):
             )
             if feasible_index_x.shape[0] == 0:
                 print(
-                    "An infeasible layout. Please run again!\
+                    "\nAn infeasible layout. Please run again!\
                         (This is very rare, lucky U!)"
                 )
                 flag = False
-                return
+                return None, flag
             choose_index = np.random.randint(
                 0, feasible_index_x.shape[0], size=1, dtype="int"
             )
@@ -137,6 +137,7 @@ if __name__ == "__main__":
         intensity,
         size,
     )
+
     np.random.seed(1)
     # sequence = np.random.choice(range(12), size=12, replace=False)
 
@@ -156,7 +157,7 @@ if __name__ == "__main__":
     f_sum = np.zeros((grid_board, grid_board))
     n_sample = 1
     for i in range(n_sample):
-        f_layout, flag = task.sample()
+        f_layout, flag = task.sample_until_success()
         f_sum += f_layout
     t2 = time.time()
     im = plt.imshow(f_sum / n_sample)

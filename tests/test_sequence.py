@@ -23,5 +23,5 @@ def test_size_grid_board(size_board, grid_board):
         intensity=intensity,
         method="sequence",
     )
-    F, _ = task.sample()
+    F, _ = task.sample_until_success()
     assert F.shape == (grid_board, grid_board)

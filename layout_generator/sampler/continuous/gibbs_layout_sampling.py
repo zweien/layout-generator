@@ -266,7 +266,7 @@ if __name__ == "__main__":
     t_0 = time.time()
     n_sample = 1
     for i in range(n_sample):
-        f_layout, _ = task.sample()
+        f_layout, _ = task.sample_until_success()
         t_1 = time.time()
         print(t_1 - t_0)
         t_0 = t_1

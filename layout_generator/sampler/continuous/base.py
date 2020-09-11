@@ -102,5 +102,12 @@ class Task:
     def sample(self, *args):
         raise NotImplementedError
 
+    def sample_until_success(self, *args):
+        while True:
+            f_layout, flag = self.sample(*args)
+            if flag:
+                break
+        return f_layout, flag
+
     def warmup(self, *args):
         pass

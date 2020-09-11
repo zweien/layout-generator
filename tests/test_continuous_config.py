@@ -3,7 +3,7 @@ from layout_generator.cli import main
 import layout_generator.sampler.continuous as continuous
 
 
-def test_mulit_powers_seq():
+def test_multi_powers_seq():
     sys.argv = "layout_generator generate_c".split()
     parser, options = main(debug=True)
 
@@ -29,12 +29,12 @@ def test_mulit_powers_seq():
     assert (isinstance(p, list) for p in task.components.intensity)
 
     task.warmup()
-    layout, _ = task.sample()
+    layout, _ = task.sample_until_success()
     assert layout.shape == (options.nx,) * 2
     assert any(p in layout for p in options.powers[0])
 
 
-def test_mulit_powers_gibbs():
+def test_multi_powers_gibbs():
     sys.argv = "layout_generator generate_c".split()
     parser, options = main(debug=True)
 
@@ -53,6 +53,6 @@ def test_mulit_powers_gibbs():
     )
 
     task.warmup()
-    layout, _ = task.sample()
+    layout, _ = task.sample_until_success()
     assert layout.shape == (options.nx,) * 2
     assert any(p in layout for p in options.powers[0])

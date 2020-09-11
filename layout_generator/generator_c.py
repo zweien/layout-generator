@@ -84,7 +84,10 @@ def pool_init(seeds_q):
 def method_fenics(i, options, sampler):
     """采用 fenics 求解
     """
-    F, _ = sampler()
+    while True:
+        F, flag = sampler()
+        if flag:
+            break
     U, xs, ys, zs = run_solver_c(
         options.ndim,
         options.length,

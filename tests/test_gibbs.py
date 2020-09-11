@@ -24,5 +24,5 @@ def test_size_grid_board(size_board, grid_board):
         method="gibbs",
     )
     task.warmup()
-    F, _ = task.sample()
+    F, _ = task.sample_until_success()
     assert F.shape == (grid_board, grid_board)
