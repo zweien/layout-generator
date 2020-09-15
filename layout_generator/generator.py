@@ -25,14 +25,14 @@ def generate_from_cli(options: configargparse.Namespace):
     """
     if options.bcs is None:
         options.bcs = []
-    unit_per_row = int(options.length / options.length_unit)
-    possible_n = unit_per_row ** options.ndim
+    options.unit_per_row = int(options.length / options.length_unit)
+    possible_n = options.unit_per_row ** options.ndim
     np.random.seed(options.seed)
     if options.sampler == "uniform":
         sampler = np.random.choice
-    powers = [
+    powers_all = [
         sampler(options.power, options.unit_n) for _ in range(options.sample_n)
-    ]
+    ]  # 每个样本
     layout_pos_lists = [
         sampler(possible_n, options.unit_n, replace=False)
         for _ in range(options.sample_n)
@@ -62,9 +62,7 @@ def generate_from_cli(options: configargparse.Namespace):
             method_fenics,
             options=options,
             sampler=sampler,
-            possible_n=possible_n,
-            unit_per_row=unit_per_row,
-            powers=powers,
+            powers_all=powers_all,
             layout_pos_lists=layout_pos_lists,
         )
 
@@ -87,15 +85,61 @@ def generate_from_cli(options: configargparse.Namespace):
     print(f"Generated {options.sample_n} layouts in {options.data_dir}")
 
 
-def method_fenics(
-    i, options, sampler, possible_n, unit_per_row, powers, layout_pos_lists
-):
-    """采用 fenics 求解
-    """
+def method_fenics(i, options, sampler, powers_all, layout_pos_lists):
+    """采用 fenics 求解"""
     layout_pos_list = layout_pos_lists[i]
     # print(layout_pos_list)
+    # print(powers)
+
+    # F = io.layout2matrix(
+    #     options.ndim,
+    #     options.nx,
+    #     options.unit_per_row,
+    #     powers_all[i],
+    #     layout_pos_list,
+    # )
+    # U, xs, ys, zs = run_solver(
+    #     options.ndim,
+    #     options.length,
+    #     options.length_unit,
+    #     options.bcs,
+    #     layout_pos_list,
+    #     options.u_D,
+    #     powers_all[i],
+    #     options.nx,
+    #     coordinates=True,
+    #     F=F,
+    #     vtk=options.vtk,
+    # )
+
+    F, U, xs, ys, zs = layout_pos_list2temp(
+        options, layout_pos_list, powers_all[i]
+    )
+
+    io.save(options, i, U, xs, ys, F, layout_pos_list, zs)
+
+
+def layout_pos_list2temp(
+    options: configargparse.Namespace, layout_pos_list: list, powers: list
+):
+    """Get tempreture field from layout position list.
+
+    Args:
+        options (configargparse.Namespace): options must have keys `ndim, length, length_unit, unit_per_row, bcs, u_D, nx`. Note that `nx` here is element number which is node number minus 1.
+        layout_pos_list (list): The position starts from 0.
+        powers (list): The power for each layout unit. len(layout_pos_list)=len(powers).
+
+    Returns:
+        F, U, xs, ys, zs
+    """
+    if "vtk" not in options:
+        options.vtk = False
     F = io.layout2matrix(
-        options.ndim, options.nx, unit_per_row, powers[i], layout_pos_list
+        options.ndim,
+        options.nx,
+        options.unit_per_row,
+        powers,
+        layout_pos_list,
     )
     U, xs, ys, zs = run_solver(
         options.ndim,
@@ -110,5 +154,4 @@ def method_fenics(
         F=F,
         vtk=options.vtk,
     )
-
-    io.save(options, i, U, xs, ys, F, layout_pos_list, zs)
+    return F, U, xs, ys, zs

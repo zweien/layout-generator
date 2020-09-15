@@ -113,6 +113,9 @@
 
 
 ## Change Log
+
+- unreleased
+  - add `layout_generator.layout_pos_list2temp()` for generating a sample according to paticular layout position list
 - v0.5.3
   - fix bug in sequence sampling
 - v0.5.2

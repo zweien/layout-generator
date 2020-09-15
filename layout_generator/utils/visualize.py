@@ -43,13 +43,13 @@ def plot_mat(
 
     fig = plt.figure(**figkwargs)
     plt.subplot(121)
-    img = plt.pcolormesh(xs, ys, u)
+    img = plt.pcolormesh(xs, ys, u, shading='auto')
     plt.colorbar(img)
     plt.axis("image")
-    plt.title("u")
+    plt.title("U")
 
     plt.subplot(122)
-    img = plt.pcolormesh(xs, ys, F)
+    img = plt.pcolormesh(xs, ys, F, shading='auto')
     plt.colorbar(img)
     plt.axis("image")
     plt.title("F")
