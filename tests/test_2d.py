@@ -1,6 +1,8 @@
 import sys
+import argparse
 from layout_generator.utils import io
 from layout_generator.cli import main
+from layout_generator.generator import layout_pos_list2temp
 
 
 def test_2d_generator(tmp_path, capsys):
@@ -126,3 +128,21 @@ def test_2d_bc(tmp_path):
     u = r["u"]
     assert u.shape == (options.nx,) * options.ndim
     assert u.min() >= options.u_D
+
+
+def test_layout_pos_list2temp():
+    options = argparse.Namespace(
+        ndim=2,
+        length=0.1,
+        length_unit=0.01,
+        unit_per_row=10,
+        bcs=[[[0.05, 0], [0.07, 0]]],
+        u_D=298,
+        nx=199,
+    )
+    powers = [8000, 2000]
+    layout_pos_list = [15, 55]
+    F, U, xs, ys, zs = layout_pos_list2temp(options, layout_pos_list, powers)
+    assert U.shape == (200, 200)
+    assert U.min() >= 298
+    assert all(power in F for power in powers)
