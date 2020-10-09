@@ -1,5 +1,6 @@
 import pytest
 import sys
+from pathlib import Path
 import argparse
 from layout_generator.cli import main
 
@@ -32,3 +33,11 @@ def test_cli_default():
 
     with pytest.raises(SystemExit):
         parser.parse_args("-V")
+
+
+@pytest.mark.parametrize("type_", ["discrete2d", "discrete3d", "continuous2d"])
+def test_config_template(type_, tmp_path, bash):
+    config_path: Path = tmp_path / f"{type_}_config.yml"
+    args = f"layout_generator makeconfig --type {type_} -o {config_path}".split()
+    bash.run_script(args[0], args[1:])
+    assert config_path.exists()
