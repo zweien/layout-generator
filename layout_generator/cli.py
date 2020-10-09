@@ -9,14 +9,23 @@ Desc      :   command line interface entry.
 
 
 import os
+from pathlib import Path
 from configargparse import ArgumentParser
 from .utils.configarg import (
     get_parser_discrete,
     get_parser_continuous,
+    get_parser_makeconfig,
+    makeconfig,
 )
 from .utils.visualize import get_parser as get_plot_parser
 from .utils.convert import get_parser as get_convert_parser
 from .about import __version__
+
+
+def handle_makeconfig(options):
+    print(1)
+    output_path = Path(options.output).resolve()
+    makeconfig(options, output_path)
 
 
 def handle_generate(options):
@@ -109,9 +118,15 @@ def main(debug=False, options_flag=False):
     convert_parser = get_convert_parser(convert_parser)
     convert_parser.set_defaults(handle=handle_convert)
 
+    makeconfig_parser = subparsers.add_parser(
+        "makeconfig", help="make template config"
+    )
+    makeconfig_parser = get_parser_makeconfig(makeconfig_parser)
+    makeconfig_parser.set_defaults(handle=handle_makeconfig)
+
     options, _ = parser.parse_known_args()
 
-    if options.test:  # 仅测试，输出参数
+    if hasattr(options, "test") and options.test:  # 仅测试，输出参数
         print(parser.format_values())
         print(options)
         # print(sys.argv)

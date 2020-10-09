@@ -10,15 +10,18 @@ Desc      :   config based argparser.
 
 import configargparse
 import os
+import shutil
 from pathlib import Path
 import yaml
 import numpy as np
 from ..about import __version__
 
 
+here = Path(__file__).resolve().parent
+
+
 def get_parser_common(parser: configargparse.ArgumentParser, config_name: str):
-    here = os.path.abspath(os.path.dirname(__file__))
-    config_path = Path(os.path.join(here, config_name))
+    config_path = here / config_name
     assert config_path.exists(), "Config do not exist!"
 
     parser._config_file_parser = configargparse.YAMLConfigFileParser()
@@ -114,10 +117,16 @@ def get_parser_continuous(
         help="shape of each unit",
     )
     parser.add(
-        "--powers", action="append", type=yaml.safe_load, help="power of each unit",
+        "--powers",
+        action="append",
+        type=yaml.safe_load,
+        help="power of each unit",
     )
     parser.add(
-        "--angles", action="append", type=float, help="angle of each unit",
+        "--angles",
+        action="append",
+        type=float,
+        help="angle of each unit",
     )
 
     parser.add(
@@ -128,3 +137,33 @@ def get_parser_continuous(
     )
 
     return parser
+
+
+def get_parser_makeconfig(parser: configargparse.ArgumentParser):
+    parser.add_argument(
+        "--type",
+        type=str,
+        choices=["discrete2d", "discrete3d", "continuous2d"],
+        help="config type",
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        type=str,
+        default="template_config.yml",
+        help="path for config template",
+    )
+    return parser
+
+
+def makeconfig(options, output_path):
+    config_file_dict = dict(
+        discrete2d="default.yml",
+        discrete3d="default3D.yml",
+        continuous2d="default_c.yml",
+    )
+    config_name = config_file_dict[options.type]
+    # config_path = os.path.join(here, config_name)
+    config_path = Path(__file__).resolve().parent / config_name
+    shutil.copyfile(config_path, output_path)
+    print(f"Generated the config template in {output_path}")
