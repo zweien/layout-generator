@@ -1,9 +1,11 @@
-image: zweien/layout-generator:latest
+default:
+    image:
+        name: quay.io/fenicsproject/stable:current
+        entrypoint: [""]
 
-before_script:
-    - python -V
-    - sudo pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
-    - sudo pip install -U .[dev]
+    before_script:
+        - python3 -V
+        - pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 
 stages:
     - style
@@ -12,11 +14,12 @@ stages:
 flake8:
     stage: style
     script:
-        - sudo pip install flake8
+        - pip install flake8
         - flake8 --config .flake8 --count --show-source --statistics .
 
 pytest:
     stage: test
     script:
+        - pip install -U .[dev]
         - pytest --cov=./
     coverage: '/^TOTAL.*\s+(\d+\%)$/'
