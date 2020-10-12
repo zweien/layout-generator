@@ -142,6 +142,6 @@ class Task:
             pos (list): position list, each element is (x, y) position
         """
         assert len(pos) == len(self.components)
-        
+
         # TODO 判断给定位置的组件是否重叠
         return False
