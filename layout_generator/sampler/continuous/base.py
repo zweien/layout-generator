@@ -59,7 +59,9 @@ class Components:
             np.reshape(np.cos(self.angle), [-1, 1]) * self.size
             + np.reshape(np.sin(self.angle), [-1, 1]) * self.size[:, ::-1]
         )
-        self.realsize_pixel = np.rint((self.realsize / domain.size) * domain.grid)
+        self.realsize_pixel = np.rint(
+            (self.realsize / domain.size) * domain.grid
+        )
 
         # 组件坐标x,y的上下界
         self.posx_lb = self.realsize[:, 0] / 2
@@ -77,10 +79,18 @@ class Components:
                 [self.posx_ub[i], self.posy_ub[i]]
             ).reshape(1, 2)
 
-        self.posx_pixel_lb = np.rint((self.posx_lb / domain.size) * domain.grid)
-        self.posy_pixel_lb = np.rint((self.posy_lb / domain.size) * domain.grid)
-        self.posx_pixel_ub = np.rint((self.posx_ub / domain.size) * domain.grid)
-        self.posy_pixel_ub = np.rint((self.posy_ub / domain.size) * domain.grid)
+        self.posx_pixel_lb = np.rint(
+            (self.posx_lb / domain.size) * domain.grid
+        )
+        self.posy_pixel_lb = np.rint(
+            (self.posy_lb / domain.size) * domain.grid
+        )
+        self.posx_pixel_ub = np.rint(
+            (self.posx_ub / domain.size) * domain.grid
+        )
+        self.posy_pixel_ub = np.rint(
+            (self.posy_ub / domain.size) * domain.grid
+        )
         self.pos_pixel_lb = np.rint((self.pos_lb / domain.size) * domain.grid)
         self.pos_pixel_ub = np.rint((self.pos_ub / domain.size) * domain.grid)
 
@@ -88,6 +98,9 @@ class Components:
     def real_area(self):
         """组件实际面积 real_x*real_y"""
         return np.prod(self.realsize, axis=1)
+
+    def __len__(self):
+        return self.number
 
 
 class Task:
@@ -111,3 +124,24 @@ class Task:
 
     def warmup(self, *args):
         pass
+
+    def layout_from_pos(self, pos: list):
+        """Get layout matrix from position
+
+        Args:
+            pos (list): position list, each element is (x, y) position
+        """
+        assert len(pos) == len(self.components)
+        # TODO 给出每个组件具体位置时，生成对应 layout 图像
+        return np.zeros(shape=(self.domain.grid, self.domain.grid))
+
+    def is_overlaping(self, pos):
+        """Check if the components at pos is overlaping
+
+        Args:
+            pos (list): position list, each element is (x, y) position
+        """
+        assert len(pos) == len(self.components)
+        
+        # TODO 判断给定位置的组件是否重叠
+        return False

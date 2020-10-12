@@ -7,10 +7,7 @@ class TaskSeq(Task):
     """顺序布局任务"""
 
     def __init__(self, components: Components):
-        self.domain = components.domain
-        self.components = components
-        self.location = np.zeros((components.number, 2))
-        self.angle = components.angle
+        super().__init__(components)
 
     def sample(self, sequence=None):
         """按顺序随机摆放组件
