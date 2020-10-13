@@ -1,6 +1,5 @@
 import sys
 import pytest
-import argparse
 from layout_generator.sampler.continuous import get_task
 from layout_generator.generator_c import layout_pos2temp
 from layout_generator.cli import main
