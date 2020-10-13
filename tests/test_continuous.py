@@ -1,13 +1,8 @@
 import sys
 import pytest
+import argparse
 from layout_generator.sampler.continuous import get_task
-
-# from layout_generator.sampler.continuous.config import (
-#     angle,
-#     intensity,
-#     size,
-#     geometry,
-# )
+from layout_generator.generator_c import layout_pos2temp
 from layout_generator.cli import main
 
 
@@ -76,14 +71,30 @@ class TestTask:
         )
         return _task
 
-    def test_layout_from_pos(self, task):
-        pos = [None] * len(task.components)
+    @pytest.fixture(scope="class")
+    def pos(self, task):
+        positions = [None] * len(task.components)
+        return positions
+
+    def test_layout_from_pos(self, task, pos):
         pos[0] = (0.0, 0.0)
         layout = task.layout_from_pos(pos)
         grid = task.domain.grid
         assert layout.shape == (grid, grid)
 
-    def test_is_overlaping(self, task):
-        pos = [None] * len(task.components)
+    def test_is_overlaping(self, task, pos):
         pos[0] = (0.0, 0.0)
         assert task.is_overlaping(pos) is False
+
+    @pytest.mark.skip(reason="no way of currently testing this")
+    def test_layout_pos2temp(self, task, config, pos):
+        parser, options = config
+        powers = [8000]
+        pos[0] = (0.0, 0.0)
+        layout, temp = layout_pos2temp(
+            options, pos, powers
+        )
+
+        assert layout.shape == (task.domain.grid, ) * options.ndim
+        assert temp.min() >= 298
+        assert all(power in layout for power in powers)
