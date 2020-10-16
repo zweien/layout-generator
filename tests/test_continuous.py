@@ -71,29 +71,58 @@ class TestTask:
         return _task
 
     @pytest.fixture(scope="class")
+    def task_gibbs(self, config):
+        parser, options = config
+        _task = get_task(
+            geometry_board="s",
+            size_board=options.length,
+            grid_board=options.nx,
+            geometry=["r"] * len(options.units),
+            size=options.units,
+            angle=options.angles,
+            intensity=options.powers,
+            method="gibbs",
+            rad=False,
+        )
+        return _task
+
+    @pytest.fixture(scope="class")
     def pos(self, task):
         positions = [None] * len(task.components)
         return positions
 
-    def test_layout_from_pos(self, task, pos):
-        pos[0] = (0.0, 0.0)
-        layout = task.layout_from_pos(pos)
-        grid = task.domain.grid
+    @pytest.fixture(scope="class")
+    def powers(self, task):
+        pows = [None] * len(task.components)
+        return pows
+
+    def test_layout_from_pos(self, task_gibbs, pos, powers):
+        pos = [(0.0, 0.0)] * len(pos)
+        powers = [10000] * len(pos)
+        layout = task_gibbs.layout_from_pos(pos, powers)
+        grid = task_gibbs.domain.grid
         assert layout.shape == (grid, grid)
 
-    def test_is_overlaping(self, task, pos):
-        pos[0] = (0.0, 0.0)
-        assert task.is_overlaping(pos) is False
+        task_gibbs.warmup(initial_position=None, burn_in_period=1)
+        location = task_gibbs.sample_location()
+        layout = task_gibbs.layout_from_pos(location, powers)
+        grid = task_gibbs.domain.grid
+        assert layout.shape == (grid, grid)
+
+    def test_is_overlaping(self, pos, task_gibbs):
+        pos = [(0.0, 0.0)] * len(pos)
+        task_gibbs.warmup(initial_position=None, burn_in_period=1)
+        location = task_gibbs.sample_location()
+        assert task_gibbs.is_overlaping(pos) is True
+        assert task_gibbs.is_overlaping(location) is False
 
     @pytest.mark.skip(reason="no way of currently testing this")
     def test_layout_pos2temp(self, task, config, pos):
         parser, options = config
         powers = [8000]
         pos[0] = (0.0, 0.0)
-        layout, temp = layout_pos2temp(
-            options, pos, powers
-        )
+        layout, temp = layout_pos2temp(options, pos, powers)
 
-        assert layout.shape == (task.domain.grid, ) * options.ndim
+        assert layout.shape == (task.domain.grid,) * options.ndim
         assert temp.min() >= 298
         assert all(power in layout for power in powers)

@@ -22,9 +22,7 @@ class TaskGibbs(Task):
             flag_sampling : True - 采样成功
         """
         flag_sampling = True
-        samp_comp_index = np.ceil(index / 2).astype(
-            int
-        )  # (1 ~ self.components.number)
+        samp_comp_index = np.ceil(index / 2).astype(int)  # (1 ~ self.components.number)
         comp_location = position.reshape(-1, 2)  # 将 1*2n 位置向量转化为 n*2 向量
 
         flag = index % 2
@@ -49,9 +47,7 @@ class TaskGibbs(Task):
                 ]
             )
 
-        real_component_location = np.delete(
-            comp_location, samp_comp_index - 1, axis=0
-        )
+        real_component_location = np.delete(comp_location, samp_comp_index - 1, axis=0)
         real_component_size = np.delete(
             self.components.realsize, samp_comp_index - 1, axis=0
         )
@@ -118,22 +114,16 @@ class TaskGibbs(Task):
             overlap_interval = temp_interval
 
         flatten_overlap_interval = overlap_interval.reshape(1, -1)
-        interval = np.sort(
-            np.append(flatten_overlap_interval, [0, self.domain.size])
-        )
+        interval = np.sort(np.append(flatten_overlap_interval, [0, self.domain.size]))
 
         # 去除无法放下组件的小区间
         length = len(interval) / 2
         piece_interval = interval.reshape(-1, 2)
 
         length_interval = piece_interval[:, 1] - piece_interval[:, 0]
-        samp_comp_length = self.components.realsize[
-            samp_comp_index - 1, flag - 1
-        ]
+        samp_comp_length = self.components.realsize[samp_comp_index - 1, flag - 1]
         piece_interval = piece_interval[
-            np.arange(0, length)[length_interval > samp_comp_length].astype(
-                int
-            ),
+            np.arange(0, length)[length_interval > samp_comp_length].astype(int),
             :,
         ]
 
@@ -149,9 +139,9 @@ class TaskGibbs(Task):
             )
             return position, flag_sampling
         temp1 = (samp_comp_length / 2) * np.ones((num_piece, 1))
-        piece_interval = piece_interval + np.append(
-            temp1, -temp1, axis=1
-        ).reshape(-1, 2)
+        piece_interval = piece_interval + np.append(temp1, -temp1, axis=1).reshape(
+            -1, 2
+        )
         length_interval = piece_interval[:, 1] - piece_interval[:, 0]
         sum_length = np.sum(length_interval)
 
@@ -180,10 +170,7 @@ class TaskGibbs(Task):
                 self.position, flag = self.gibbs_one_dim(j + 1, self.position)
                 if flag is False:
                     print(
-                        (
-                            "Sorry! Please input "
-                            f"anther initial position. (i = {i})"
-                        )
+                        ("Sorry! Please input " f"anther initial position. (i = {i})")
                     )
         print(
             (
@@ -197,14 +184,18 @@ class TaskGibbs(Task):
     def sample(self):
         """通过Gibbs采样原理获得一组随机布局"""
 
+        self.sample_location()
+        intensity = [np.random.choice(p) for p in self.components.intensity]
+        return self.location_to_image(self.location, intensity), True
+
+    def sample_location(self):
         for i in range(2 * self.components.number):
             self.position, flag = self.gibbs_one_dim(i + 1, self.position)
             if flag is False:
                 print("Sorry! Please retry.")
                 return None
         self.location = self.position.reshape(-1, 2)
-        intensity = [np.random.choice(p) for p in self.components.intensity]
-        return self.location_to_image(self.location, intensity), True
+        return self.location
 
     def location_to_image(self, location, intensity):
         """
@@ -243,7 +234,7 @@ if __name__ == "__main__":
     import time
     import matplotlib.pyplot as plt
     from layout_generator.sampler.continuous.utils import get_task
-    from config import size, angle, intensity, geometry
+    from .config import size, angle, intensity, geometry
 
     # np.random.seed(1)
 
