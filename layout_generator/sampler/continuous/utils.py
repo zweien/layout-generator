@@ -45,6 +45,8 @@ def get_task(
         )
 
         return TaskGibbs(components)
+    elif method is None:
+        return Task(components)
     else:
         raise LookupError("Method {method} does not supported!")
 

@@ -82,8 +82,7 @@ def pool_init(seeds_q):
 
 
 def method_fenics(i, options, sampler):
-    """采用 fenics 求解
-    """
+    """采用 fenics 求解"""
     while True:
         F, flag = sampler()
         if flag:
@@ -101,3 +100,33 @@ def method_fenics(i, options, sampler):
     )
 
     io.save(options, i, U, xs, ys, F)
+
+
+def layout_pos2temp(
+    options: configargparse.Namespace, pos: list, powers: list
+):
+    if options.bcs is None:
+        options.bcs = []
+    task = get_task(
+        geometry_board="s",
+        size_board=options.length,
+        grid_board=options.nx,
+        geometry=len(options.units) * "r",
+        size=options.units,
+        angle=options.angles,
+        intensity=options.powers,
+        rad=False,
+        method=None,
+    )
+    layout = task.layout_from_pos(pos, powers)
+    temp, xs, ys, zs = run_solver_c(
+        ndim=options.ndim,
+        length=options.length,
+        units=options.units,
+        bcs=options.bcs,
+        u0=options.u_D,
+        powers=powers,
+        nx=options.nx - 1,
+        F=layout,
+    )
+    return layout, temp

@@ -115,6 +115,8 @@
 ## Change Log
 
 - unreleased
+  - add `layout_generator.generator.layout_pos2temp()`
+  - add `laytout_generator.sampler.continuous.base.Task.layout_from_pos()`
   - add `layout_generator.generator.layout_pos_list2temp()` for generating a sample according to paticular layout position list
   - add command `makeconfig` for generating template config
 - v0.5.3
