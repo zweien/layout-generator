@@ -71,7 +71,7 @@ class TestTask:
         return _task
 
     @pytest.fixture(scope="class")
-    def task_gibbs(self, config):
+    def pos(self, config):
         parser, options = config
         _task = get_task(
             geometry_board="s",
@@ -84,43 +84,34 @@ class TestTask:
             method="gibbs",
             rad=False,
         )
-        return _task
-
-    @pytest.fixture(scope="class")
-    def pos(self, task):
-        positions = [None] * len(task.components)
-        return positions
+        _task.warmup(initial_position=None, burn_in_period=1)
+        return _task.sample_location()
 
     @pytest.fixture(scope="class")
     def powers(self, task):
-        pows = [None] * len(task.components)
+        pows = [10000] * len(task.components)
+        pows[1] = 20000
         return pows
 
-    def test_layout_from_pos(self, task_gibbs, pos, powers):
+    def test_layout_from_pos(self, task, pos, powers):
+        layout = task.layout_from_pos(pos, powers)
+        grid = task.domain.grid
+        assert layout.shape == (grid, grid)
+
         pos = [(0.0, 0.0)] * len(pos)
         powers = [10000] * len(pos)
-        layout = task_gibbs.layout_from_pos(pos, powers)
-        grid = task_gibbs.domain.grid
+        layout = task.layout_from_pos(pos, powers)
+        grid = task.domain.grid
         assert layout.shape == (grid, grid)
 
-        task_gibbs.warmup(initial_position=None, burn_in_period=1)
-        location = task_gibbs.sample_location()
-        layout = task_gibbs.layout_from_pos(location, powers)
-        grid = task_gibbs.domain.grid
-        assert layout.shape == (grid, grid)
+    def test_is_overlaping(self, pos, task):
+        assert task.is_overlaping(pos) is False
 
-    def test_is_overlaping(self, pos, task_gibbs):
         pos = [(0.0, 0.0)] * len(pos)
-        task_gibbs.warmup(initial_position=None, burn_in_period=1)
-        location = task_gibbs.sample_location()
-        assert task_gibbs.is_overlaping(pos) is True
-        assert task_gibbs.is_overlaping(location) is False
+        assert task.is_overlaping(pos) is True
 
-    @pytest.mark.skip(reason="no way of currently testing this")
-    def test_layout_pos2temp(self, task, config, pos):
+    def test_layout_pos2temp(self, task, config, pos, powers):
         parser, options = config
-        powers = [8000]
-        pos[0] = (0.0, 0.0)
         layout, temp = layout_pos2temp(options, pos, powers)
 
         assert layout.shape == (task.domain.grid,) * options.ndim

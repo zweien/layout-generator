@@ -118,7 +118,7 @@ def layout_pos2temp(
         rad=False,
         method=None,
     )
-    layout = task.layout_from_pos(pos)
+    layout = task.layout_from_pos(pos, powers)
     temp, xs, ys, zs = run_solver_c(
         ndim=options.ndim,
         length=options.length,
