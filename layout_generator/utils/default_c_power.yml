@@ -57,6 +57,7 @@ nx: 200
 method: fenics
 
 # 202103015 add inputting position function
+positions_type: coord  # coord or grid
 positions:
     - [0.01927952, 0.09154201]
     - [0.09288323, 0.07906539]
@@ -85,8 +86,14 @@ positions:
 #     - [0, 0]
 #     - [0, 0]
 
-observation_points:
-    - [0.01927952, 0.09154201]
-    - [0.09288323, 0.07906539]
-    - [0.04514527, 0.01451643]
+# observation_points_type: coord
+# observation_points:
+#     - [0.01927952, 0.09154201]
+#     - [0.09288323, 0.07906539]
+#     - [0.04514527, 0.01451643]
 
+observation_points_type: grid
+observation_points:
+    - [0, 40]
+    - [40, 60]
+    - [60, 200]

@@ -22,7 +22,7 @@ class Components:
         angle: Sequence,
         intensity: Sequence,
         rad=True,
-        position: Sequence = None,
+        position: np.ndarray = None,
     ):
         assert (
             len(size) == len(intensity) == len(angle) == len(geometry)
@@ -52,7 +52,7 @@ class Components:
         # define the given position from yaml file
         if position is not None:
             assert len(position) == self.number
-            self.given_position = np.array([k for k in position])
+            self.given_position = position
         else:
             self.given_position = position
         # ###################### user defines components here ###########

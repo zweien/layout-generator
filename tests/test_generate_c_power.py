@@ -14,6 +14,14 @@ def test_powers():
     assert isinstance(options.powers, list)
     assert isinstance(options.powers[0], list)
 
+    positions = np.array([k for k in options.positions])
+    if options.positions_type == "coord":
+        pass
+    elif options.positions_type == "grid":
+        positions = positions / (options.nx + 1) * options.length
+    else:
+        raise LookupError(f"Type {options.positions_type} is not supported!")
+
     task = continuous.get_task_powers_sampling(
         geometry_board="s",
         size_board=options.length,
@@ -23,7 +31,7 @@ def test_powers():
         angle=options.angles,
         intensity=options.powers,
         rad=False,
-        position=options.positions,
+        position=positions,
     )
 
     # 每个组件的功率都是 list
@@ -39,6 +47,14 @@ def test_interpolation():
     sys.argv = "layout_generator generate_c_power".split()
     parser, options = main(debug=True)
 
+    positions = np.array([k for k in options.positions])
+    if options.positions_type == "coord":
+        pass
+    elif options.positions_type == "grid":
+        positions = positions / (options.nx + 1) * options.length
+    else:
+        raise LookupError(f"Type {options.positions_type} is not supported!")
+
     task = continuous.get_task_powers_sampling(
         geometry_board="s",
         size_board=options.length,
@@ -48,7 +64,7 @@ def test_interpolation():
         angle=options.angles,
         intensity=options.powers,
         rad=False,
-        position=options.positions,
+        position=positions,
     )
 
     task.warmup()

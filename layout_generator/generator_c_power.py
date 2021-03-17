@@ -36,6 +36,15 @@ def generate_from_cli(options: configargparse.Namespace):
 
     unit_n = len(options.units)
     geometry = ["r"] * unit_n
+
+    positions = np.array([k for k in options.positions])
+    if options.positions_type == "coord":
+        pass
+    elif options.positions_type == "grid":
+        positions = positions / (options.nx + 1) * options.length
+    else:
+        raise LookupError(f"Type {options.positions_type} is not supported!")
+
     task = get_task_powers_sampling(
         geometry_board="s",
         size_board=options.length,
@@ -45,7 +54,7 @@ def generate_from_cli(options: configargparse.Namespace):
         angle=options.angles,
         intensity=options.powers,
         rad=False,
-        position=options.positions,
+        position=positions,
     )
     task.warmup()  # warm up, especially for gibbs
 
@@ -109,9 +118,17 @@ def method_fenics(i, options, sampler, task, observation=False):
         F,
         coordinates=True,
     )
-    print(options.bcs)
+
     if observation:
         points = np.array(options.observation_points)
+        if options.observation_points_type == "coord":
+            pass
+        elif options.observation_points_type == "grid":
+            points = points / (options.nx + 1) * options.length
+        else:
+            raise LookupError(
+                f"Type {options.observation_points_type} is not supported!"
+            )
         temp_points = observe_temperature_of_points(points, xs, ys, U)
     else:
         temp_points = None

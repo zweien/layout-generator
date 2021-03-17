@@ -168,11 +168,23 @@ def get_parser_continuous_power(
         help="positions of each unit",
     )
     parser.add(
+        "--positions_type",
+        type=str,
+        choices=['coord', 'grid'],
+        help="the type of input positions: coord or grid",
+    )
+    parser.add(
         "--observation_points",
         action="append",
         type=yaml.safe_load,
         default=None,
         help="positions of chosen observation points",
+    )
+    parser.add(
+        "--observation_points_type",
+        type=str,
+        choices=['coord', 'grid'],
+        help="the type of observation points: coord or grid",
     )
 
     return parser

@@ -61,7 +61,7 @@ def get_task_powers_sampling(
     intensity: Sequence,
     rad=True,
     method: str = "random",
-    position: Sequence = None,
+    position: np.ndarray = None,
 ) -> Task:
     """构造布局任务
 
