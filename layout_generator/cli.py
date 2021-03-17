@@ -14,6 +14,7 @@ from configargparse import ArgumentParser
 from .utils.configarg import (
     get_parser_discrete,
     get_parser_continuous,
+    get_parser_continuous_power,
     get_parser_makeconfig,
     makeconfig,
 )
@@ -38,6 +39,15 @@ def handle_generate(options):
 
 def handle_generate_c(options):
     from .generator_c import generate_from_cli
+
+    preprocess(options.parser, options)
+    generate_from_cli(options)
+    options.nx += 1
+
+
+# newly added in 20210315
+def handle_generate_c_power(options):
+    from .generator_c_power import generate_from_cli
 
     preprocess(options.parser, options)
     generate_from_cli(options)
@@ -106,6 +116,17 @@ def main(debug=False, options_flag=False):
     generate_c_parser = get_parser_continuous(generate_c_parser)
     generate_c_parser.set_defaults(
         handle=handle_generate_c, parser=generate_c_parser
+    )
+
+    generate_c_power_parser = subparsers.add_parser(
+        "generate_c_power",
+        help="generate continuous layout data with sampling component powers",
+    )
+    generate_c_power_parser = get_parser_continuous_power(
+        generate_c_power_parser
+    )
+    generate_c_power_parser.set_defaults(
+        handle=handle_generate_c_power, parser=generate_c_power_parser
     )
 
     plot_parser = subparsers.add_parser("plot", help="plot layout data")

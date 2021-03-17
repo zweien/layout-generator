@@ -14,9 +14,10 @@ import scipy.io as sio
 import h5py
 
 
-def save(options, i, U, xs, ys, F, layout_pos_list=None, zs=None):
-    """存储数据
-    """
+def save(
+    options, i, U, xs, ys, F, layout_pos_list=None, zs=None, observation=None
+):
+    """存储数据"""
     if layout_pos_list is None:
         layout_pos_list = []
     data_dir = Path(options.data_dir)
@@ -24,20 +25,43 @@ def save(options, i, U, xs, ys, F, layout_pos_list=None, zs=None):
     path = data_dir / file_name
     if options.file_format == "mat":
         path = path.with_suffix(".mat")
-        save_mat(path, U, xs, ys, F, layout_pos_list, zs=zs)
+        if observation is None:
+            save_mat(path, U, xs, ys, F, layout_pos_list, zs=zs)
+        else:
+            save_mat(
+                path,
+                U,
+                xs,
+                ys,
+                F,
+                layout_pos_list,
+                zs=zs,
+                observation=observation,
+            )
 
 
-def save_mat(path, U, xs, ys, F, layout_pos_list, zs=None):
+def save_mat(path, U, xs, ys, F, layout_pos_list, zs=None, observation=None):
     # 组件位置从 1 开始
     zs = zs if zs is not None else []
-    data = {
-        "u": U,
-        "xs": xs,
-        "ys": ys,
-        "zs": zs,
-        "F": F,
-        "list": np.array(layout_pos_list) + 1,
-    }
+    if observation is None:
+        data = {
+            "u": U,
+            "xs": xs,
+            "ys": ys,
+            "zs": zs,
+            "F": F,
+            "list": np.array(layout_pos_list) + 1,
+        }
+    else:
+        data = {
+            "u": U,
+            "xs": xs,
+            "ys": ys,
+            "zs": zs,
+            "F": F,
+            "list": np.array(layout_pos_list) + 1,
+            "u_obs": observation
+        }
     sio.savemat(path, data)
 
 
@@ -53,8 +77,7 @@ def load_h5(path):
 
 
 def layout2matrix(ndim, nx, unit_per_row, powers, layout_pos_list):
-    """将 layout 位置 list 转换为矩阵
-    """
+    """将 layout 位置 list 转换为矩阵"""
     assert ndim in [2, 3]
     F = np.zeros((nx + 1,) * ndim)
     if ndim == 3:
