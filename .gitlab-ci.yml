@@ -1,4 +1,6 @@
 default:
+    tags:
+        - docker
     image:
         name: quay.io/fenicsproject/stable:current
         entrypoint: [""]
