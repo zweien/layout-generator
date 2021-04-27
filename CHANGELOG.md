@@ -1,3 +1,31 @@
+##  v0.6.0(2021-04-27)
+
+* add `layout_from_pos` ([6d0aea8](https://git.idrl.site/idrl/layout-generator/commits/6d0aea8))
+* add func: coordinates type for defining positions ([88d5759](https://git.idrl.site/idrl/layout-generator/commits/88d5759))
+* add one more np.rint ([03d79ec](https://git.idrl.site/idrl/layout-generator/commits/03d79ec))
+* change to LGPL-3 ([ab3c145](https://git.idrl.site/idrl/layout-generator/commits/ab3c145))
+* fix error: mesh coordinates generation-xs-ys ([17a4567](https://git.idrl.site/idrl/layout-generator/commits/17a4567))
+* update ([6abc7d2](https://git.idrl.site/idrl/layout-generator/commits/6abc7d2))
+* Update .gitlab-ci.yml ([cfafb14](https://git.idrl.site/idrl/layout-generator/commits/cfafb14))
+* update gitignore ([05490d4](https://git.idrl.site/idrl/layout-generator/commits/05490d4))
+* update gitignore ([891d0c5](https://git.idrl.site/idrl/layout-generator/commits/891d0c5))
+* update gitlab-ci ([68bb441](https://git.idrl.site/idrl/layout-generator/commits/68bb441))
+* update gitlab-ci ([a7137de](https://git.idrl.site/idrl/layout-generator/commits/a7137de))
+* update README ([70b64cd](https://git.idrl.site/idrl/layout-generator/commits/70b64cd))
+* feat: add `layout_pos2temp()` ([72295cd](https://git.idrl.site/idrl/layout-generator/commits/72295cd))
+* feat: add api for layout_from_pos ([87cc9e4](https://git.idrl.site/idrl/layout-generator/commits/87cc9e4))
+* feat: add func `layout_generator.layout_pos_list2temp()` ([2b913de](https://git.idrl.site/idrl/layout-generator/commits/2b913de))
+* feat: add func for sampling powers at fixed layout ([a062b9c](https://git.idrl.site/idrl/layout-generator/commits/a062b9c))
+* feat: add layout_pos2temp ([c282d39](https://git.idrl.site/idrl/layout-generator/commits/c282d39))
+* feat: generate template config ([af88fb6](https://git.idrl.site/idrl/layout-generator/commits/af88fb6))
+* test: add test for layout_pos_list2temp() ([a470f39](https://git.idrl.site/idrl/layout-generator/commits/a470f39))
+* test: update test_continuous.py ([da0b202](https://git.idrl.site/idrl/layout-generator/commits/da0b202))
+* docs: update README.md ([af65142](https://git.idrl.site/idrl/layout-generator/commits/af65142))
+* fix: add sample_until_success() ([39c22be](https://git.idrl.site/idrl/layout-generator/commits/39c22be))
+* ci: update Dockerfile ([e610ba7](https://git.idrl.site/idrl/layout-generator/commits/e610ba7))
+
+
+
 ##  v0.5.3(2020-09-10)
 
 * docs: add badge for docker hub ([6491fe3](https://git.idrl.site/idrl/layout-generator/commits/6491fe3))
