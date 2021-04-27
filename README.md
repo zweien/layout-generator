@@ -57,6 +57,7 @@
 - 配置文件与命令行两种使用方式
 - 矩形组件离散位置摆放
   - 数量、位置、功率
+- 固定组件位置，变功率采样
 - 矩形组件连续位置摆放
 - 可添加多条 Dirichlet 边界条件（开口）
 - 使用 `fenics` 求解 Poisson 方程
@@ -114,7 +115,8 @@
 
 ## Change Log
 
-- unreleased
+- v0.6.0
+  - add 固定组件位置，变功率采样
   - add `layout_generator.generator.layout_pos2temp()`
   - add `laytout_generator.sampler.continuous.base.Task.layout_from_pos()`
   - add `layout_generator.generator.layout_pos_list2temp()` for generating a sample according to paticular layout position list
