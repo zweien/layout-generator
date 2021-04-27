@@ -8,6 +8,7 @@ on:
   release:
     types:
        - created
+       - edited
 
 jobs:
   build-layout-generator:
