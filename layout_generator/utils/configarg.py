@@ -139,6 +139,57 @@ def get_parser_continuous(
     return parser
 
 
+def get_parser_continuous_power(
+    parser: configargparse.ArgumentParser, config_path=None
+):
+    parser = get_parser_common(parser, "default_c_power.yml")
+    parser.add(
+        "--units",
+        action="append",
+        type=yaml.safe_load,
+        help="shape of each unit",
+    )
+    parser.add(
+        "--angles",
+        action="append",
+        type=float,
+        help="angle of each unit",
+    )
+    parser.add(
+        "--powers",
+        action="append",
+        type=yaml.safe_load,
+        help="power of each unit",
+    )
+    parser.add(
+        "--positions",
+        action="append",
+        type=yaml.safe_load,
+        help="positions of each unit",
+    )
+    parser.add(
+        "--positions_type",
+        type=str,
+        choices=['coord', 'grid'],
+        help="the type of input positions: coord or grid",
+    )
+    parser.add(
+        "--observation_points",
+        action="append",
+        type=yaml.safe_load,
+        default=None,
+        help="positions of chosen observation points",
+    )
+    parser.add(
+        "--observation_points_type",
+        type=str,
+        choices=['coord', 'grid'],
+        help="the type of observation points: coord or grid",
+    )
+
+    return parser
+
+
 def get_parser_makeconfig(parser: configargparse.ArgumentParser):
     parser.add_argument(
         "--type",

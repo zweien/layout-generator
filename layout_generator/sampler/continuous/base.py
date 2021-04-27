@@ -22,6 +22,7 @@ class Components:
         angle: Sequence,
         intensity: Sequence,
         rad=True,
+        position: np.ndarray = None,
     ):
         assert (
             len(size) == len(intensity) == len(angle) == len(geometry)
@@ -44,7 +45,16 @@ class Components:
             self.angle = self.angle / 180 * np.pi
 
         # heat disapation power: W
-        self.intensity = [(p if isinstance(p, list) else [p]) for p in intensity]
+        self.intensity = [
+            (p if isinstance(p, list) else [p]) for p in intensity
+        ]
+
+        # define the given position from yaml file
+        if position is not None:
+            assert len(position) == self.number
+            self.given_position = position
+        else:
+            self.given_position = position
         # ###################### user defines components here ###########
 
         self.size_pixel = np.rint((self.size / domain.size) * domain.grid)
@@ -57,7 +67,9 @@ class Components:
             np.reshape(np.cos(self.angle), [-1, 1]) * self.size
             + np.reshape(np.sin(self.angle), [-1, 1]) * self.size[:, ::-1]
         )
-        self.realsize_pixel = np.rint((self.realsize / domain.size) * domain.grid)
+        self.realsize_pixel = np.rint(
+            (self.realsize / domain.size) * domain.grid
+        )
 
         # 组件坐标x,y的上下界
         self.posx_lb = self.realsize[:, 0] / 2
@@ -75,10 +87,18 @@ class Components:
                 [self.posx_ub[i], self.posy_ub[i]]
             ).reshape(1, 2)
 
-        self.posx_pixel_lb = np.rint((self.posx_lb / domain.size) * domain.grid)
-        self.posy_pixel_lb = np.rint((self.posy_lb / domain.size) * domain.grid)
-        self.posx_pixel_ub = np.rint((self.posx_ub / domain.size) * domain.grid)
-        self.posy_pixel_ub = np.rint((self.posy_ub / domain.size) * domain.grid)
+        self.posx_pixel_lb = np.rint(
+            (self.posx_lb / domain.size) * domain.grid
+        )
+        self.posy_pixel_lb = np.rint(
+            (self.posy_lb / domain.size) * domain.grid
+        )
+        self.posx_pixel_ub = np.rint(
+            (self.posx_ub / domain.size) * domain.grid
+        )
+        self.posy_pixel_ub = np.rint(
+            (self.posy_ub / domain.size) * domain.grid
+        )
         self.pos_pixel_lb = np.rint((self.pos_lb / domain.size) * domain.grid)
         self.pos_pixel_ub = np.rint((self.pos_ub / domain.size) * domain.grid)
 
@@ -99,6 +119,14 @@ class Task:
         self.components = components
         self.location = np.zeros((components.number, 2))
         self.angle = components.angle
+        self.given_position = components.given_position
+        self.intensity_sample = []
+
+        if self.given_position is not None:
+            if self.is_overlaping(self.given_position):
+                raise ValueError(
+                    "Overlap happened! Input another layout (Arg: positions)."
+                )
 
     def sample(self, *args):
         raise NotImplementedError

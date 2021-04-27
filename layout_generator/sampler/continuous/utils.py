@@ -51,6 +51,52 @@ def get_task(
         raise LookupError("Method {method} does not supported!")
 
 
+def get_task_powers_sampling(
+    geometry_board: str,
+    size_board: float,
+    grid_board: int,
+    geometry: Sequence,
+    size: Sequence,
+    angle: Sequence,
+    intensity: Sequence,
+    rad=True,
+    method: str = "random",
+    position: np.ndarray = None,
+) -> Task:
+    """构造布局任务
+
+    Args:
+        geometry_board (str): [description]
+        size_board (float): [description]
+        grid_board (int): [description]
+        geometry (Sequence): [description]
+        size (Sequence): [description]
+        angle (Sequence): [description]
+        intensity (Sequence): [description]
+        rad (bool, optional): [description]. Defaults to True.
+        method (str, optional): [description]. Defaults to "random".
+        position (Sequence, optional): [description]. Defaults to None.
+
+    Returns:
+        Task: [description]
+    """
+
+    domain = Domain(geometry_board, size_board, grid_board)
+    components = Components(
+        domain, geometry, size, angle, intensity, position=position
+    )
+    if method == "random":
+        from layout_generator.sampler.continuous.powers_samping import (
+            TaskPowersSampling,
+        )
+
+        return TaskPowersSampling(components)
+    elif method is None:
+        return Task(components)
+    else:
+        raise LookupError(f"Method {method} does not supported!")
+
+
 def overlap_rec_rec(u1, a1, b1, u2, a2, b2):
     """
     可同时处理多组组件之间的干涉计算。
