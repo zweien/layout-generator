@@ -211,8 +211,8 @@ def get_mesh_grid(length, nx, ny, nz=None):
     """
     mesh = get_mesh(length, nx, ny, nz)
     if nz is None:
-        xs = mesh.coordinates()[:, 0].reshape(nx + 1, nx + 1)
-        ys = mesh.coordinates()[:, 1].reshape(nx + 1, ny + 1)
+        xs = mesh.coordinates()[:, 0].reshape(ny + 1, nx + 1).T
+        ys = mesh.coordinates()[:, 1].reshape(ny + 1, nx + 1).T
         return xs, ys, None
     xs = mesh.coordinates()[:, 0].reshape(nx + 1, ny + 1, nz + 1)
     ys = mesh.coordinates()[:, 1].reshape(nx + 1, ny + 1, nz + 1)
